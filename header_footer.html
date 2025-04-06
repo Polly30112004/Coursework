@@ -3,31 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900">
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900" rel="stylesheet">
     <link rel="stylesheet" href="header_footer.css">
     <title>Happy Coaching</title>
 </head>
 <body>
-    <header class = "header"> 
+   <header class = "header"> 
        <div class = "brand">
         <img src="img/header_brand.png" alt="" class = "brand_icon">
          <p class = "brand_name">Happy Coaching</p>
        </div>
-       <div class = "navigation">
-     <img src="img/night.png" alt="">
-     <img src="img/visibility_off.png" alt="">
-     <div>
-        <button class = "eng">en</button>
-        <button class = "rus">рус</button>
-     </div>
-      <p>Home</p>
-      <p>Services</p>
-      <p>About us</p>
-      <p>Extra Salespage</p>
-      <button class = "Shop">Get your guide now</button>
+    <div class = "navigation">
+        <input type="checkbox" id="theme">
+        <label for="theme" class="theme-toggle" >
+            <img src="img/night.png" alt="" class="theme-night">
+            <img src="img/day.png" alt="" class="theme-day">
+        </label> 
+
+        <input type="checkbox" id="visibility">
+        <label for="visibility" class="visibility-toggle">
+            <img src="img/visibility_off.png" alt="" class="visibility-off">
+            <img src="img/visibility.png" alt="" class="visibility-on">
+        </label>
+     <div class="lang">
+        <input type="radio" id="eng" name="language" value="en" checked>
+        <label for="eng" class="eng">en</label>
+        <input type="radio" id="rus" name="language" value="rus">
+        <label for="rus" class="rus">рус</label>
+    </div>
+    <a href="home.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About us</a>
+    <a href="extra-salespage.html">Extra Salespage</a>
+      <button class = "shop">Get your guide now</button>
       <img src="img/shopping_basket.png" alt="">
     </div>
-    </header>
+   </header>
 
 
     <footer class = "footer"></footer>
