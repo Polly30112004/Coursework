@@ -1,0 +1,169 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.header
+{
+height: 60px;
+margin: auto calc(20px + 3.125vw);
+display: flex;
+flex-direction: row;
+color: #4A556C;
+align-content: center;
+justify-content: space-between;
+}
+
+.brand
+{
+display: flex;
+flex-direction: row;
+gap: 10px;   
+align-items: center; 
+}
+
+.brand_icon
+{
+height: 23px;
+width: 25px;
+}
+
+.brand_name
+{
+font-size: 16px;
+color: #333461;
+font-weight: 700;
+}
+
+
+.navigation
+{
+    display: flex;
+    flex-direction: row;
+    gap: calc(15px + 1.04vw);  
+    align-items: center;    
+}
+
+.navigation img
+{
+    height: 28px;
+    width: 28px;
+}
+
+.navigation p
+{
+    font-size: 15px;
+}
+
+.shop
+{
+  border-color: #20AD96;
+  border-radius: 4px;
+  background-color: #20AD96;
+  color: white;
+  font-weight: 700;
+  padding: 11px 16px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+.eng, .rus {
+
+    text-align: center;
+    width: 30px;
+    cursor: pointer;
+    border: 2px solid #333461; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.eng {
+    border-radius: 20px 0 0 20px; 
+}
+
+.rus {
+    border-radius: 0 20px 20px 0; 
+}
+
+input[type="radio"]:checked + .eng,
+input[type="radio"]:checked + .rus {
+    background-color: #20AD96; 
+    color: #fff; 
+}
+
+.lang {
+    display: flex;
+    gap: 5px; 
+}
+
+.theme-toggle {
+    display: block;
+    cursor: pointer;
+}
+
+
+.theme-night {
+    display: block;
+}
+
+.theme-day {
+    display: none;
+}
+
+
+input[type="checkbox"]#theme:checked + .theme-toggle .theme-night {
+    display: none;
+}
+
+input[type="checkbox"]#theme:checked + .theme-toggle .theme-day {
+    display: block;
+}
+
+
+.visibility-toggle {
+    display: block;
+    cursor: pointer;
+}
+
+.visibility-off {
+    display: block;
+}
+
+.visibility-on {
+    display: none;
+}
+
+input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-off {
+    display: none;
+}
+
+input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
+    display: block;
+}
+
+.navigation a {
+    color: #4A556C;
+    text-decoration: none; 
+}
+
+
+.navigation a:hover {
+    color: #20AD96;
+}
+
+
+
+
+
+
+.footer
+{
+height:617px ;
+
+}
