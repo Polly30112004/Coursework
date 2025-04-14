@@ -3,6 +3,8 @@
     margin: 0;
     padding: 0;
     font-size: 16px;
+    line-height: 1.5rem;  
+    font-family: Kumbh Sans;  
 }
 
 .block1 {
@@ -44,6 +46,7 @@ height: auto;
 {
 font-size: 4.5rem;
 color: #333461;
+line-height: 120%;
 }
 
 .description 
@@ -52,6 +55,8 @@ color: #333461;
  color:#4A556C;
  font-size: 1.125rem;
  margin: 1.125rem 0;
+ text-align: left
+
 }
 
 .btn
@@ -121,7 +126,6 @@ color: #fff;
    padding: 6.875rem  calc(5vw + 4.875rem);
    gap:1rem;
    color:#4A556C;
-
 }
 
 .description_for_types
@@ -136,6 +140,7 @@ color: #fff;
 {
     font-size: 3rem;
     color: #333461;
+    line-height: 3.5rem;
 }
 
 .description_for_types_text
@@ -189,6 +194,7 @@ text-align: center;
 {
     color:#333461 !important;
     margin-bottom: 0.75rem;
+    line-height: 2rem;
 }
 
 .card button
@@ -214,6 +220,7 @@ gap:calc(1rem + 1.6vw);
     display: flex;
     flex-direction: column;
     box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+    height: 100%;
     max-height: 376px;
     max-width: 22.5rem;
     min-width: 300px;
@@ -227,14 +234,97 @@ gap:calc(1rem + 1.6vw);
 
 
 
+
+
+
+
+.block5
+{
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    padding: 8.31rem 6.383rem;
+    min-height: 878px; 
+}
+
+
+.block5 .content_text {
+    display: flex;
+    flex-direction: column;
+}
+
+.block5 .description {
+    max-width: 34rem;
+    color: #4A556C;
+    font-size: 1.125rem;
+    margin: 1.125rem 0;
+    text-align: left; 
+}
+
+.transsform_life {
+    padding-top: 2rem;
+    width: 100%; 
+    max-width: 581px; 
+    height: auto; 
+    min-width: 300px;
+}
+
+.free_guid
+{
+    height: 6.5rem;
+    position: absolute;
+    top: 0rem;
+    right:-2rem;
+    display: flex; 
+}
+
+.image_icon 
+{
+    display: flex;
+    border-radius:100%;
+    background-color: #20AD96;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 700;
+    height: 92px;
+    width: 92px;
+    align-items:center;
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 1200px) { 
     *
     {font-size: calc(15px + 0.08vw);}
     
-    .block1 
+    .block1, .block5 
     {
         gap:0;
     }  
+
     .description_for_types
     {
         gap: 2rem; 
@@ -253,12 +343,28 @@ gap:calc(1rem + 1.6vw);
 { 
     *
     {font-size: calc( 14px + 0.1vw );}
-    .block1 
+    .block1, .block5 
     {
        flex-wrap: wrap;
-       gap: 15px;
+       gap: 15px !important;
     } 
+
+    .block5 .content_text {
+        text-align: center;
+        align-items:center;
+    }
+
+    .block5 .description 
+    {
+        text-align: center !important;
+    }
+
     .content {
+        text-align: center;
+    }
+
+    .content
+    {
         text-align: center;
         align-content:center;
     }
@@ -320,10 +426,10 @@ gap:calc(1rem + 1.6vw);
     padding: 0;
 }
 
-.photo_from_1_block
+.photo_from_1_block, .transsform_life
 {
     width: 52vw;
-    height: auto;
+    height: auto;   
     min-width: 250px;
 }
 .success-overlay
@@ -345,6 +451,13 @@ gap:calc(1rem + 1.6vw);
     padding: 0 10vw;  
     padding-top: 3.44rem;
 }
+
+.block5
+{    
+    max-height: 697px !important;
+    min-height: auto;
+    padding: 0 10vw;  
+}
 .block2
 {
     padding: 6.875rem  5vw;
@@ -357,6 +470,7 @@ gap:calc(1rem + 1.6vw);
 .h2   
 {
     font-size: calc(0.5rem + 5vw);
+    line-height: normal;
 }
     .success-overlay
 {
