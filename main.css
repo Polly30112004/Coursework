@@ -231,13 +231,6 @@ gap:calc(1rem + 1.6vw);
     padding: 1.5rem 1.75rem;
 }
 
-
-
-
-
-
-
-
 .block5
 {
     display: flex;
@@ -292,29 +285,50 @@ gap:calc(1rem + 1.6vw);
     justify-content: center;
 }
 
+.block6
+{
+    background-color:#FAF8F6;
+    border-radius:25px;
+    margin: 0  calc(2rem + 5.56vw);
+    margin-bottom: 6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-height: 480px;
+}
 
+.block6_tittle
+{
+    font-size: calc(1rem + 1.39vw);
+    color:#333461;
+    line-height: 45px;
+}
+.block6 img
+{
+  width: 100%;
+  max-width: 560px;
+  min-width: 250px;
+  height: auto;
+  border-radius: 0 25px 25px 0;
+  display: flex;
+  align-content:end;
+}
 
+.block6 p
+{
+    color:#4A556C;    
+    font-size: 1.125rem;
+    margin-bottom: 1.25rem;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.block6_text
+{
+    display: flex;
+    flex-direction: column;
+    gap:1.25rem;
+    padding-top: 8.125rem;
+    padding-left: 4rem;
+}
 
 @media (max-width: 1200px) { 
     *
@@ -337,6 +351,23 @@ gap:calc(1rem + 1.6vw);
     {
         padding: 6.01rem  calc(0.5rem + 5.49vw);
     }
+    .block6
+    {
+
+        justify-content: center;
+        align-content:center;
+    }
+    .block6 img
+    {
+        display: none;
+    }
+    .block6_text
+    {        
+        padding: 0;
+        align-items:center;
+        text-align: center;
+        padding: 8.125rem 4rem;
+    }
 }
 
 @media (max-width: 1030px) 
@@ -348,6 +379,11 @@ gap:calc(1rem + 1.6vw);
        flex-wrap: wrap;
        gap: 15px !important;
     } 
+
+    .block6_tittle
+    {
+     line-height: normal;
+    }
 
     .block5 .content_text {
         text-align: center;
@@ -394,6 +430,7 @@ gap:calc(1rem + 1.6vw);
     {
         gap: 5vw;
     }
+
 }
 
 @media (max-width: 768px) { 
@@ -407,7 +444,10 @@ gap:calc(1rem + 1.6vw);
     padding: 0 10vw;  
     padding-top: 3.44rem;
 }
-
+.block6
+{
+    margin:8.3rem calc(1rem + 7.03vw) ;
+}
 .block2
 {
     padding: 6.875rem  15vw;
@@ -461,6 +501,11 @@ gap:calc(1rem + 1.6vw);
 .block2
 {
     padding: 6.875rem  5vw;
+}
+
+.block6_text
+{
+    padding: calc(3rem +  11.98vw) calc(1rem + 6.875vw);
 }
 .h1
 {
