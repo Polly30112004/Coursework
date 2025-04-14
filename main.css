@@ -19,7 +19,7 @@
 .zigzag
 {
     height: 17px;
-    width: auto;
+    width: 101px;
 }
 
 .content_text
@@ -114,6 +114,73 @@ color: #fff;
 }
 
 
+.block2
+{
+   display: flex;
+   flex-direction: column; 
+   padding: 6.875rem  calc(5vw + 4.875rem);
+   gap:1rem;
+   color:#4A556C;
+
+}
+
+.description_for_types
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 4.69rem;
+}
+
+.h2
+{
+    font-size: 3rem;
+    color: #333461;
+}
+
+.description_for_types_text
+{
+width: 50%;
+font-size: 1.125rem;
+}
+
+.types
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap:5.56rem;
+    justify-content: center;
+}
+
+.types img
+{
+    width: 4.5rem;
+    margin-bottom: 1rem;
+}
+.h3
+{
+    color: #041434;
+    font-size: 1.5rem;
+}
+.type
+{
+    display: flex;
+    flex-direction: column;
+    align-content:start;
+    font-size: 1rem;
+    max-width: 300px;
+    gap: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 1200px) { 
     *
     {font-size: calc(15px + 0.08vw);}
@@ -122,12 +189,15 @@ color: #fff;
     {
         gap:0;
     }  
+    .description_for_types
+    {gap: 2rem; }
+
 }
 
 @media (max-width: 1030px) 
 { 
     *
-    {font-size: calc(14px + 0.1vw);}
+    {font-size: calc( 14px + 0.1vw );}
     .block1 
     {
        flex-wrap: wrap;
@@ -137,7 +207,7 @@ color: #fff;
         text-align: center;
         align-content:center;
     }
-    .content img
+    .zigzag
     {
         display: none;
     }
@@ -146,11 +216,29 @@ color: #fff;
     {
         padding: 0 3.125rem;
     }
+
+    .description_for_types
+    {
+        flex-direction: column;
+        text-align: center;
+
+    }
+    .description_for_types_text
+    {
+        align-self: center;
+        width: 100%;
+    }
+
+    .types
+    {
+        gap: 5vw;
+    }
 }
 
 @media (max-width: 768px) { 
     *
-    {font-size: calc( 13px +0.5vw);
+    {
+        font-size:11.2px;
     }
     
 .block1
@@ -158,9 +246,19 @@ color: #fff;
     padding: 0 10vw;  
     padding-top: 3.44rem;
 }
+
+.block2
+{
+    padding: 6.875rem  15vw;
+}
 .h1
 {
     font-size: calc(2.5rem + 5vw);
+}
+
+.h2
+{
+    font-size: calc(0.5rem + 5vw);
 }
 .content_text
 {
@@ -184,18 +282,27 @@ color: #fff;
 @media (max-width: 480px) { 
     *
     {
-        font-size: calc( 12px +0.5vw);
+        font-size: 11px;
     }
-    .block1
+.block1
 {
     margin: 0 auto;
     padding: 0 10vw;  
     padding-top: 3.44rem;
 }
-    .h1
-    {
-        font-size: calc(1.5rem + 5vw);
-    }
+.block2
+{
+    padding: 6.875rem  5vw;
+}
+.h1
+{
+     font-size: calc(1.5rem + 5vw) ;
+}
+
+.h2   
+{
+    font-size: calc(0.5rem + 5vw);
+}
     .success-overlay
 {
     left: calc(-0.2rem - 8vw);
