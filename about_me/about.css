@@ -106,6 +106,31 @@ color: #fff;
     flex-direction: column;
 }
 
+.block2
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: #667085;
+    padding: calc(3rem + 3.1vw) calc(2rem + 3.33vw);
+    gap: calc(1rem + 1.11vw);
+}
+
+.block2-images
+{   
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(3rem + 3.1vw);
+    justify-content: center;
+}
+
+.block2-images img
+{
+    height: calc(1rem + 2.22vw);
+    min-height: 16px;
+    width: auto;
+}
+
 @media (max-width: 1380px)
 {
     .block1
