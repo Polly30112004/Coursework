@@ -55,8 +55,6 @@ line-height: 120%;
  color:#4A556C;
  font-size: 1.125rem;
  margin: 1.125rem 0;
- text-align: left
-
 }
 
 .btn
@@ -396,22 +394,20 @@ gap:calc(1rem + 1.6vw);
     }
 
     .content {
-        text-align: center;
+        text-align: center !important;
     }
 
-    .content
+    .description p
+    {text-align: center !important;}
+
+    .block1 .content_text 
     {
-        text-align: center;
-        align-content:center;
+        text-align: center !important;
+        align-items:center;
     }
     .zigzag
     {
         display: none;
-    }
-
-    .content_text
-    {
-        padding: 0 3.125rem;
     }
 
     .description_for_types

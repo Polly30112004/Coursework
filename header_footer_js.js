@@ -1,4 +1,4 @@
-fetch('header_footer.html')
+fetch('/header_footer.html')
     .then(response => response.text())
     .then(data => {
         // Создаём временный контейнер для парсинга HTML
