@@ -365,8 +365,9 @@ color: #fff;
     
 .block1
 {
-    padding: 0 10vw;  
-    padding-top: 3.44rem;
+    padding:3.44rem 10vw 0;  
+    height: calc(49vw + 32rem);
+    min-height: 565px;
 }
 
 .block3
@@ -389,7 +390,13 @@ color: #fff;
     height: auto;   
 }
 
-.icon
+.image-section
+{
+    height: 58vw;
+    min-height: 300px;
+}
+
+.icon 
 {
     width: 6.25vw;
     min-width: 16px;
@@ -417,6 +424,7 @@ color: #fff;
     margin: 0 auto;
     padding: 0 10vw;  
     padding-top: 3.44rem;
+    height: calc(32vw + 30rem);
 }
 
 .block4
