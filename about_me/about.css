@@ -288,6 +288,53 @@ color: #fff;
 }
 
 
+
+
+
+
+.block4-button
+{
+    max-width: 100% ;
+    background-color:#FAF8F6;
+    border-radius:25px;
+    margin: 0  calc(1rem + 6.67vw) calc(4rem + 4.72vw) ;
+    text-align: center;
+    padding: 2rem 10px;
+}
+
+.block4-button h3
+{
+    font-size: 1.25rem;
+    color: #333461;
+    margin: 0 10px 2rem;
+}
+
+.block4-button p
+{
+    color:#4A556C;    
+    font-size: 1.125rem; 
+}
+
+
+/*сделать рсстоянпие*/
+.block4-button .btn
+{
+  margin: 2rem 0 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 1380px)
 {
     .block1
