@@ -145,6 +145,119 @@ color: #fff;
 }
 
 
+.block5
+{
+    max-width: 900px;
+    width: calc(18.75rem + 41.67vw);
+    padding:calc(3rem + 3.125vw) calc(2rem + 1.25vw);
+    margin: 0 auto;
+}
+
+.block5-text
+{
+    
+    text-align: center;
+    margin-bottom: calc(2rem + 2.22vw);
+    font-size: 1.25rem;
+}
+
+.block5-text .h2
+{
+    max-width: 100% !important;
+    margin: 0  0 calc(0.5rem + 0.83vw);
+}
+
+.block5-text span
+{
+    font-size: 1.25rem;
+    color: #4A556C;
+}
+
+.block5-content 
+{
+    margin-bottom: 30px;
+}
+
+.block5-item {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.block5-item summary::-webkit-details-marker,
+.block5-item summary::marker {
+    display: none;
+}
+
+.block5-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    list-style: none;
+}
+
+.block5-question span 
+{
+    font-size: 1.1rem;
+    color: #101828;
+    padding: calc(1rem + 0.625vw) 0;
+}
+
+.block5-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.block5-item[open] .block4-icon 
+{
+    content: url('img/minus.svg');
+}
+
+.block5-answer 
+{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.block5-item[open] .block4-answer {
+    max-height: 500px; 
+}
+
+.block5-answer p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 10px;
+}
+
+.block5-button
+{
+    max-width: 100% ;
+    background-color:#FAF8F6;
+    border-radius:25px;
+    margin: 0  calc(1rem + 6.67vw) calc(4rem + 4.72vw) ;
+    text-align: center;
+    padding: 2rem 10px;
+}
+
+.block5-button h3
+{
+    font-size: 1.25rem;
+    color: #333461;
+    margin: 0 10px 2rem;
+}
+
+.block5-button p
+{
+    color:#4A556C;    
+    font-size: 1.125rem; 
+}
+
+.block5-button .btn
+{
+  margin: 2rem 0 0;
+}
 
 
 @media (max-width: 1200px) { 
@@ -246,6 +359,12 @@ color: #fff;
     margin: 0 auto;
     padding: 0 10vw;  
     padding-top: 3.44rem;
+}
+
+.block5
+{
+    padding:calc(3rem + 3.125vw) 20px;
+    max-width: calc(17rem + 41.67vw);
 }
 
 .h1
