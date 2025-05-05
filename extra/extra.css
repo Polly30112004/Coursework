@@ -145,6 +145,43 @@ color: #fff;
 }
 
 
+
+
+
+
+
+
+
+
+.block4 
+{
+    text-align: center;
+    margin: calc(5.07vw + 3rem) auto;
+    max-width: 580px;
+    padding: 0 1.25rem;
+}
+
+.guarantee-icon {
+    width: 312px;
+    height: auto;
+}
+
+.block4-tittle
+{
+    font-size: 2.5rem;
+    color: #333461;
+    margin: 0 0 calc(1rem + 0.97vw);
+}
+
+.block4 p {
+    font-size: 1.25rem; 
+    color: #4A556C;
+}
+
+
+
+
+
 .block5
 {
     max-width: 900px;
