@@ -134,6 +134,7 @@ color: #fff;
 .block3
 {
     color:#4A556C;
+    margin:calc(3rem + 3.125vw) 0 ;
 }
 
 .h2
@@ -200,6 +201,93 @@ color: #fff;
 
 
 
+.block4 
+{
+    max-width: 900px;
+    width: calc(18.75rem + 41.67vw);
+    padding:calc(3rem + 3.125vw) 50px;
+    margin: 0 auto;
+}
+
+.block4-text
+{
+    
+    text-align: center;
+    margin-bottom: calc(2rem + 2.22vw);
+    font-size: 1.25rem;
+}
+
+.block4-text .h2
+{
+    max-width: 100% !important;
+    margin: 0  0 calc(0.5rem + 0.83vw);
+}
+
+.block4-text span
+{
+    font-size: 1.25rem;
+    color: #4A556C;
+}
+
+.block4-content 
+{
+    margin-bottom: 30px;
+}
+
+.block4-item {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.block4-item summary::-webkit-details-marker,
+.block4-item summary::marker {
+    display: none;
+}
+
+.block4-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    list-style: none;
+}
+
+.block4-question span 
+{
+    font-size: 1.1rem;
+    color: #101828;
+    padding: calc(1rem + 0.625vw) 0;
+}
+
+.block4-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.block4-item[open] .block4-icon 
+{
+    content: url('img/minus.svg');
+}
+
+.block4-answer 
+{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.block4-item[open] .block4-answer {
+    max-height: 500px; 
+}
+
+.block4-answer p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 10px;
+}
+
+
 @media (max-width: 1380px)
 {
     .block1
@@ -247,6 +335,10 @@ color: #fff;
     padding-top: 3.44rem;
 }
 
+.block3
+{
+    padding: 0 10vw;
+}
 .h1
 {
     font-size: calc(2.5rem + 5vw);
