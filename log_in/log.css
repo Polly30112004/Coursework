@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5rem;  
+    font-family: Kumbh Sans;  
+}
+
+.block3
+{
+    text-align: center;
+    padding: 2rem;
+}
+
+.text
+{
+    margin-bottom: calc(3rem + 1.53vw);
+}
+
+.text p
+{
+    color:#4A556C;
+    font-size: 1.125rem;
+    max-width: 33.75rem;
+    margin: calc(1rem + 0.23vw) auto 2.5rem;  
+}
+
+.h2
+{
+    color: #333461 ;
+    font-size: 3rem;   
+    line-height: 3.5rem;
+}
+
+.h2 span
+{
+    font-size: 3rem;  
+    color: #20AD96;
+}
+
+.btn
+{
+width: 15.625rem;
+height: 2.625rem;
+background-color:#20AD96;
+border-radius:10px;
+color: #fff;
+}
+
+.after-text p
+{
+  color: #4A556C;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+@media (max-width: 1200px) { 
+    *
+    {font-size: calc(15px + 0.08vw);}
+    
+
+}
+
+@media (max-width: 1030px) 
+{ 
+    *
+    {font-size: calc( 14px + 0.1vw );}
+
+
+
+
+}
+
+@media (max-width: 768px) { 
+    *
+    {
+        font-size:11.2px;
+    }
+
+
+.h2, .h2 span
+{
+    font-size: calc(0.5rem + 5vw);
+}
+
+
+
+
+}
+
+@media (max-width: 480px) { 
+    *
+    {
+        font-size: 11px;
+    }
+
+
+.h2, .h2 span
+{
+    font-size: calc(0.5rem + 5vw);
+    line-height: normal;
+}
+
+
+}
