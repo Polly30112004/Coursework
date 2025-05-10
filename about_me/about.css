@@ -269,7 +269,7 @@ color: #fff;
 
 .block4-item[open] .block4-icon 
 {
-    content: url('img/minus.svg');
+    content: url('/img/minus.svg');
 }
 
 .block4-answer 

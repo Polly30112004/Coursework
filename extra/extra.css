@@ -306,7 +306,7 @@ color: #fff;
 
 .block5-item[open] .block4-icon 
 {
-    content: url('img/minus.svg');
+    content: url('/img/minus.svg');
 }
 
 .block5-answer 

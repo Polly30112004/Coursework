@@ -414,7 +414,6 @@ gap:calc(1rem + 1.6vw);
     {
         flex-direction: column;
         text-align: center;
-
     }
     .description_for_types_text
     {
