@@ -1,108 +1,164 @@
-.main
-{
+.main {
     width: 90%;
     height: auto;
     margin: auto;
 }
 
-.main span
+.main span 
 {
-    text-align: center;
-    margin: 20px 0;
+    display: flex;
+    text-align: left;
+    margin: 20px calc(100%/3 - 5rem);
     color: #4A556C;
+    max-width: 37.5rem;
+    width: calc(27.5rem + 11.11vw);
 }
 
-.main p 
-{
+.main p {
     color: gray;
 }
 
-.h2
-{
-    font-size: 3.3vw;
+.h2 {
+    font-size: 3.3rem;
     color: #333461;
     line-height: 3.5rem;
+    text-align: center;
 }
 
-#game_over 
-{
+#game_over {
     display: none;
     text-align: center;
-    font-size: 48px;
-    color: red;
+    font-size: 3rem;
+    color: gray;
     margin: 20px 0;
+    position: absolute;
+    max-width: 37.5rem;
+    width: calc(27.5rem + 11.11vw);
+    top: 50px;
+    z-index: 10;
 }
 
-#score 
-{
-    position: relative;
+#score {
+    position: absolute;
     top: 10px;
-    left: 580px;
-    font-size: 24px;
+    right: 10px;
+    font-size: 1.5rem;
     color: gray;
+    margin: 0 0 10px;
 }
 
-
-/*доделать исправление чтоюы нажималаь вся иконка, рестарт отодвигать по мере увеличения счета*/
-#restart
-{
-    position: relative;
+#restart {
+    position: absolute;
     top: 10px;
-    left: auto;
-    font-size: 24px;
-    color: gray;
-    margin: 10px 0;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    transition: left 0.3s;
 }
 
-.game
-{
-width: 600px;
-height: 200px;
-border-bottom: 1px solid  gray;
-margin: auto;
+.game {
+    max-width: 37.5rem;
+    width: calc(27.5rem + 11.11vw);
+    height: 200px;
+    border-bottom: 1px solid gray;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
 }
 
-#dino
-{
+#dino {
     width: 50px;
     height: 50px;
-    background-image: url(dino.png);
+    background-image: url(/img/dino.png);
     background-size: 50px 50px;
     position: relative;
     top: 150px;
 }
 
-#cactus
-{
+#cactus {
     width: 20px;
     height: 40px;
-    background-image: url(cactus.png);
+    background-image: url(/img/cactus.png);
     background-size: 20px 40px;
     position: relative;
     top: 110px;
-    left: 580px;
+    left: calc(27.5rem + 9.72vw);
     animation: CactusMove 1.5s infinite linear;
 }
 
+@keyframes CactusMove {
+    0% { left:  calc(27.5rem + 9.72vw); }
+    100% { left: -20px; }
+}
 
-@keyframes CactusMove 
-{
-  0% { left: 580px;}
-  100% { left: -20px;}   
+.jump {
+    animation: jump 0.3s linear;
+}
+
+@keyframes jump {
+    0% { top: 150px; }
+    30% { top: 130px; }
+    50% { top: 80px; }
+    80% { top: 130px; }
+    100% { top: 150px; }
 }
 
 
-.jump
-{
-    animation: jump 0.3s linear; 
+
+
+@media (max-width: 1200px) { 
+    *
+    {font-size: calc(15px + 0.08vw);}
+    
 }
 
-@keyframes jump 
-{
- 0% { top: 150px;}
- 30% { top: 130px;}
- 50% {top: 80px;}
- 80% {top: 130px;}
- 100% {top: 150px;}
+@media (max-width: 1030px) 
+{ 
+    *
+    {font-size: calc( 14px + 0.1vw );}
 
+}
+
+@media (max-width: 768px) { 
+    *
+    {
+        font-size:11.2px;
+    }
+    
+
+.h2
+{
+    font-size: calc(0.5rem + 5vw);
+}
+
+.main span
+{
+    margin: 20px auto;
+}
+
+}
+
+@media (max-width: 480px) { 
+    *
+    {
+        font-size: 11px;
+    }
+
+
+.h2   
+{
+    font-size: calc(0.5rem + 5vw);
+    line-height: normal;
+}
+
+.game
+{    
+    width: calc(24rem + 8.3vw);
+}
+
+.main span
+{
+    margin: 20px auto;
+    width: calc(23rem + 8.3vw);
+}
 }
