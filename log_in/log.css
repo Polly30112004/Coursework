@@ -55,6 +55,150 @@ color: #fff;
   margin-bottom: 10px;
 }
 
+.block2
+{
+margin: 100px;
+}
+
+.block2 .h2
+{
+    text-align: left;
+    padding-left: 3.125rem;
+}
+
+
+
+/* Карусель */
+.carousel-container {
+    position: relative;
+    padding: 20px 60px;
+}
+
+.carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 20px;
+    padding: 10px 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.testimonial {
+    flex: 0 0 calc(33.333% - 14px);
+    scroll-snap-align: start;
+    padding: 25px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.testimonial-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-style: italic;
+    color: #555;
+}
+
+.client-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.stars {
+    color: #f1c40f;
+    font-size: 1.3rem;
+}
+
+/* Кнопки навигации */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(52, 152, 219, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-btn:hover {
+    background-color: #3498db;
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+
+.arrow-icon {
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .testimonial {
+        flex: 0 0 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .testimonial {
+        flex: 0 0 100%;
+    }
+    
+    .testimonial-text {
+        font-size: 1rem;
+    }
+    
+    .carousel-container {
+        padding: 20px 40px;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .arrow-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
+
+
+
+
 
 
 
