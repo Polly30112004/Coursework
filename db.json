@@ -1,0 +1,197 @@
+{
+  "products": 
+  [
+    {
+      "id": 1,
+      "title": "Personal Growth Consultation",
+      "type": "consultation",
+      "availability_dates": ["2025-06-01T10:00", "2025-06-03T14:00", "2025-06-05T16:00"],
+      "price": 60,
+      "description": "A 45-minute session to identify personal goals and create a tailored action plan.",
+      "additional_info": "One-on-one session with a follow-up email summary.",
+      "image": "/img/consultation1.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Career Path Consultation",
+      "type": "consultation",
+      "availability_dates": ["2025-06-02T11:00", "2025-06-04T15:00", "2025-06-06T09:00"],
+      "price": 50,
+      "description": "Explore career options and develop strategies in a 30-minute session.",
+      "additional_info": "Includes a career roadmap PDF.",
+      "image": "/img/consultation2.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Stress Management Consultation",
+      "type": "consultation",
+      "availability_dates": ["2025-06-07T13:00", "2025-06-09T17:00", "2025-06-11T10:00"],
+      "price": 55,
+      "description": "Learn stress management techniques in a personalized 45-minute session.",
+      "additional_info": "Provides a stress assessment and meditation guide.",
+      "image": "/img/consultation3.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Financial Planning Consultation",
+      "type": "consultation",
+      "availability_dates": ["2025-06-08T12:00", "2025-06-10T16:00", "2025-06-12T14:00"],
+      "price": 70,
+      "description": "Get expert advice on budgeting and financial goals in a 60-minute session.",
+      "additional_info": "Includes a budgeting template.",
+      "image": "/img/consultation4.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Life Transformation Coaching",
+      "type": "coaching",
+      "availability_dates": ["2025-07-01T09:00", "2025-07-03T13:00", "2025-07-05T15:00"],
+      "price": 200,
+      "description": "A 6-week individual coaching program to unlock your full potential.",
+      "additional_info": "Individual sessions, weekly assignments, and email support.",
+      "image": "/img/coaching1.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Leadership Mastery Coaching",
+      "type": "coaching",
+      "availability_dates": ["2025-07-02T10:00", "2025-07-04T14:00", "2025-07-06T16:00"],
+      "price": 250,
+      "description": "An 8-week individual and group coaching program to develop leadership skills.",
+      "additional_info": "Individual_and_group format, includes leadership assessments.",
+      "image": "/img/coaching2.jpg"
+    },
+    {
+      "id": 7,
+      "title": "Productivity Boost Coaching",
+      "type": "coaching",
+      "availability_dates": ["2025-07-07T11:00", "2025-07-09T15:00", "2025-07-11T17:00"],
+      "price": 150,
+      "description": "A 4-week group coaching program to optimize daily habits.",
+      "additional_info": "Group sessions, includes a productivity journal.",
+      "image": "/img/coaching3.jpg"
+    },
+    {
+      "id": 8,
+      "title": "Confidence Building Coaching",
+      "type": "coaching",
+      "availability_dates": ["2025-07-08T12:00", "2025-07-10T16:00", "2025-07-12T10:00"],
+      "price": 180,
+      "description": "A 6-week individual coaching program to build self-confidence.",
+      "additional_info": "Individual sessions, includes confidence exercises.",
+      "image": "/img/coaching4.jpg"
+    },
+    {
+      "id": 9,
+      "title": "Group Motivation Coaching",
+      "type": "coaching",
+      "availability_dates": ["2025-07-13T13:00", "2025-07-15T17:00", "2025-07-17T11:00"],
+      "price": 120,
+      "description": "A 5-week group coaching program to stay motivated and achieve goals.",
+      "additional_info": "Group format, includes access to a private community.",
+      "image": "/img/coaching5.jpg"
+    },
+    {
+      "id": 10,
+      "title": "Relationship Success Coaching",
+      "type": "coaching",
+      "availability_dates": ["2025-07-14T14:00", "2025-07-16T10:00", "2025-07-18T12:00"],
+      "price": 190,
+      "description": "A 6-week individual and group coaching program to improve relationships.",
+      "additional_info": "Individual_and_group format, includes communication templates.",
+      "image": "/img/coaching6.jpg"
+    },
+    {
+      "id": 11,
+      "title": "Mindfulness Coaching",
+      "type": "coaching",
+      "availability_dates": ["2025-07-19T15:00", "2025-07-21T09:00", "2025-07-23T13:00"],
+      "price": 140,
+      "description": "A 4-week individual coaching program to enhance focus and balance.",
+      "additional_info": "Individual sessions, includes mindfulness guides.",
+      "image": "/img/coaching7.jpg"
+    },
+    {
+      "id": 12,
+      "title": "Career Transition Coaching",
+      "type": "coaching",
+      "availability_dates": ["2025-07-20T16:00", "2025-07-22T11:00", "2025-07-24T14:00"],
+      "price": 220,
+      "description": "A 6-week group coaching program for smooth career transitions.",
+      "additional_info": "Group format, includes resume review and interview prep.",
+      "image": "/img/coaching8.jpg"
+    },
+    {
+      "id": 13,
+      "title": "Balancing Your Love and Work Life",
+      "type": "book",
+      "availability_dates": null,
+      "price": 25,
+      "description": "A guide to achieving harmony between personal and professional life.",
+      "additional_info": "E-book, 150 pages, includes printable worksheets.",
+      "image": "/img/1book.jpg"
+    },
+    {
+      "id": 14,
+      "title": "A Short Break from Social Media",
+      "type": "book",
+      "availability_dates": null,
+      "price": 20,
+      "description": "Learn the benefits of a digital detox for better mental health.",
+      "additional_info": "E-book, 120 pages, includes a 7-day detox plan.",
+      "image": "/img/2book.jpg"
+    },
+    {
+      "id": 15,
+      "title": "How to Be 1% Better Every Day",
+      "type": "book",
+      "availability_dates": null,
+      "price": 22,
+      "description": "Small steps for daily improvement and long-term success.",
+      "additional_info": "E-book, 130 pages, includes habit-tracking templates.",
+      "image": "/img/3book.jpg"
+    },
+    {
+      "id": 16,
+      "title": "Mindful Living Made Simple",
+      "type": "book",
+      "availability_dates": null,
+      "price": 18,
+      "description": "A beginner’s guide to mindfulness for greater peace.",
+      "additional_info": "E-book, 100 pages, includes meditation scripts.",
+      "image": "/img/4book.jpg"
+    },
+    {
+      "id": 17,
+      "title": "The Productivity Blueprint",
+      "type": "book",
+      "availability_dates": null,
+      "price": 24,
+      "description": "Master time management with proven strategies.",
+      "additional_info": "E-book, 140 pages, includes a productivity planner.",
+      "image": "/img/5book.jpg"
+    },
+    {
+      "id": 18,
+      "title": "Unleash Your Inner Confidence",
+      "type": "book",
+      "availability_dates": null,
+      "price": 21,
+      "description": "A step-by-step guide to building unshakable confidence.",
+      "additional_info": "E-book, 125 pages, includes confidence exercises.",
+      "image": "/img/6book.jpg"
+    }
+  ],
+
+  "cart": 
+  [],
+
+  "users":
+  [   
+    {
+      "userName": "asdf",
+      "password": "Muvape1234!",
+      "bestScore": "100"
+    }
+  ]
+}
