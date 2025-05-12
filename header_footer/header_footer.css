@@ -19,8 +19,11 @@ justify-content: space-between;
 {
 display: flex;
 gap: 10px;   
-justify-self: start;
-align-items: center; 
+}
+
+.header a
+{
+    align-content: center;
 }
 
 .brand_icon
@@ -32,7 +35,7 @@ width: 25px;
 .brand_name
 {
 font-size: 16px;
-color: #333461;
+color: #333461 !important;
 font-weight: 700;
 }
 
@@ -147,7 +150,8 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
     display: block;
 }
 
-.navigation a {
+.header a 
+{
     color: #4A556C;
     text-decoration: none; 
 }
@@ -227,7 +231,7 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
     font-size: 16px;
 }
 
-.header.active .links, .button-cart
+.header.active .links,.header.active .button-cart
 {
     gap: 20px;
 }
@@ -285,97 +289,72 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
 
 
 
-
 .subscribe-section {
     background-color: #FAF8F6;
-    padding: 48px 0;
-    border-radius: 8px;
+    padding:  calc(1rem + 2.22vw) calc(2rem + 3.33vw);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
 }
 
-.subscribe-text h2 {
+.h2 
+{
     color: #333461;
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-size: 1.875rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
 }
 
 .subscribe-text p {
     color: #4A556C;
     font-size: 16px;
-}
-
-.subscribe-form {
-    display: flex;
-    gap: 16px;
-}
-
-.subscribe-form input[type="email"] {
-    padding: 10px 16px;
-    border: 1px solid #D1D5DB;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #4A556C;
-    background-color: #fff;
-    width: 200px;
-}
-
-.subscribe-form input[type="email"]::placeholder {
-    color: #A0AEC0;
-}
-
-.subscribe-form input[type="email"]:focus {
-    outline: 2px solid #20AD96;
-    outline-offset: 2px;
+    margin-bottom: 16px;
 }
 
 .subscribe-form button {
     background-color: #20AD96;
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px 36px;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     font-size: 16px;
-    font-weight: 700;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.subscribe-form button:hover {
-    background-color: #1A8C77;
-}
-
-.subscribe-form button:focus {
-    outline: 2px solid #333461;
-    outline-offset: 2px;
-}
-
-/* Средняя часть: колонки */
 .footer-columns {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
-    margin-bottom: 40px;
+    padding:  calc(2rem + 2.22vw) calc(2rem + 3.33vw);
 }
 
-.footer-column {
+.footer-brand .brand_name
+{
+    margin-bottom: 16px;;
+}
+.footer-brand span 
+{
+    display: flex;
+    color:#4A556C;
+    opacity: 50%;
+    margin-right: calc(2rem + 2.22vw);
+    margin-bottom: 12px;
+    min-width: 320px;
+}
+.footer-column 
+{
+    max-width: calc(230px + 16.25vw);
+    min-width: 230px;
     flex: 1;
+    padding-right: 2rem;
 }
 
-.footer-column h3 {
+.footer-column h3 
+{
     color: #333461;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 700;
     margin-bottom: 16px;
-}
-
-.footer-column p {
-    color: #4A556C;
-    font-size: 14px;
-    line-height: 1.5;
 }
 
 .footer-column ul {
@@ -384,11 +363,13 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
 
 .footer-column ul li {
     margin-bottom: 12px;
-    font-size: 14px;
+    font-size: 1rem;
     color: #4A556C;
 }
 
-.footer-column ul li a {
+.footer-column ul li a 
+{
+    font-size: 1rem;
     color: #4A556C;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -398,42 +379,29 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
     color: #20AD96;
 }
 
-.footer-column ul li a:focus {
-    outline: 2px solid #20AD96;
-    outline-offset: 2px;
-}
-
-/* Нижняя часть: копирайт и соцсети */
 .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 20px;
-    border-top: 1px solid #E5E7EB;
+    padding-top: calc(1rem + 1.18vw) ;
+    margin:0 calc(2rem + 5.55vw) calc(1rem + 1.18vw);
+    border-top: 1px solid #E4E7EC;
 }
 
-.footer-bottom p {
+.footer-bottom p 
+{
     color: #4A556C;
     font-size: 14px;
 }
 
-.footer-bottom p a {
+.footer-bottom a {
     color: #20AD96;
     text-decoration: none;
 }
 
-.footer-bottom p a:hover {
-    text-decoration: underline;
-}
-
-.footer-bottom p a:focus {
-    outline: 2px solid #20AD96;
-    outline-offset: 2px;
-}
-
 .social-icons {
     display: flex;
-    gap: 16px;
+    gap: 24px;
 }
 
 .social-icons a {
@@ -465,6 +433,30 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
     .ham-menu {
         display: block;
     }
+
+    .footer-columns
+    {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .footer-column
+    {
+       text-align: center; 
+    }
+
+    .footer-brand .brand, .footer-brand span
+    {
+       justify-content: center; 
+       text-align: center;
+       margin-right: 0;
+    }
+    .subscribe-section
+    {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
 }
 
 @media (max-width: 768px) {
@@ -474,7 +466,7 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
 }
 
 @media (max-width: 500px) {
-    .brand 
+    .header .brand 
     {
         display: none;
     }
@@ -482,5 +474,9 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
     .header
     {
        justify-content: end;
+    }
+    .h2
+    {
+        line-height: 20px;
     }
 }
