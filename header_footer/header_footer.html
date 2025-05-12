@@ -7,10 +7,12 @@
 </head>
 <body>
    <header class = "header"  id = "header"> 
-       <div class = "brand">
+    <a href="/home/index.html">
+    <div class = "brand">
         <img src="/img/header_brand.svg" alt="" class = "brand_icon">
-         <p class = "brand_name">Happy Coaching</p>
-       </div>
+        <p class = "brand_name">Happy Coaching</p>
+    </div>
+    </a>
     <div class = "navigation">
         <input type="checkbox" id="theme">
         <label for="theme" class="theme-toggle" >
@@ -30,7 +32,7 @@
         <label for="rus" class="rus">рус</label>
     </div>
     <div class="links">
-         <a href="/home/index.html">Home</a>
+        <a href="/home/index.html">Home</a>
         <a href="/log_in/log.html">Log in</a>
         <a href="/about_me/about.html">About us</a>
         <a href="/extra/extra.html">Extra sales</a>
@@ -53,38 +55,39 @@
  <footer class = "footer" id = "footer">
     <div class="subscribe-section">
     <div class="subscribe-text">
-        <h2>Get notified when I publish new articles</h2>
+        <h2 class = "h2">Get notified when I publish new articles</h2>
         <p>Stay up to date with the latest news, announcements, and articles.</p>
     </div>
     <form class="subscribe-form">
-        <input type="email" placeholder="Enter your email" >
-        <button type="submit">Subscribe</button>
+        <button>Subscribe</button>
     </form>
     </div>
 
 
     <div class="footer-columns">
-    <div class="footer-column">
-        <p>HappyCoaching</p>
-        <p>Design amazing digital experiences that create more happy in the world.</p>
+    <div class="footer-brand">
+        <div class = "brand">
+        <img src="/img/header_brand.svg" alt="" class = "brand_icon">
+        <p class = "brand_name">Happy Coaching</p>
+        </div>
+        <span>Design amazing digital experiences that <br> create more happy in the world.</span>
     </div>
 
     <div class="footer-column">
-        <p>Pages</p>
+        <h3>Pages</h3>
         <ul>
-            <li><a href="home.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="about.html">About us</a></li>
-            <li><a href="extra-salespage.html">Extra Sales/Landingpage</a></li>
-            <li><a href="free-guide.html">Free guide</a></li>
+            <li><a href="/home/index.html">Home</a></li>
+            <li><a href="/log_in/log.html">Log in</a></li>
+            <li><a href="/about_me/about.html">About us</a></li>
+            <li><a href="/extra/extra.html">Extra Sales/Landingpage</a></li>
+            <li><a href="/catalog/catalog.html">Catalog</a></li>
         </ul>
     </div>
 
-    <!-- Колонка 3: контактные данные -->
     <div class="footer-column">
         <h3>Contact</h3>
         <ul>
-            <li>+123 456 789</li>
+            <li>+375 29 44 888</li>
             <li><a href="mailto:hello@happydigital.nl">hello@happydigital.nl</a></li>
             <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
             <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
@@ -93,7 +96,7 @@
 </div>
 
 <div class="footer-bottom">
-    <p>Made with 💙 by <a href="https://happydigital.nl" target="_blank">HappyDigital</a></p>
+   <a href="https://happydigital.nl" target="_blank"> <p>Made with <img src="/img/footer-bottom.svg" alt=""> by HappyDigital</p></a>
     <div class="social-icons">
         <a href="https://linkedin.com" target="_blank">
             <img src="/img/In.png" alt="LinkedIn">
