@@ -297,7 +297,7 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
     align-items: center;
 }
 
-.h2 
+.footer .h2 
 {
     color: #333461;
     font-size: 1.875rem;
@@ -475,7 +475,7 @@ input[type="checkbox"]#visibility:checked + .visibility-toggle .visibility-on {
     {
        justify-content: end;
     }
-    .h2
+    .footer .h2
     {
         line-height: 20px;
     }
