@@ -304,7 +304,7 @@ color: #fff;
     transition: transform 0.3s ease;
 }
 
-.block5-item[open] .block4-icon 
+.block5-item[open] .block5-icon 
 {
     content: url('/img/minus.svg');
 }
@@ -316,7 +316,7 @@ color: #fff;
     transition: max-height 0.5s ease, padding 0.5s ease;
 }
 
-.block5-item[open] .block4-answer {
+.block5-item[open] .block5-answer {
     max-height: 500px; 
 }
 
