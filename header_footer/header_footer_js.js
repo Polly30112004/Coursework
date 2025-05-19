@@ -1,4 +1,41 @@
-fetch('../header_footer/header_footer.html')
+let currentUser = null;
+
+function checkAuth() {
+    const user = localStorage.getItem('currentUser');
+    console.log('Текущий пользователь:', user ? JSON.parse(user) : null); 
+    if (user) {
+        currentUser = JSON.parse(user);
+        return true;
+    }
+    currentUser = null;
+    return false;
+}
+
+// Обновление ссылки Log In/Log Out
+function updateHeader(isLoggedIn) {
+    const authLink = document.getElementById('auth-link');
+    if (authLink) {
+        authLink.innerHTML = ''; 
+        authLink.textContent = isLoggedIn ? 'Log Out' : 'Log In';
+        authLink.href = isLoggedIn ? '#' : '/log_in/log.html';
+        authLink.removeEventListener('click', handleLogout);
+        if (isLoggedIn) {
+            authLink.addEventListener('click', handleLogout);
+        }
+    } else {
+        console.error('Элемент с id="auth-link" не найден в DOM');
+    }
+}
+
+function handleLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem('currentUser');
+    currentUser = null;
+    updateHeader(false);
+    window.location.href = '/log_in/log.html';
+}
+
+fetch('/header_footer/header_footer.html')
     .then(response => response.text())
     .then(data => {
         const parser = new DOMParser();
@@ -15,8 +52,10 @@ fetch('../header_footer/header_footer.html')
         }
 
         initBurgerMenu();
+
+        updateHeader(checkAuth());
     })
-    .catch(error => console.error('Ошибка загрузки:', error));
+    .catch(error => console.error('Ошибка загрузки хедера/футера:', error));
 
 function initBurgerMenu() {
     const hamMenu = document.querySelector('.ham-menu');
@@ -60,7 +99,7 @@ function initBurgerMenu() {
 
     buttonCart.addEventListener('click', (e) => {
         if (e.target.tagName === 'IMG' || e.target === buttonCart) {
-            window.location.href = '/cart/cart.html'; 
+            window.location.href = '/cart/cart.html';
             hamMenu.classList.remove('active');
             header.classList.remove('active');
             buttonCart.classList.remove('active');
@@ -74,5 +113,4 @@ function initBurgerMenu() {
             buttonCart.classList.add('active');
         }
     });
-
 }
