@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900" rel="stylesheet">
+    <link rel="stylesheet" href="catalog.css">
+    <link rel="stylesheet" href="/header_footer/header_footer.css">
+    <link rel="stylesheet" href="/preloader/preloader.css">
+    <link rel="icon" href="/img/header_brand.svg" type="image/svg">
+    <title>Happy Coaching</title>  
+</head>
+<body>
+<div id="preloader" class="preloader">
+        <div class="spinner"></div>
+</div>    
+<header id = "header"></header>
+<main class = "main">
+            <section class="catalog">
+            <div class="catalog-controls">
+                <div class="search">
+                    <input type="text" id="search-input" placeholder="Search by title...">
+                </div>
+                <div class="filter">
+                    <select id="type-filter">
+                        <option value="all">Type</option>
+                        <option value="consultation">Consultation</option>
+                        <option value="coaching">Coaching</option>
+                        <option value="book">Book</option>
+                    </select>
+                </div>
+                <div class="sort">
+                    <select id="sort-options">
+                        <option value="price-asc">Low to high price</option>
+                        <option value="price-desc">High to low price</option>
+                    </select>
+                </div>
+            </div>
+            <div class="cards" id="catalog-cards">
+            </div>
+            <div class="pagination" id="pagination">
+            </div>
+        </section>
+    </main>
+<footer id = "footer"></footer>
+<script src="/header_footer/header_footer_js.js"></script>
+<script src="/preloader/preloader.js"></script>
+<script src = "catalog.js"></script>
+</body>
+</html>
