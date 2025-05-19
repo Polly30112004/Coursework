@@ -27,30 +27,45 @@ server.use(middlewares);
 server.use(async (req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
 
-    // Пропускаем API-запросы
-    if (req.url.startsWith('/products') || req.url.startsWith('/api')) {
+    // Пропускаем API-запросы только если нет расширения файла
+    const urlPath = req.url.split('?')[0];
+    if (
+        (urlPath.startsWith('/products') ||
+         urlPath.startsWith('/users') ||
+         urlPath.startsWith('/cart') ||
+         urlPath.startsWith('/api')) &&
+        !path.extname(urlPath)
+    ) {
+        console.log('Передаём запрос JSON Server:', urlPath);
         return next();
     }
 
     // Нормализуем путь
-    let filePath = path.join(PUBLIC_DIR, req.url === '/' ? 'home/index.html' : req.url);
+    let filePath = path.join(PUBLIC_DIR, urlPath === '/' ? 'home/index.html' : urlPath);
+    console.log('Пытаемся обслужить файл:', filePath); // Диагностика
+
+    // Если путь заканчивается на папку, пробуем найти index.html
+    if (!path.extname(filePath)) {
+        filePath = path.join(filePath, 'index.html');
+    }
 
     const extname = path.extname(filePath).toLowerCase();
     const contentType = mimeTypes[extname] || 'application/octet-stream';
 
     try {
         const content = await fs.readFile(filePath);
+        console.log('Файл найден, отправляем:', filePath);
         res.writeHead(200, { 'Content-Type': contentType });
         res.end(content);
     } catch (error) {
-        console.error(`Error serving ${filePath}:`, error.message);
+        console.error(`Ошибка обслуживания ${filePath}:`, error.message);
         try {
             const notFoundPath = path.join(PUBLIC_DIR, 'page_404/404.html');
             const notFoundContent = await fs.readFile(notFoundPath);
             res.writeHead(404, { 'Content-Type': 'text/html' });
             res.end(notFoundContent);
         } catch (notFoundError) {
-            console.error('Error serving 404:', notFoundError.message);
+            console.error('Ошибка обслуживания 404:', notFoundError.message);
             res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.end('404 Not Found');
         }
