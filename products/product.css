@@ -1,0 +1,100 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5rem;  
+    font-family: 'Kumbh Sans', sans-serif;  
+}
+
+.product-details {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    display: flex;
+    gap: 40px;
+    background-color: var(--card-bg, #fff);
+    border-radius: 10px;
+}
+
+.product-details img {
+    max-width: 400px; /* Уменьшаем размер картинки */
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-info h1 {
+    font-size: 2rem;
+    color: var(--text-color, #333461);
+}
+
+.product-info .info-item {
+    font-size: 1rem;
+    color: var(--secondary-text-color, #4A556C);
+    line-height: 1.6;
+}
+
+.product-info .price {
+    font-size: 1.5rem;
+    color: var(--button-bg, #20AD96);
+    font-weight: bold;
+}
+
+.product-info .description {
+    font-size: 1rem;
+}
+
+.product-info .dates select {
+    padding: 0.5rem;
+    border: 1px solid #4A556C;
+    border-radius: 4px;
+    color: #333461;
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: white;
+    width: 100%;
+    max-width: 300px;
+}
+
+.product-info .add-to-cart {
+    background-color: var(--button-bg, #20AD96);
+    color: var(--button-text, #fff);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: filter 0.3s ease;
+    max-width: 200px;
+}
+
+.product-info .add-to-cart:hover {
+    filter: brightness(90%);
+}
+
+.product-info .add-to-cart img {
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 768px) {
+    .product-details {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-details img {
+        max-width: 400px; /* Картинка не увеличивается при адаптиве */
+        width: 100%;
+    }
+}
