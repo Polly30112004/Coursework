@@ -4,138 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900" rel="stylesheet">
-    <link rel="stylesheet" href="log.css">
+    <link rel="stylesheet" href="/log_in/log.css">
     <link rel="stylesheet" href="/header_footer/header_footer.css">
     <link rel="stylesheet" href="/preloader/preloader.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="icon" href="/img/header_brand.svg" type="image/svg">
     <title>Happy Coaching</title>  
 </head>
 <body>
-    <header id = "header"></header>
+    <header id="header"></header>
     <div id="preloader" class="preloader">
         <div class="spinner"></div>
     </div>
 
-    <main class = "main">
+    <main class="main">
+        <div class="container">
+            <div class="left">
+                <h2 class="h2">Results that speak for themselves</h2>
+                <p>Discover how real progress and clear outcomes can boost your confidence and drive lasting change.</p>
+                <form id="loginForm">
+                    <input type="text" id="name" placeholder="Name" required />
+                    <input type="password" id="password" placeholder="Password" required />
+                    <p><a href="/registration/registration.html">Create a new account</a></p>
+                    <button type="submit" class="btn">Log in</button>
+                </form>
+            </div>
+            <div class="right">
+                <div class="circle">Free guide!</div>
+                <div class="card">
+                    <img src="/img/transsform_life.png" alt="Transform Your Life" />
+                </div>
+            </div>
+        </div>
 
-    <div class="block2">
+
+ <div class="block2">
+    <div class="comments-container">
         <h2 class="h2">Hear out what my <br>clients say about me.</h2>
-        <div class="carousel-container">
-            <button class="carousel-btn prev">
-                <img src="/img/arrow_circle_left.png" alt="Previous" class="arrow-icon">
-            </button>
-            <div class="carousel">
-                <div class="testimonial">
-                    <p class="testimonial-text">"Working with this professional completely transformed my approach to networking. I gained so much confidence in my ability to connect with people."</p>
-                    <p class="client-name">Jane</p>
-                    <img src="/img/user1.jpg" alt="">
-                    <div class="stars">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                    </div>                
-                </div>
-                <div class="testimonial">
-                    <p class="testimonial-text">"The guidance I received helped me break through my communication barriers. Now I approach every conversation with clarity and purpose."</p>
-                    <p class="client-name">Michelle</p>
-                    <img src="/img/user2.jpg" alt="">                    
-                    <div class="stars">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/nostar.svg" alt="">
-                    </div>
-                </div>
-                
-                <div class="testimonial">
-                    <p class="testimonial-text">"I never realized how much my self-doubt was holding me back until these coaching sessions. The tools I learned have been invaluable."</p>
-                    <p class="client-name">Sarah</p>
-                    <img src="/img/user3.jpg" alt="">                    
-                    <div class="stars">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                    </div>
-                </div>
-                
-                <div class="testimonial">
-                    <p class="testimonial-text">"From the first session, I felt understood and supported. My social anxiety decreased significantly after just a few meetings."</p>
-                    <p class="client-name">David</p>
-                    <img src="/img/user4.jpg" alt="">
-                    <div class="stars">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/nostar.svg" alt="">
-                    </div>
-                </div>
-                
-                <div class="testimonial">
-                    <p class="testimonial-text">"The transformation in my communication skills has been remarkable. I've received multiple compliments at work about my new confidence."</p>
-                    <p class="client-name">Emily</p>
-                    <img src="/img/user5.jpg" alt="">
-                    <div class="stars">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                    </div>
-                </div>
-                
-                <div class="testimonial">
-                    <p class="testimonial-text">"These techniques helped me negotiate a better salary and improve my relationships with colleagues. Worth every penny!"</p>
-                    <p class="client-name">Robert</p>
-                    <img src="/img/user6.jpg" alt="">
-                    <div class="stars">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                       <img src="/img/star.svg" alt="">
-                    </div>
-                </div>
+        
+        <div class="slider-controls">
+            <button class="slider-btn prev-btn"></button>
+            <div class="comments-slider">
+                <div class="swiper-wrapper"></div>
             </div>
-            
-            <button class="carousel-btn next">
-                <img src="/img/arrow_circle_right_24dp_333461_FILL0_wght400_GRAD0_opsz24.png" alt="Next" class="arrow-icon">
-            </button>
+            <button class="slider-btn next-btn"></button>
         </div>
     </div>
-     
-    
+</div>
 
-
-
-    <div class="block3">
-       <div class="text">
-           <h2 class = "h2">Don’t miss out on my <span>‘Live life at <br>the full potential’</span> free guide</h2>
-           <p>Get my free ‘Live life at the full potential’ guide! It’s packed with a simple 3-step method to overcome obstacles, boost productivity, and achieve your dreams. Start your transformation today—download now!
-           </p>
-           <button class = "btn">Download my free guide</button>          
-        </div>
-        <div class="after-text">
-            <p>More than 100+ 5 star reviews</p>
-           <div class="stars">    
-               <img src="/img/star.svg" alt="">
-               <img src="/img/star.svg" alt="">
-               <img src="/img/star.svg" alt="">
-               <img src="/img/star.svg" alt="">
-               <img src="/img/star.svg" alt="">
+        <div class="block3">
+            <div class="text">
+                <h2 class="h2">Don’t miss out on my <span>‘Live life at <br>the full potential’</span> free guide</h2>
+                <p>Get my free ‘Live life at the full potential’ guide! It’s packed with a simple 3-step method to overcome obstacles, boost productivity, and achieve your dreams. Start your transformation today—download now!</p>
+                <button class="btn">Download my free guide</button>          
+            </div>
+            <div class="after-text">
+                <p>More than 100+ 5 star reviews</p>
+                <div class="stars">    
+                    <img src="/img/star.svg" alt="">
+                    <img src="/img/star.svg" alt="">
+                    <img src="/img/star.svg" alt="">
+                    <img src="/img/star.svg" alt="">
+                    <img src="/img/star.svg" alt="">
+                </div>
             </div>
         </div>
-    </div>
-
-</main>
-<footer id = "footer"></footer>
-<script src="/log_in/log.js"></script>
-<script src = "/header_footer/header_footer_js.js"></script>
-<script src="/preloader/preloader.js"></script>
+    </main>
+    <footer id="footer"></footer>
+    <script src="/log_in/log.js"></script>
+    <script src="/header_footer/header_footer_js.js"></script>
+    <script src="/preloader/preloader.js"></script>
+    <script src="slider.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>
