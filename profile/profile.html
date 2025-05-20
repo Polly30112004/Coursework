@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900" rel="stylesheet">
+    <link rel="stylesheet" href="/profile/profile.css">
+    <link rel="stylesheet" href="/header_footer/header_footer.css">
+    <link rel="stylesheet" href="/preloader/preloader.css">
+    <link rel="icon" href="/img/header_brand.svg" type="image/svg">
+    <title>Happy Coaching - Profile</title>
+</head>
+<body>
+<div id="preloader" class="preloader">
+    <div class="spinner"></div>
+</div>
+<header id="header"></header>
+<main class="main">
+    <section class="profile">
+        <h1>Your Profile</h1>
+        <form id="profile-form">
+            <div class="form-group">
+                <label for="phone">Phone Number<span class="required">*</span></label>
+                <input type="tel" id="phone" placeholder="+375 XX XXX XX XX" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email<span class="required">*</span></label>
+                <input type="email" id="email" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Date of Birth<span class="required">*</span></label>
+                <input type="date" id="birthdate" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="first-name">First Name<span class="required">*</span></label>
+                <input type="text" id="first-name" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name<span class="required">*</span></label>
+                <input type="text" id="last-name" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="middle-name">Middle Name</label>
+                <input type="text" id="middle-name">
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="card-number">Card Number<span class="required">*</span></label>
+                <input type="text" id="card-number" maxlength="19" placeholder="1234 5678 9012 3456" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="card-expiry">Expiry Date<span class="required">*</span></label>
+                <input type="text" id="card-expiry" maxlength="5" placeholder="MM/YY" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="card-cvv">CVV<span class="required">*</span></label>
+                <input type="text" id="card-cvv" maxlength="3" placeholder="123" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="username">Username<span class="required">*</span></label>
+                <input type="text" id="username" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label>Password Method<span class="required">*</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="password-method" value="manual" checked> Manual</label>
+                    <label><input type="radio" name="password-method" value="auto"> Auto-generated</label>
+                </div>
+            </div>
+            <div class="form-group password-group" id="manual-password">
+                <label for="password">Password<span class="required">*</span></label>
+                <input type="text" id="password" required>
+                <span class="error-message"></span>
+                <label for="confirm-password">Confirm Password<span class="required">*</span></label>
+                <input type="text" id="confirm-password" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group password-group" id="auto-password" style="display: none;">
+                <label>Generated Password</label>
+                <input type="text" id="generated-password" readonly>
+                <button type="button" id="regenerate-password">Regenerate</button>
+            </div>
+            <button type="button" id="save-btn" style="display: none;">Save</button>
+            <div id="confirm-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">×</span>
+                    <h2>Confirm Changes</h2>
+                    <p>Are you sure you want to save the changes to your profile?</p>
+                    <button type="button" id="confirm-save" class="modal-button">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
+<footer id="footer"></footer>
+<script src="/header_footer/header_footer_js.js"></script>
+<script src="/preloader/preloader.js"></script>
+<script type="module" src="/profile/profile.js"></script>
+</body>
+</html>
