@@ -2,18 +2,20 @@ let currentUser = null;
 
 function checkAuth() {
     const user = localStorage.getItem('currentUser');
-    console.log('Текущий пользователь:', user ? JSON.parse(user) : null); 
     if (user) {
         currentUser = JSON.parse(user);
+        console.log('Текущий пользователь:', currentUser); 
         return true;
     }
     currentUser = null;
     return false;
 }
 
-// Обновление ссылки Log In/Log Out
 function updateHeader(isLoggedIn) {
     const authLink = document.getElementById('auth-link');
+    const profileLink = document.getElementById('profile-link');
+    const cartIconWrapper = document.querySelector('.cart-icon-wrapper');
+    
     if (authLink) {
         authLink.innerHTML = ''; 
         authLink.textContent = isLoggedIn ? 'Log Out' : 'Log In';
@@ -22,8 +24,43 @@ function updateHeader(isLoggedIn) {
         if (isLoggedIn) {
             authLink.addEventListener('click', handleLogout);
         }
-    } else {
-        console.error('Элемент с id="auth-link" не найден в DOM');
+    }
+
+    if (profileLink) {
+        if (isLoggedIn) {
+            profileLink.style.display = 'block';
+            profileLink.href = '/profile/profile.html';
+            profileLink.textContent = 'Profile';
+        } else {
+            profileLink.style.display = 'none';
+        }
+    }
+
+    if (cartIconWrapper) {
+        const badge = cartIconWrapper.querySelector('.cart-badge');
+        if (isLoggedIn && currentUser && currentUser.userName) { // Используем userName
+            fetch(`http://localhost:3000/cart?userName=${currentUser.userName}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка при запросе корзины');
+                    }
+                    return response.json();
+                })
+                .then(cartItems => {
+                    console.log('Товары в корзине для пользователя', currentUser.userName, ':', cartItems); // Для отладки
+                    const cartCount = cartItems.length; 
+                    badge.textContent = cartCount;
+                    badge.setAttribute('data-count', cartCount);
+                })
+                .catch(error => {
+                    console.error('Ошибка проверки корзины:', error);
+                    badge.textContent = '0';
+                    badge.setAttribute('data-count', '0');
+                });
+        } else {
+            badge.textContent = '0';
+            badge.setAttribute('data-count', '0');
+        }
     }
 }
 
@@ -33,6 +70,31 @@ function handleLogout(e) {
     currentUser = null;
     updateHeader(false);
     window.location.href = '/log_in/log.html';
+}
+
+function showNotification(message) {
+    let notification = document.querySelector('.notification');
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerHTML = `
+            <span>${message}</span>
+            <button class="close-notification">×</button>
+        `;
+        document.body.appendChild(notification);
+    } else {
+        notification.querySelector('span').textContent = message;
+        notification.style.display = 'flex';
+    }
+
+    const closeButton = notification.querySelector('.close-notification');
+    closeButton.addEventListener('click', () => {
+        notification.style.display = 'none';
+    });
+
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
 }
 
 fetch('/header_footer/header_footer.html')
@@ -52,8 +114,9 @@ fetch('/header_footer/header_footer.html')
         }
 
         initBurgerMenu();
-
-        updateHeader(checkAuth());
+        initFooterSubscription();
+        const isLoggedIn = checkAuth();
+        updateHeader(isLoggedIn);
     })
     .catch(error => console.error('Ошибка загрузки хедера/футера:', error));
 
@@ -113,4 +176,14 @@ function initBurgerMenu() {
             buttonCart.classList.add('active');
         }
     });
+}
+
+function initFooterSubscription() {
+    const subscribeButton = document.querySelector('.subscribe-form button');
+    if (subscribeButton) {
+        subscribeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            showNotification('Subscription successful! You will receive updates soon.');
+        });
+    }
 }
