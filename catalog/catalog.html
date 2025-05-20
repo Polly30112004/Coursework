@@ -12,39 +12,59 @@
 </head>
 <body>
 <div id="preloader" class="preloader">
-        <div class="spinner"></div>
+    <div class="spinner"></div>
 </div>    
-<header id = "header"></header>
-<main class = "main">
-            <section class="catalog">
-            <div class="catalog-controls">
-                <div class="search">
-                    <input type="text" id="search-input" placeholder="Search by title...">
-                </div>
-                <div class="filter">
-                    <select id="type-filter">
-                        <option value="all">Type</option>
-                        <option value="consultation">Consultation</option>
-                        <option value="coaching">Coaching</option>
-                        <option value="book">Book</option>
-                    </select>
-                </div>
-                <div class="sort">
-                    <select id="sort-options">
-                        <option value="price-asc">Low to high price</option>
-                        <option value="price-desc">High to low price</option>
-                    </select>
+<header id="header"></header>
+<main class="main">
+    <section class="catalog">
+        <div class="catalog-controls">
+            <div class="price-filter">
+                <label class="price-filter-label">Price</label>
+                <div class="price-filter-dropdown">
+                    <div class="price-filter-form">
+                        <div class="form-group">
+                            <label for="min-price">Min ($)</label>
+                            <input type="number" id="min-price" min="0" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="max-price">Max ($)</label>
+                            <input type="number" id="max-price" min="0" step="1">
+                        </div>
+                        <button id="apply-price-filter">Apply</button>
+                        <button id="reset-price-filter">Reset</button>
+                    </div>
                 </div>
             </div>
-            <div class="cards" id="catalog-cards">
+            <div class="filter">
+                <select id="type-filter">
+                    <option value="all">All</option>
+                    <option value="consultation">Consultation</option>
+                    <option value="individual coaching">Individual Coaching</option>
+                    <option value="group coaching">Group Coaching</option>
+                    <option value="book">Book</option>
+                </select>
             </div>
-            <div class="pagination" id="pagination">
+            <div class="sort">
+                <select id="sort-options">
+                    <option value="price-asc">Low to high price</option>
+                    <option value="price-desc">High to low price</option>
+                    <option value="date-desc">Newest to oldest date</option>
+                    <option value="date-asc">Oldest to newest date</option>
+                </select>
             </div>
-        </section>
-    </main>
-<footer id = "footer"></footer>
+            
+            <div class="search">
+                <input type="text" id="search-input" placeholder="Search by title...">
+            </div>
+        </div>
+        
+        <div class="cards" id="catalog-cards"></div>
+        <div class="pagination" id="pagination"></div>
+    </section>
+</main>
+<footer id="footer"></footer>
 <script src="/header_footer/header_footer_js.js"></script>
 <script src="/preloader/preloader.js"></script>
-<script src = "catalog.js"></script>
+<script src="catalog.js"></script>
 </body>
 </html>

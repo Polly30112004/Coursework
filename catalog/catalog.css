@@ -1,14 +1,7 @@
 .catalog {
-    padding: 2rem calc(20px + 3.125vw);
-    max-width: 1200px;
+    padding: 2rem 1rem;
+    max-width: 1440px;
     margin: 0 auto;
-}
-
-.catalog-title {
-    color: #333461;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
 }
 
 .catalog-controls {
@@ -25,52 +18,163 @@
     border: 1px solid #4A556C;
     border-radius: 4px;
     width: 200px;
+    color: #333461;
+    font-family: 'Kumbh Sans', sans-serif;
 }
 
-.filter, .sort {
+.search input::placeholder {
+    color: #4A556C;
+}
+
+.filter, .sort, .price-filter {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.filter label, .sort label {
+.price-filter-label {
     color: #333461;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .filter select, .sort select {
     padding: 0.5rem;
     border: 1px solid #4A556C;
     border-radius: 4px;
+    color: #333461;
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: white;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+    appearance: menulist;
+}
+
+.filter select option, .sort select option {
+    color: #333461;
+    background-color: white;
+}
+
+.price-filter {
+    position: relative;
+}
+
+.price-filter-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #4A556C;
+    border-radius: 4px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.price-filter:hover .price-filter-dropdown {
+    display: block;
+}
+
+.price-filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 200px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: #333461;
+}
+
+.form-group input {
+    padding: 0.3rem;
+    border: 1px solid #4A556C;
+    border-radius: 4px;
+    width: 100%;
+    color: #333461;
+    font-family: 'Kumbh Sans', sans-serif;
+}
+
+.price-filter-form button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.price-filter-form #apply-price-filter {
+    background-color: #20AD96;
+    color: white;
+}
+
+.price-filter-form #apply-price-filter:hover {
+    background-color: #218838;
+}
+
+.price-filter-form #reset-price-filter {
+    background-color: #ccc;
+    color: #333;
+}
+
+.price-filter-form #reset-price-filter:hover {
+    background-color: #bbb;
 }
 
 .cards {
-    display: flex;
-    justify-content: center;
-    gap: calc(1rem + 1.6vw);
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+}
+
+@media (max-width: 400px) {
+    .cards {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding: 0;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 285px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .card {
     color: #4A556C;
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+    width: 300px;
+    height: 350px;
+    position: relative;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
-    height: 100%;
-    max-height: 376px;
-    max-width: 22.5rem;
-    min-width: 300px;
-    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .card img {
-    height: 130px;
+    height: 150px;
     width: 100%;
     object-fit: cover;
 }
 
 .card_text {
-    padding: 1.5rem 1.75rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -79,24 +183,37 @@
 .card h3 {
     color: #333461 !important;
     margin-bottom: 0.75rem;
-    line-height: 2rem;
+    line-height: 1.5rem;
     font-size: 1.25rem;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
 }
 
 .card_text span.description {
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    display: box;
     -webkit-box-orient: vertical;
+    box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 1rem;
     flex-grow: 1;
+    font-size: 0.9rem;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
 }
 
 .card_text .price {
     font-weight: 700;
     color: #20AD96;
     margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .card_text .add-to-cart {
@@ -114,6 +231,7 @@
 .pagination {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 0.5rem;
     margin-top: 2rem;
 }
@@ -136,4 +254,9 @@
 .pagination button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.pagination .ellipsis {
+    padding: 0.5rem;
+    color: #4A556C;
 }
