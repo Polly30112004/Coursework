@@ -26,7 +26,7 @@
     color: #4A556C;
 }
 
-.filter, .sort, .price-filter {
+.filter, .sort, .price-filter, .admin-add {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -216,14 +216,14 @@
     font-size: 1.1rem;
 }
 
-.card_text .add-to-cart {
+.card_text .add-to-cart, .card_text .delete-product {
     position: absolute;
     bottom: 1rem;
     right: 1rem;
     cursor: pointer;
 }
 
-.card_text .add-to-cart img {
+.card_text .add-to-cart img, .card_text .delete-product img {
     width: 24px;
     height: 24px;
 }
@@ -259,4 +259,92 @@
 .pagination .ellipsis {
     padding: 0.5rem;
     color: #4A556C;
+}
+
+/* Стили для кнопки Add */
+.admin-add button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #20AD96;
+    color: white;
+    font-family: 'Kumbh Sans', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-add button:hover {
+    background-color: #218838;
+}
+
+/* Стили для модального окна */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Kumbh Sans', sans-serif;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #4A556C;
+}
+
+.modal-content p {
+    color: #333461;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.modal-buttons button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Kumbh Sans', sans-serif;
+}
+
+#modal-confirm {
+    background-color: #20AD96;
+    color: white;
+}
+
+#modal-confirm:hover {
+    background-color: #218838;
+}
+
+#modal-cancel {
+    background-color: #ccc;
+    color: #333;
+}
+
+#modal-cancel:hover {
+    background-color: #bbb;
 }

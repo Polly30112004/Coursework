@@ -52,19 +52,32 @@
                     <option value="date-asc">Oldest to newest date</option>
                 </select>
             </div>
-            
             <div class="search">
                 <input type="text" id="search-input" placeholder="Search by title...">
             </div>
+            <div class="admin-add" id="admin-add" style="display: none;">
+                <button id="add-product-btn">Add</button>
+            </div>
         </div>
-        
         <div class="cards" id="catalog-cards"></div>
         <div class="pagination" id="pagination"></div>
     </section>
+    <!-- Модальное окно -->
+    <div id="delete-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close">×</span>
+            <p id="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="modal-confirm" style="display: none;">Yes</button>
+                <button id="modal-cancel">Close</button>
+            </div>
+        </div>
+    </div>
 </main>
 <footer id="footer"></footer>
-<script src="/header_footer/header_footer_js.js"></script>
 <script src="/preloader/preloader.js"></script>
+<script type="module" src="/header_footer/language-switcher.js"></script>
+<script type="module" src="/header_footer/header_footer_js.js"></script>
 <script src="catalog.js"></script>
 </body>
 </html>

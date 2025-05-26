@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let products = [];
-    let filteredProducts = [];
     let currentPage = 1;
     const itemsPerPage = 6;
     let currentUser = null;
     let priceFilter = { min: null, max: null };
+    let pendingDeleteProductId = null;
 
     function checkAuth() {
         const user = localStorage.getItem('currentUser');
@@ -15,92 +14,186 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
+    function isAdmin() {
+        return currentUser && currentUser.userName === 'Admin';
+    }
+
     if (!checkAuth()) {
         window.location.href = '/log_in/log.html';
         return;
     }
 
-    fetch('http://localhost:3000/products')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Не удалось загрузить товары: ${response.status}`);
+    // Clear admin's cart on login
+    if (isAdmin()) {
+        fetch(`http://localhost:3000/cart?userName=Admin`)
+            .then(response => response.json())
+            .then(cartItems => {
+                const deletePromises = cartItems.map(item =>
+                    fetch(`http://localhost:3000/cart/${item.id}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                );
+                return Promise.all(deletePromises);
+            })
+            .then(() => {
+                updateHeader(true);
+            })
+            .catch(error => console.error('Error clearing admin cart:', error));
+
+        const adminAdd = document.getElementById('admin-add');
+        if (adminAdd) {
+            adminAdd.style.display = 'block';
+            const addButton = document.getElementById('add-product-btn');
+            if (addButton) {
+                addButton.addEventListener('click', () => {
+                    window.location.href = '/products/product.html';
+                });
             }
-            return response.json();
-        })
-        .then(data => {
-            products = data;
-            filteredProducts = [...products];
-            applyFiltersAndSort();
-            renderCatalog();
-            setupEventListeners();
-        })
-        .catch(error => {
-            console.error('Ошибка загрузки товаров:', error);
-            const catalogCards = document.getElementById('catalog-cards');
-            if (catalogCards) {
-                catalogCards.innerHTML = '<p>Ошибка загрузки товаров. Попробуйте позже.</p>';
-            }
-        });
-
-    function applyFiltersAndSort() {
-        const searchQuery = document.getElementById('search-input')?.value.toLowerCase() || '';
-        filteredProducts = products.filter(product =>
-            product.title.toLowerCase().includes(searchQuery)
-        );
-
-        // Фильтрация по типу
-        const typeFilter = document.getElementById('type-filter')?.value || 'all';
-        if (typeFilter !== 'all') {
-            filteredProducts = filteredProducts.filter(product => product.type === typeFilter);
-        }
-
-        // Фильтрация по цене
-        if (priceFilter.min !== null) {
-            filteredProducts = filteredProducts.filter(product => product.price >= priceFilter.min);
-        }
-        if (priceFilter.max !== null) {
-            filteredProducts = filteredProducts.filter(product => product.price <= priceFilter.max);
-        }
-
-        // Сортировка
-        const sortBy = document.getElementById('sort-options')?.value || 'price-asc';
-        if (sortBy === 'price-asc') {
-            filteredProducts.sort((a, b) => a.price - b.price);
-        } else if (sortBy === 'price-desc') {
-            filteredProducts.sort((a, b) => b.price - a.price);
-        } else if (sortBy === 'date-desc') {
-            filteredProducts.sort((a, b) => {
-                const dateA = a.availability_dates ? new Date(a.availability_dates[0]) : new Date('9999-12-31');
-                const dateB = b.availability_dates ? new Date(b.availability_dates[0]) : new Date('9999-12-31');
-                return dateB - dateA;
-            });
-        } else if (sortBy === 'date-asc') {
-            filteredProducts.sort((a, b) => {
-                const dateA = a.availability_dates ? new Date(a.availability_dates[0]) : new Date('9999-12-31');
-                const dateB = b.availability_dates ? new Date(b.availability_dates[0]) : new Date('9999-12-31');
-                return dateA - dateB;
-            });
         }
     }
 
-    function renderCatalog() {
+    // Load saved filters from localStorage
+   // Исправленная функция loadFilters
+function loadFilters() {
+    const savedFilters = localStorage.getItem('catalogFilters');
+    if (savedFilters) {
+        try {
+            const filters = JSON.parse(savedFilters);
+            currentPage = filters.currentPage || 1;
+            
+            // Безопасное получение priceFilter
+            priceFilter = {
+                min: (filters.priceFilter && filters.priceFilter.min !== undefined) ? filters.priceFilter.min : null,
+                max: (filters.priceFilter && filters.priceFilter.max !== undefined) ? filters.priceFilter.max : null
+            };
+
+            const searchInput = document.getElementById('search-input');
+            const typeFilter = document.getElementById('type-filter');
+            const sortOptions = document.getElementById('sort-options');
+            const minPriceInput = document.getElementById('min-price');
+            const maxPriceInput = document.getElementById('max-price');
+
+            if (searchInput && filters.searchQuery !== undefined) {
+                searchInput.value = filters.searchQuery;
+            }
+            if (typeFilter && filters.typeFilter) {
+                typeFilter.value = filters.typeFilter;
+            }
+            if (sortOptions && filters.sortBy) {
+                sortOptions.value = filters.sortBy;
+            }
+            if (minPriceInput && priceFilter.min !== null) {
+                minPriceInput.value = priceFilter.min;
+            }
+            if (maxPriceInput && priceFilter.max !== null) {
+                maxPriceInput.value = priceFilter.max;
+            }
+        } catch (e) {
+            console.error('Error parsing saved filters:', e);
+            // В случае ошибки сбросим фильтры
+            localStorage.removeItem('catalogFilters');
+            priceFilter = { min: null, max: null };
+        }
+    }
+}
+
+    // Save filters to localStorage
+    function saveFilters() {
+        const filters = {
+            searchQuery: document.getElementById('search-input')?.value || '',
+            typeFilter: document.getElementById('type-filter')?.value || 'all',
+            sortBy: document.getElementById('sort-options')?.value || 'price-asc',
+            priceFilter: {
+                min: priceFilter.min,
+                max: priceFilter.max
+            },
+            currentPage: currentPage
+        };
+        localStorage.setItem('catalogFilters', JSON.stringify(filters));
+    }
+
+    function fetchProducts() {
+        const searchQuery = document.getElementById('search-input')?.value.toLowerCase() || '';
+        const typeFilter = document.getElementById('type-filter')?.value || 'all';
+        const sortBy = document.getElementById('sort-options')?.value || 'price-asc';
+
+        const params = new URLSearchParams();
+        if (searchQuery) params.append('title_like', searchQuery);
+        if (typeFilter !== 'all') params.append('type', typeFilter);
+        if (priceFilter.min !== null) params.append('price_gte', priceFilter.min);
+        if (priceFilter.max !== null) params.append('price_lte', priceFilter.max);
+
+        if (sortBy === 'price-asc') {
+            params.append('_sort', 'price');
+            params.append('_order', 'asc');
+        } else if (sortBy === 'price-desc') {
+            params.append('_sort', 'price');
+            params.append('_order', 'desc');
+        } else if (sortBy === 'date-asc') {
+            params.append('_sort', 'availability_dates');
+            params.append('_order', 'asc');
+        } else if (sortBy === 'date-desc') {
+            params.append('_sort', 'availability_dates');
+            params.append('_order', 'desc');
+        }
+
+        params.append('_page', currentPage);
+        params.append('_limit', itemsPerPage);
+
+        console.log('Fetching products with params:', params.toString());
+
+        fetch(`http://localhost:3000/products?${params.toString()}`)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                return response.json();
+            })
+            .then(products => {
+                console.log('Received products:', products);
+                const countParams = new URLSearchParams(params);
+                countParams.delete('_page');
+                countParams.delete('_limit');
+                return fetch(`http://localhost:3000/products?${countParams.toString()}`)
+                    .then(countResponse => {
+                        if (!countResponse.ok) throw new Error(`HTTP error: ${countResponse.status}`);
+                        return countResponse.json();
+                    })
+                    .then(countData => ({ products, totalItems: countData.length }));
+            })
+            .then(({ products, totalItems }) => {
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+                console.log('Total items:', totalItems, 'Total pages:', totalPages);
+                renderCatalog(products, totalPages);
+            })
+            .catch(error => {
+                console.error('Error loading products:', error);
+                showModal('Failed to load products. Please check your server connection.');
+            });
+    }
+
+    // Load filters and fetch products
+    loadFilters();
+    fetchProducts();
+    setupEventListeners();
+
+    function renderCatalog(products, totalPages) {
         const catalogCards = document.getElementById('catalog-cards');
         if (!catalogCards) {
-            console.error('Элемент с id="catalog-cards" не найден в DOM');
+            console.error('Element with id="catalog-cards" not found in DOM');
+            showModal('Failed to display catalog.');
             return;
         }
         catalogCards.innerHTML = '';
 
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const paginatedProducts = filteredProducts.slice(start, end);
+        console.log('Products to render:', products);
 
-        if (paginatedProducts.length === 0) {
-            catalogCards.innerHTML = '<p>Товары не найдены.</p>';
+        if (!products || products.length === 0) {
+            console.log('No products to display');
+            catalogCards.innerHTML = '<p>No products found.</p>';
             return;
         }
 
-        paginatedProducts.forEach(product => {
+        products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'card';
             card.dataset.id = product.id;
@@ -110,26 +203,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3>${product.title}</h3>
                     <span class="description">${product.description}</span>
                     <span class="price">$${product.price}</span>
-                    <div class="add-to-cart" data-id="${product.id}">
-                        <img src="/img/shopping_basket.png" alt="Add to Cart">
-                    </div>
+                    ${
+                        isAdmin()
+                            ? `<div class="delete-product" data-id="${product.id}">
+                                 <img src="/img/close.svg" alt="Delete Product">
+                               </div>`
+                            : `<div class="add-to-cart" data-id="${product.id}">
+                                 <img src="/img/shopping_basket.png" alt="Add to Cart">
+                               </div>`
+                    }
                 </div>
             `;
             catalogCards.appendChild(card);
         });
 
-        renderPagination();
+        renderPagination(totalPages);
     }
 
-    function renderPagination() {
+    function renderPagination(totalPages) {
         const pagination = document.getElementById('pagination');
         if (!pagination) {
-            console.error('Элемент с id="pagination" не найден в DOM');
+            console.error('Element with id="pagination" not found in DOM');
             return;
         }
         pagination.innerHTML = '';
 
-        const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
         if (totalPages <= 1) return;
 
         const prevButton = document.createElement('button');
@@ -138,7 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
         prevButton.addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             }
         });
         pagination.appendChild(prevButton);
@@ -156,7 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
             firstPageButton.textContent = '1';
             firstPageButton.addEventListener('click', () => {
                 currentPage = 1;
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             });
             pagination.appendChild(firstPageButton);
 
@@ -174,7 +274,8 @@ document.addEventListener('DOMContentLoaded', () => {
             pageButton.className = i === currentPage ? 'active' : '';
             pageButton.addEventListener('click', () => {
                 currentPage = i;
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             });
             pagination.appendChild(pageButton);
         }
@@ -191,7 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
             lastPageButton.textContent = totalPages;
             lastPageButton.addEventListener('click', () => {
                 currentPage = totalPages;
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             });
             pagination.appendChild(lastPageButton);
         }
@@ -202,10 +304,38 @@ document.addEventListener('DOMContentLoaded', () => {
         nextButton.addEventListener('click', () => {
             if (currentPage < totalPages) {
                 currentPage++;
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             }
         });
         pagination.appendChild(nextButton);
+    }
+
+    function showModal(message, isConfirm = false, productId = null) {
+        const modal = document.getElementById('delete-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const confirmButton = document.getElementById('modal-confirm');
+        const cancelButton = document.getElementById('modal-cancel');
+
+        if (!modal || !modalMessage || !cancelButton) {
+            console.error('Modal elements not found');
+            return;
+        }
+
+        modalMessage.textContent = message;
+        confirmButton.style.display = isConfirm ? 'block' : 'none';
+        cancelButton.textContent = isConfirm ? 'Cancel' : 'Close';
+        pendingDeleteProductId = isConfirm ? productId : null;
+
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('delete-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            pendingDeleteProductId = null;
+        }
     }
 
     function addToCart(productId) {
@@ -213,12 +343,14 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = '/log_in/log.html';
             return;
         }
+        if (isAdmin()) {
+            showModal('Admin cannot add products to cart.');
+            return;
+        }
 
         fetch(`http://localhost:3000/products/${productId}`)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Не удалось загрузить данные о товаре');
-                }
+                if (!response.ok) throw new Error('Failed to load product data');
                 return response.json();
             })
             .then(product => {
@@ -241,23 +373,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 return fetch('http://localhost:3000/cart', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(cartItem)
                 });
             })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Не удалось добавить товар в корзину');
-                }
+                if (!response.ok) throw new Error('Failed to add product to cart');
                 return response.json();
             })
             .then(() => {
                 updateHeader(true);
             })
             .catch(error => {
-                console.error('Ошибка добавления в корзину:', error);
+                console.error('Error adding to cart:', error);
+                showModal('Failed to add product to cart. Please try again.');
+            });
+    }
+
+    function deleteProduct(productId) {
+        if (!isAdmin()) {
+            showModal('Only admin can delete products.');
+            return;
+        }
+        showModal('Are you sure you want to delete this product?', true, productId);
+    }
+
+    function confirmDelete() {
+        if (!pendingDeleteProductId) return;
+
+        fetch(`http://localhost:3000/cart?productId=${pendingDeleteProductId}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load cart');
+                return response.json();
+            })
+            .then(cartItems => {
+                const deletePromises = cartItems.map(item =>
+                    fetch(`http://localhost:3000/cart/${item.id}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                );
+                return Promise.all(deletePromises);
+            })
+            .then(() => {
+                return fetch(`http://localhost:3000/products/${pendingDeleteProductId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to delete product');
+                closeModal();
+                fetchProducts();
+            })
+            .catch(error => {
+                console.error('Error deleting product:', error);
+                closeModal();
+                showModal('Failed to delete product. Please try again.');
             });
     }
 
@@ -266,8 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchInput) {
             searchInput.addEventListener('input', () => {
                 currentPage = 1;
-                applyFiltersAndSort();
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             });
         }
 
@@ -275,8 +447,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeFilter) {
             typeFilter.addEventListener('change', () => {
                 currentPage = 1;
-                applyFiltersAndSort();
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             });
         }
 
@@ -284,8 +456,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sortOptions) {
             sortOptions.addEventListener('change', () => {
                 currentPage = 1;
-                applyFiltersAndSort();
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             });
         }
 
@@ -293,12 +465,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (catalogCards) {
             catalogCards.addEventListener('click', (e) => {
                 const addToCartBtn = e.target.closest('.add-to-cart');
+                const deleteProductBtn = e.target.closest('.delete-product');
                 const card = e.target.closest('.card');
 
-                if (addToCartBtn) {
+                if (addToCartBtn && !isAdmin()) {
                     e.preventDefault();
                     const productId = addToCartBtn.dataset.id;
                     addToCart(productId);
+                } else if (deleteProductBtn) {
+                    e.preventDefault();
+                    const productId = deleteProductBtn.dataset.id;
+                    deleteProduct(productId);
                 } else if (card) {
                     const productId = card.dataset.id;
                     window.location.href = `/products/product.html?id=${productId}`;
@@ -318,15 +495,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const maxPrice = maxPriceInput.value ? parseFloat(maxPriceInput.value) : null;
 
                 if (minPrice !== null && maxPrice !== null && minPrice > maxPrice) {
-                    alert('Minimum price cannot be greater than maximum price');
+                    showModal('Minimum price cannot be greater than maximum price.');
                     return;
                 }
 
                 priceFilter.min = minPrice;
                 priceFilter.max = maxPrice;
                 currentPage = 1;
-                applyFiltersAndSort();
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             });
 
             resetPriceFilterBtn.addEventListener('click', (e) => {
@@ -335,10 +512,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 maxPriceInput.value = '';
                 priceFilter.min = null;
                 priceFilter.max = null;
-                currentPage = 1;
-                applyFiltersAndSort();
-                renderCatalog();
+                saveFilters();
+                fetchProducts();
             });
         }
+
+        const modalClose = document.querySelector('.modal-close');
+        const modalConfirm = document.getElementById('modal-confirm');
+        const modalCancel = document.getElementById('modal-cancel');
+
+        if (modalClose) modalClose.addEventListener('click', closeModal);
+        if (modalConfirm) modalConfirm.addEventListener('click', confirmDelete);
+        if (modalCancel) modalCancel.addEventListener('click', closeModal);
     }
 });
