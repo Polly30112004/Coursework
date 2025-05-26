@@ -1,3 +1,4 @@
+/* Global reset and base styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -7,6 +8,7 @@
     font-family: 'Kumbh Sans', sans-serif;  
 }
 
+/* Product details section */
 .product-details {
     max-width: 1200px;
     margin: 40px auto;
@@ -17,41 +19,76 @@
     border-radius: 10px;
 }
 
+/* Product image container */
+#product-image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+}
+
+/* Product image */
 .product-details img {
-    max-width: 400px; /* Уменьшаем размер картинки */
+    max-width: 400px;
     width: 100%;
     height: auto;
     border-radius: 10px;
 }
 
-.product-info {
+/* Placeholder image */
+.product-details .placeholder-image {
+    max-width: 400px;
+    width: 100%;
+    height: 300px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-text-color, #4A556C);
+    font-size: 1.2rem;
+}
+
+/* Product information container */
+.product-info 
+{
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
+.product-info label
+{
+    color:#333461;
+}
+
+/* Product title */
 .product-info h1 {
     font-size: 2rem;
     color: var(--text-color, #333461);
 }
 
+/* General info items */
 .product-info .info-item {
     font-size: 1rem;
     color: var(--secondary-text-color, #4A556C);
     line-height: 1.6;
 }
 
+/* Price styling */
 .product-info .price {
     font-size: 1.5rem;
     color: var(--button-bg, #20AD96);
     font-weight: bold;
 }
 
+/* Description styling */
 .product-info .description {
     font-size: 1rem;
 }
 
+/* Date selection dropdown */
 .product-info .dates select {
     padding: 0.5rem;
     border: 1px solid #4A556C;
@@ -63,6 +100,7 @@
     max-width: 300px;
 }
 
+/* Add to cart button for users */
 .product-info .add-to-cart {
     background-color: var(--button-bg, #20AD96);
     color: var(--button-text, #fff);
@@ -87,14 +125,178 @@
     height: 20px;
 }
 
+/* Admin buttons */
+.save-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    max-width: 200px;
+    transition: filter 0.3s ease;
+    background-color: var(--button-bg, #20AD96);
+    color: var(--button-text, #fff);
+}
+
+.save-btn:hover {
+    filter: brightness(90%);
+}
+
+/* Editable fields */
+.edit-field {
+    padding: 0.5rem;
+    border: 1px solid #4A556C;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 600px;
+    font-family: 'Kumbh Sans', sans-serif;
+    color: #333461;
+}
+
+.edit-field.textarea {
+    resize: vertical;
+    height: 200px;
+}
+
+/* Type select */
+.type-select {
+    padding: 0.5rem;
+    border: 1px solid #4A556C;
+    border-radius: 4px;
+    color: #333461;
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: white;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Date management */
+.dates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.date-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.date-item input {
+    flex: 0;
+    padding: 0.75rem;
+    border: 1px solid #4A556C;
+    border-radius: 4px;
+    max-width: 600px;
+    font-size: 1rem;
+}
+
+.date-item button {
+    padding: 0.3rem 0.6rem;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.date-item button:hover {
+    background-color: #e63946;
+}
+
+.add-date-btn {
+    padding: 12px 24px;
+    background-color: var(--button-bg, #20AD96);
+    color: var(--button-text, #fff);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    max-width: 200px;
+    transition: filter 0.3s ease;
+    margin-top: 1rem; /* Increased spacing */
+}
+
+.add-date-btn:hover {
+    filter: brightness(90%);
+}
+
+/* Image upload */
+.image-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 400px;
+    position: relative;
+}
+
+.image-upload input[type="file"] {
+    display: none;
+}
+
+.image-upload-label {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--button-bg, #20AD96);
+    color: var(--button-text, #fff);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.image-upload-label:hover {
+    background-color: #1b8c7a;
+}
+
+/* Grey placeholder */
+.image-placeholder {
+    width: 300px;
+    height: 300px;
+    background-color: #ccc;
+    border: 1px solid #999;
+}
+
+/* Product image */
+#product-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Field container */
+.field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.field-container label {
+    font-weight: bold;
+}
+
+
+
+
+
+/* Responsive design */
 @media (max-width: 768px) {
     .product-details {
         flex-direction: column;
         align-items: center;
     }
 
-    .product-details img {
-        max-width: 400px; /* Картинка не увеличивается при адаптиве */
+    .product-details img, .product-details .placeholder-image {
+        max-width: 400px;
         width: 100%;
+        height: auto;
+    }
+
+    #product-image-container {
+        align-items: center;
     }
 }

@@ -17,17 +17,20 @@
 <header id="header"></header>
 <main class="main">
     <section class="product-details">
-        <img id="product-image" src="" alt="Product Image">
+        <div id="product-image-container">
+            <img id="product-image" src="" alt="Product Image">
+        </div>
         <div class="product-info">
             <h1 id="product-title"></h1>
-            <p id="product-type" class="info-item"></p>
+            <div id="product-type" class="info-item"></div>
             <p id="product-price" class="info-item price"></p>
             <p id="product-description" class="info-item description"></p>
             <div id="product-dates" class="info-item dates"></div>
-            <button class="add-to-cart" id="add-to-cart-btn">
-                <img src="/img/shopping_basket.png" alt="Add to Cart">
-                Add to Cart
-            </button>
+            <div id="action-buttons">
+                <button id="add-to-cart-btn" class="add-to-cart">
+                    <img src="/img/shopping_basket.png" alt="Cart Icon"> Add to Cart
+                </button>
+            </div>
         </div>
     </section>
 </main>
