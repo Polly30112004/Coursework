@@ -1,4 +1,5 @@
 import commonPasswords from './common-passwords.js';
+import { getTranslations } from '/header_footer/language-switcher.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('register-form');
@@ -27,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerBtn = document.getElementById('register-btn');
 
     let usernameAttempts = 5;
+
+    // Получение переводов
+    const getCurrentTranslations = () => getTranslations(localStorage.getItem('language') || 'en');
 
     const validatePhone = (phone) => {
         const cleaned = phone.replace(/\D/g, '');
@@ -105,18 +109,20 @@ document.addEventListener('DOMContentLoaded', () => {
         validateForm();
     };
 
-    const setError = (element, message) => {
-        // Находим родительский form-group
+    const setError = (element, messageKey) => {
+        const t = getCurrentTranslations();
         const formGroup = element.closest('.form-group');
         const errorSpan = formGroup.querySelector('.error-message');
         if (errorSpan) {
-            errorSpan.textContent = message;
+            const keys = messageKey.split('.');
+            let message = t;
+            keys.forEach(key => message = message?.[key]);
+            errorSpan.textContent = message || 'Error';
         }
         element.classList.add('invalid');
     };
 
     const clearError = (element) => {
-        // Находим родительский form-group
         const formGroup = element.closest('.form-group');
         const errorSpan = formGroup.querySelector('.error-message');
         if (errorSpan) {
@@ -125,34 +131,43 @@ document.addEventListener('DOMContentLoaded', () => {
         element.classList.remove('invalid');
     };
 
+    const updateUsernameAttempts = () => {
+        const t = getCurrentTranslations();
+        if (usernameAttempts > 0) {
+            usernameAttemptsSpan.textContent = t.register_page.form.username.attempts.replace('{count}', usernameAttempts);
+        } else {
+            usernameAttemptsSpan.textContent = t.register_page.form.username.manual;
+        }
+    };
+
     const validateForm = () => {
         let isValid = true;
 
         if (!phoneInput.value) {
-            setError(phoneInput, 'Phone number is required');
+            setError(phoneInput, 'register_page.form.phone.required');
             isValid = false;
         } else if (!validatePhone(phoneInput.value)) {
-            setError(phoneInput, 'Phone number must start with +375 and have 9 digits');
+            setError(phoneInput, 'register_page.form.phone.invalid');
             isValid = false;
         } else {
             clearError(phoneInput);
         }
 
         if (!emailInput.value) {
-            setError(emailInput, 'Email is required');
+            setError(emailInput, 'register_page.form.email.required');
             isValid = false;
         } else if (!validateEmail(emailInput.value)) {
-            setError(emailInput, 'Enter a valid email address');
+            setError(emailInput, 'register_page.form.email.invalid');
             isValid = false;
         } else {
             clearError(emailInput);
         }
 
         if (!birthdateInput.value) {
-            setError(birthdateInput, 'Date of birth is required');
+            setError(birthdateInput, 'register_page.form.birthdate.required');
             isValid = false;
         } else if (!validateBirthdate(birthdateInput.value)) {
-            setError(birthdateInput, 'You must be between 16 and 120 years old');
+            setError(birthdateInput, 'register_page.form.birthdate.invalid');
             isValid = false;
         } else {
             clearError(birthdateInput);
@@ -161,27 +176,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const method = document.querySelector('input[name="password-method"]:checked').value;
         if (method === 'manual') {
             if (!passwordInput.value) {
-                setError(passwordInput, 'Password is required');
+                setError(passwordInput, 'register_page.form.password.required');
                 isValid = false;
             } else if (!validatePassword(passwordInput.value)) {
-                setError(passwordInput, 'Password must be 8-20 characters, include uppercase, lowercase, number, special character, and not be common');
+                setError(passwordInput, 'register_page.form.password.invalid');
                 isValid = false;
             } else {
                 clearError(passwordInput);
             }
 
             if (!confirmPasswordInput.value) {
-                setError(confirmPasswordInput, 'Confirm password is required');
+                setError(confirmPasswordInput, 'register_page.form.password.confirm_required');
                 isValid = false;
             } else if (confirmPasswordInput.value !== passwordInput.value) {
-                setError(confirmPasswordInput, 'Passwords do not match');
+                setError(confirmPasswordInput, 'register_page.form.password.mismatch');
                 isValid = false;
             } else {
                 clearError(confirmPasswordInput);
             }
         } else {
             if (!generatedPasswordInput.value) {
-                setError(generatedPasswordInput, 'Generated password is required');
+                setError(generatedPasswordInput, 'register_page.form.generated_password.required');
                 isValid = false;
             } else {
                 clearError(generatedPasswordInput);
@@ -189,71 +204,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!firstNameInput.value) {
-            setError(firstNameInput, 'First name is required');
+            setError(firstNameInput, 'register_page.form.first_name.required');
             isValid = false;
         } else if (!validateName(firstNameInput.value)) {
-            setError(firstNameInput, 'First name must contain only letters');
+            setError(firstNameInput, 'register_page.form.first_name.invalid');
             isValid = false;
         } else {
             clearError(firstNameInput);
         }
 
         if (!lastNameInput.value) {
-            setError(lastNameInput, 'Last name is required');
+            setError(lastNameInput, 'register_page.form.last_name.required');
             isValid = false;
         } else if (!validateName(lastNameInput.value)) {
-            setError(lastNameInput, 'Last name must contain only letters');
+            setError(lastNameInput, 'register_page.form.last_name.invalid');
             isValid = false;
         } else {
             clearError(lastNameInput);
         }
 
         if (middleNameInput.value && !validateName(middleNameInput.value)) {
-            setError(middleNameInput, 'Middle name must contain only letters');
+            setError(middleNameInput, 'register_page.form.middle_name.invalid');
             isValid = false;
         } else {
             clearError(middleNameInput);
         }
 
         if (!cardNumberInput.value) {
-            setError(cardNumberInput, 'Card number is required');
+            setError(cardNumberInput, 'register_page.form.card_number.required');
             isValid = false;
         } else if (!validateCardNumber(cardNumberInput.value)) {
-            setError(cardNumberInput, 'Enter a valid 16-digit card number');
+            setError(cardNumberInput, 'register_page.form.card_number.invalid');
             isValid = false;
         } else {
             clearError(cardNumberInput);
         }
 
         if (!cardExpiryInput.value) {
-            setError(cardExpiryInput, 'Expiry date is required');
+            setError(cardExpiryInput, 'register_page.form.card_expiry.required');
             isValid = false;
         } else if (!validateCardExpiry(cardExpiryInput.value)) {
-            setError(cardExpiryInput, 'Enter a valid expiry date (MM/YY, not expired)');
+            setError(cardExpiryInput, 'register_page.form.card_expiry.invalid');
             isValid = false;
         } else {
             clearError(cardExpiryInput);
         }
 
         if (!cardCvvInput.value) {
-            setError(cardCvvInput, 'CVV is required');
+            setError(cardCvvInput, 'register_page.form.card_cvv.required');
             isValid = false;
         } else if (!validateCardCvv(cardCvvInput.value)) {
-            setError(cardCvvInput, 'Enter a valid 3-digit CVV');
+            setError(cardCvvInput, 'register_page.form.card_cvv.invalid');
             isValid = false;
         } else {
             clearError(cardCvvInput);
         }
 
         if (!usernameInput.value) {
-            setError(usernameInput, 'Username is required');
+            setError(usernameInput, 'register_page.form.username.required');
             isValid = false;
         } else {
             clearError(usernameInput);
         }
 
         if (!agreementCheckbox.checked) {
-            setError(agreementCheckbox, 'You must agree to the User Agreement');
+            setError(agreementCheckbox, 'register_page.form.agreement.required');
             isValid = false;
         } else {
             clearError(agreementCheckbox);
@@ -264,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     usernameInput.value = generateUsername();
+    updateUsernameAttempts();
 
     passwordMethodRadios.forEach(radio => {
         radio.addEventListener('change', togglePasswordFields);
@@ -278,11 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (usernameAttempts > 0) {
             usernameInput.value = generateUsername();
             usernameAttempts--;
-            usernameAttemptsSpan.textContent = `Attempts left: ${usernameAttempts}`;
+            updateUsernameAttempts();
             if (usernameAttempts === 0) {
                 usernameInput.readOnly = false;
                 regenerateUsernameBtn.disabled = true;
-                usernameAttemptsSpan.textContent = 'Enter your username manually';
             }
             validateForm();
         }
@@ -315,14 +330,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     closeModal.addEventListener('click', () => {
-        agreementModal.style.display = 'none';
+        agreementModal.style.display = '';
     });
 
     agreementAcceptBtn.addEventListener('click', () => {
         agreementCheckbox.disabled = false;
         agreementCheckbox.checked = true;
         agreementAcceptBtn.disabled = true;
-        agreementModal.style.display = 'none';
+        agreementModal.style.display = '';
         validateForm();
     });
 
@@ -331,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('change', validateForm);
     });
 
-    confirmPasswordInput.addEventListener('paste', (e) => {
+    confirmPasswordInput.addEventListener('input', (e) => {
         e.preventDefault();
     });
 
@@ -348,33 +363,39 @@ document.addEventListener('DOMContentLoaded', () => {
             firstName: firstNameInput.value,
             lastName: lastNameInput.value,
             middleName: middleNameInput.value || '',
-            cardNumber: cardNumberInput.value,
+            cardNumber: cardNumberInput.value.replace(/\s/g, ''),
             cardExpiry: cardExpiryInput.value,
             cardCvv: cardCvvInput.value,
             bestScore: '0'
         };
 
         try {
-            const response = await fetch(`http://localhost:3000/users?name=${user.name}`);
+            const response = await fetch(`http://localhost:${PORT}/users?name=${encodeURIComponent(user.name)}`);
             const users = await response.json();
             if (users.length > 0) {
-                setError(usernameInput, 'Username already exists');
+                setError(usernameInput, 'register_page.form.username.exists');
                 return;
             }
 
-            const postResponse = await fetch('http://localhost:3000/users', {
+            const postResponse = await fetch(`http://localhost:${PORT}/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
             });
 
-            if (!postResponse.ok) throw new Error('Failed to register user');
+            if (!postResponse.ok) throw new Error('Registration failed');
 
-            window.location.href = '/log_in/log.html';
+            window.location.assign('/log-in/log-in.html');
         } catch (error) {
             console.error('Error registering user:', error);
-            setError(form, 'Registration failed. Please try again.');
+            setError(form, 'register_page.form.server_error');
         }
+    });
+
+    // Обновление переводов при смене языка
+    document.addEventListener('languageChanged', () => {
+        updateUsernameAttempts();
+        validateForm();
     });
 
     togglePasswordFields();
