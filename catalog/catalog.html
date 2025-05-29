@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/header_footer/header_footer.css">
     <link rel="stylesheet" href="/preloader/preloader.css">
     <link rel="icon" href="/img/header_brand.svg" type="image/svg">
-    <title>Happy Coaching</title>  
+    <title data-i18n="catalog_page.title">Happy Coaching</title>
 </head>
 <body>
 <div id="preloader" class="preloader">
@@ -19,57 +19,56 @@
     <section class="catalog">
         <div class="catalog-controls">
             <div class="price-filter">
-                <label class="price-filter-label">Price</label>
+                <label class="price-filter-label" data-i18n="catalog_page.controls.price_filter.label">Price</label>
                 <div class="price-filter-dropdown">
                     <div class="price-filter-form">
                         <div class="form-group">
-                            <label for="min-price">Min ($)</label>
+                            <label for="min-price" data-i18n="catalog_page.controls.price_filter.min_label">Min ($)</label>
                             <input type="number" id="min-price" min="0" step="1">
                         </div>
                         <div class="form-group">
-                            <label for="max-price">Max ($)</label>
+                            <label for="max-price" data-i18n="catalog_page.controls.price_filter.max_label">Max ($)</label>
                             <input type="number" id="max-price" min="0" step="1">
                         </div>
-                        <button id="apply-price-filter">Apply</button>
-                        <button id="reset-price-filter">Reset</button>
+                        <button id="apply-price-filter" data-i18n="catalog_page.controls.price_filter.apply">Apply</button>
+                        <button id="reset-price-filter" data-i18n="catalog_page.controls.price_filter.reset">Reset</button>
                     </div>
                 </div>
             </div>
             <div class="filter">
                 <select id="type-filter">
-                    <option value="all">All</option>
-                    <option value="consultation">Consultation</option>
-                    <option value="individual coaching">Individual Coaching</option>
-                    <option value="group coaching">Group Coaching</option>
-                    <option value="book">Book</option>
+                    <option value="all" data-i18n="catalog_page.controls.filter.all">All</option>
+                    <option value="consultation" data-i18n="catalog_page.controls.filter.consultation">Consultation</option>
+                    <option value="individual coaching" data-i18n="catalog_page.controls.filter.individual_coaching">Individual Coaching</option>
+                    <option value="group coaching" data-i18n="catalog_page.controls.filter.group_coaching">Group Coaching</option>
+                    <option value="book" data-i18n="catalog_page.controls.filter.book">Book</option>
                 </select>
             </div>
             <div class="sort">
                 <select id="sort-options">
-                    <option value="price-asc">Low to high price</option>
-                    <option value="price-desc">High to low price</option>
-                    <option value="date-desc">Newest to oldest date</option>
-                    <option value="date-asc">Oldest to newest date</option>
+                    <option value="price-asc" data-i18n="catalog_page.controls.sort.price_asc">Low to high price</option>
+                    <option value="price-desc" data-i18n="catalog_page.controls.sort.price_desc">High to low price</option>
+                    <option value="date-desc" data-i18n="catalog_page.controls.sort.date_desc">Newest to oldest date</option>
+                    <option value="date-asc" data-i18n="catalog_page.controls.sort.date_asc">Oldest to newest date</option>
                 </select>
             </div>
             <div class="search">
-                <input type="text" id="search-input" placeholder="Search by title...">
+                <input type="text" id="search-input" data-i18n="catalog_page.controls.search.placeholder" placeholder="Search by title...">
             </div>
             <div class="admin-add" id="admin-add" style="display: none;">
-                <button id="add-product-btn">Add</button>
+                <button id="add-product-btn" data-i18n="catalog_page.controls.admin_add.button">Add</button>
             </div>
         </div>
         <div class="cards" id="catalog-cards"></div>
         <div class="pagination" id="pagination"></div>
     </section>
-    <!-- Модальное окно -->
     <div id="delete-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="modal-close">×</span>
             <p id="modal-message"></p>
             <div class="modal-buttons">
-                <button id="modal-confirm" style="display: none;">Yes</button>
-                <button id="modal-cancel">Close</button>
+                <button id="modal-confirm" style="display: none;" data-i18n="catalog_page.modal.confirm">Yes</button>
+                <button id="modal-cancel" data-i18n="catalog_page.modal.cancel">Close</button>
             </div>
         </div>
     </div>
@@ -78,6 +77,6 @@
 <script src="/preloader/preloader.js"></script>
 <script type="module" src="/header_footer/language-switcher.js"></script>
 <script type="module" src="/header_footer/header_footer_js.js"></script>
-<script src="catalog.js"></script>
+<script type="module" src="catalog.js"></script>
 </body>
 </html>
