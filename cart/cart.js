@@ -1,8 +1,14 @@
+import { getTranslations, applyLanguage } from '/header_footer/language-switcher.js';
+import { updateHeader } from '/header_footer/header_footer_js.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartTotalSpan = document.getElementById('cart-total');
     const payAllBtn = document.getElementById('pay-all-btn');
     let currentUser = null;
+
+    const getCurrentTranslations = () => getTranslations(localStorage.getItem('language') || 'en');
+    const getCurrentLanguage = () => localStorage.getItem('language') || 'en';
 
     // Проверка авторизации
     function checkAuth() {
@@ -19,8 +25,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    // Применение переводов к статическим элементам
+    function applyStaticTranslations() {
+        const t = getCurrentTranslations();
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const translation = key.split('.').reduce((o, k) => (o && o[k] ? o[k] : null), t);
+            if (translation) {
+                el.textContent = translation;
+            }
+        });
+        document.title = t.cart_page.title || 'Happy Coaching';
+    }
+
     const loadCart = async () => {
         try {
+            const t = getCurrentTranslations();
+            const lang = getCurrentLanguage();
+
             // Загружаем корзину
             const cartResponse = await fetch(`http://localhost:3000/cart?userName=${currentUser.userName}`);
             if (!cartResponse.ok) throw new Error(`Failed to load cart: ${cartResponse.status}`);
@@ -38,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const today = new Date();
 
             if (cartItems.length === 0) {
-                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                cartItemsContainer.innerHTML = `<p data-i18n="cart_page.messages.empty">${t.cart_page.messages.empty}</p>`;
                 cartTotalSpan.textContent = '0';
                 payAllBtn.disabled = true;
                 return;
@@ -60,15 +82,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 itemElement.dataset.cartId = cartItem.id;
                 itemElement.innerHTML = `
                     <div class="cart-item-details">
-                        <h3>${product.title}</h3>
-                        <p>Type: ${product.type}</p>
+                        <h3>${product.title[lang] || product.title.en}</h3>
+                        <p data-i18n="cart_page.labels.type">${t.cart_page.labels.type}: ${product.type[lang] || product.type.en}</p>
                         ${cartItem.selectedDate ? `
                             <div class="date-selector">
-                                <label for="date-select-${cartItem.id}">Date: </label>
+                                <label for="date-select-${cartItem.id}" data-i18n="cart_page.labels.date">${t.cart_page.labels.date}: </label>
                                 <select id="date-select-${cartItem.id}" data-cart-id="${cartItem.id}">
                                     ${product.availability_dates.map(date => `
                                         <option value="${date}" ${date === cartItem.selectedDate ? 'selected' : ''}>
-                                            ${new Date(date).toLocaleString('en-US', {
+                                            ${new Date(date).toLocaleString(lang, {
                                                 month: 'numeric',
                                                 day: 'numeric',
                                                 year: 'numeric',
@@ -81,12 +103,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 </select>
                             </div>
                         ` : ''}
-                        <p>Price: $${product.price}</p>
-                        ${isExpired ? '<p class="expired">Expired</p>' : ''}
+                        <p data-i18n="cart_page.labels.price">${t.cart_page.labels.price}: $${product.price}</p>
+                        ${isExpired ? `<p class="expired" data-i18n="cart_page.messages.expired">${t.cart_page.messages.expired}</p>` : ''}
                     </div>
                     <div class="cart-item-actions">
-                        <button class="pay-btn" data-cart-id="${cartItem.id}" ${isExpired ? 'disabled' : ''}>Pay</button>
-                        <button class="delete-btn" data-cart-id="${cartItem.id}">
+                        <button class="pay-btn" data-cart-id="${cartItem.id}" ${isExpired ? 'disabled' : ''} data-i18n="cart_page.labels.pay">${t.cart_page.labels.pay}</button>
+                        <button class="delete-btn" data-cart-id="${cartItem.id}" title="${t.cart_page.labels.delete}">
                             <img src="/img/close.svg" alt="Delete">
                         </button>
                     </div>
@@ -102,12 +124,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         } catch (error) {
             console.error('Error loading cart:', error);
-            cartItemsContainer.innerHTML = '<p>Failed to load cart. Please check the server and try again.</p>';
+            const t = getCurrentTranslations();
+            cartItemsContainer.innerHTML = `<p data-i18n="cart_page.messages.error.load">${t.cart_page.messages.error.load}</p>`;
         }
     };
 
     const deleteItem = async (cartId) => {
         try {
+            const t = getCurrentTranslations();
             // Удаляем товар из корзины
             const response = await fetch(`http://localhost:3000/cart/${cartId}`, {
                 method: 'DELETE'
@@ -120,12 +144,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateHeader(true);
         } catch (error) {
             console.error('Error deleting item:', error);
-            cartItemsContainer.innerHTML = '<p>Failed to delete item. Please try again.</p>';
+            const t = getCurrentTranslations();
+            cartItemsContainer.innerHTML = `<p data-i18n="cart_page.messages.error.delete">${t.cart_page.messages.error.delete}</p>`;
         }
     };
 
     const updateDate = async (cartId, newDate) => {
         try {
+            const t = getCurrentTranslations();
             // Обновляем selectedDate
             const response = await fetch(`http://localhost:3000/cart/${cartId}`, {
                 method: 'PATCH',
@@ -140,146 +166,151 @@ document.addEventListener('DOMContentLoaded', async () => {
             await loadCart();
         } catch (error) {
             console.error('Error updating date:', error);
-            cartItemsContainer.innerHTML = '<p>Failed to update date. Please try again.</p>';
+            const t = getCurrentTranslations();
+            cartItemsContainer.innerHTML = `<p data-i18n="cart_page.messages.error.update_date">${t.cart_page.messages.error.update_date}</p>`;
         }
     };
 
-    const payItem = async (cartId) => {
-        try {
-            // Загружаем товар из корзины
-            const cartResponse = await fetch(`http://localhost:3000/cart/${cartId}`);
-            if (!cartResponse.ok) {
-                throw new Error(`Failed to load cart item: ${cartResponse.status}`);
+   const payItem = async (cartId) => {
+    try {
+        const t = getCurrentTranslations();
+        const cartResponse = await fetch(`http://localhost:3000/cart/${cartId}`);
+        if (!cartResponse.ok) {
+            throw new Error(`Failed to load cart item: ${cartResponse.status}`);
+        }
+        const cartItem = await cartResponse.json();
+
+        const today = new Date();
+        if (cartItem.selectedDate && new Date(cartItem.selectedDate) < today) {
+            cartItemsContainer.innerHTML = `<p data-i18n="cart_page.messages.error.expired_item">${t.cart_page.messages.error.expired_item}</p>`;
+            return;
+        }
+
+        if (!cartItem || !cartItem.productId || !cartItem.userName) {
+            throw new Error('Invalid cart item data: missing productId or userName');
+        }
+
+        // Формируем минимальный объект без id
+        const purchaseData = {
+            productId: cartItem.productId,
+            userName: cartItem.userName,
+            selectedDate: cartItem.selectedDate
+        };
+
+        console.log('Sending to purchased:', { url: 'http://localhost:3000/purchased', purchaseData });
+
+        const endpointCheck = await fetch('http://localhost:3000/purchased', { method: 'GET' });
+        if (!endpointCheck.ok && endpointCheck.status === 404) {
+            throw new Error('The /purchased endpoint does not exist. Add "purchased": [] to db.json.');
+        }
+
+        const purchasedResponse = await fetch('http://localhost:3000/purchased', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(purchaseData)
+        });
+
+        if (!purchasedResponse.ok) {
+            const errorText = await purchasedResponse.text(); // Получаем текст ошибки
+            throw new Error(`Failed to add item to purchased: ${purchasedResponse.status} - ${errorText}`);
+        }
+
+        const deleteResponse = await fetch(`http://localhost:3000/cart/${cartId}`, {
+            method: 'DELETE'
+        });
+        if (!deleteResponse.ok) {
+            throw new Error(`Failed to delete item from cart: ${deleteResponse.status}`);
+        }
+
+        await loadCart();
+        updateHeader(true);
+        const successDiv = document.createElement('div');
+        successDiv.style.color = 'var(--accent)';
+        successDiv.style.marginTop = '10px';
+        successDiv.textContent = t.cart_page.messages.success.pay;
+        cartItemsContainer.appendChild(successDiv);
+        setTimeout(() => successDiv.remove(), 3000);
+    } catch (error) {
+        console.error('Error paying for item:', error);
+        const t = getCurrentTranslations();
+        cartItemsContainer.innerHTML = `<p data-i18n="cart_page.messages.error.pay">${t.cart_page.messages.error.pay}: ${error.message}</p>`;
+    }
+};
+
+const payAll = async () => {
+    try {
+        const t = getCurrentTranslations();
+        const cartResponse = await fetch(`http://localhost:3000/cart?userName=${currentUser.userName}`);
+        if (!cartResponse.ok) {
+            throw new Error(`Failed to load cart: ${cartResponse.status}`);
+        }
+        const cartItems = await cartResponse.json();
+
+        const today = new Date();
+        const hasExpired = cartItems.some(item => {
+            return item.selectedDate && new Date(item.selectedDate) < today;
+        });
+
+        if (hasExpired) {
+            cartItemsContainer.innerHTML = `<p data-i18n="cart_page.messages.error.expired_items">${t.cart_page.messages.error.expired_items}</p>`;
+            return;
+        }
+
+        const endpointCheck = await fetch('http://localhost:3000/purchased', { method: 'GET' });
+        if (!endpointCheck.ok && endpointCheck.status === 404) {
+            throw new Error('The /purchased endpoint does not exist. Add "purchased": [] to db.json.');
+        }
+
+        for (const item of cartItems) {
+            if (!item || !item.productId || !item.userName) {
+                throw new Error('Invalid cart item data: missing productId or userName');
             }
-            const cartItem = await cartResponse.json();
 
-            // Проверяем, истёк ли срок
-            const today = new Date();
-            if (cartItem.selectedDate && new Date(cartItem.selectedDate) < today) {
-                cartItemsContainer.innerHTML = '<p>Cannot pay for expired item.</p>';
-                return;
-            }
+            // Формируем минимальный объект без id
+            const purchaseData = {
+                productId: item.productId,
+                userName: item.userName,
+                selectedDate: item.selectedDate
+            };
 
-            // Проверяем, что cartItem не пустой
-            if (!cartItem || !cartItem.productId || !cartItem.userName) {
-                throw new Error('Invalid cart item data');
-            }
+            console.log('Sending to purchased:', { url: 'http://localhost:3000/purchased', purchaseData });
 
-            // Логируем данные и URL
-            console.log('Sending to purchased:', {
-                url: 'http://localhost:3000/purchased',
-                cartItem
-            });
-
-            // Проверяем доступность endpoint’а
-            const endpointCheck = await fetch('http://localhost:3000/purchased', { method: 'GET' });
-            if (!endpointCheck.ok && endpointCheck.status === 404) {
-                throw new Error('The /purchased endpoint does not exist on the server. Check db.json for the "purchased" collection.');
-            }
-
-            // Отправляем товар в purchased
             const purchasedResponse = await fetch('http://localhost:3000/purchased', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(cartItem)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(purchaseData)
             });
 
             if (!purchasedResponse.ok) {
-                throw new Error(`Failed to add item to purchased: ${purchasedResponse.status}`);
+                const errorText = await purchasedResponse.text(); // Получаем текст ошибки
+                throw new Error(`Failed to add item to purchased: ${purchasedResponse.status} - ${errorText}`);
             }
 
-            // Удаляем товар из корзины
-            const deleteResponse = await fetch(`http://localhost:3000/cart/${cartId}`, {
+            const deleteResponse = await fetch(`http://localhost:3000/cart/${item.id}`, {
                 method: 'DELETE'
             });
             if (!deleteResponse.ok) {
                 throw new Error(`Failed to delete item from cart: ${deleteResponse.status}`);
             }
-
-            // Перезагружаем корзину
-            await loadCart();
-            // Обновляем счетчик в хедере
-            updateHeader(true);
-        } catch (error) {
-            console.error('Error paying for item:', error);
-            cartItemsContainer.innerHTML = `<p>Failed to pay for item: ${error.message}. Please ensure the /purchased endpoint exists in your server configuration (db.json).</p>`;
         }
-    };
 
-    const payAll = async () => {
-        try {
-            // Загружаем корзину
-            const cartResponse = await fetch(`http://localhost:3000/cart?userName=${currentUser.userName}`);
-            if (!cartResponse.ok) {
-                throw new Error(`Failed to load cart: ${cartResponse.status}`);
-            }
-            const cartItems = await cartResponse.json();
+        await loadCart();
+        updateHeader(true);
+        const successDiv = document.createElement('div');
+        successDiv.style.color = 'var(--accent)';
+        successDiv.style.marginTop = '10px';
+        successDiv.textContent = t.cart_page.messages.success.pay_all;
+        cartItemsContainer.appendChild(successDiv);
+        setTimeout(() => successDiv.remove(), 3000);
+    } catch (error) {
+        console.error('Error paying for all items:', error);
+        const t = getCurrentTranslations();
+        cartItemsContainer.innerHTML = `<p data-i18n="cart_page.messages.error.pay_all">${t.cart_page.messages.error.pay_all}: ${error.message}</p>`;
+    }
+};
 
-            // Проверяем наличие просроченных товаров
-            const today = new Date();
-            const hasExpired = cartItems.some(item => {
-                return item.selectedDate && new Date(item.selectedDate) < today;
-            });
-
-            if (hasExpired) {
-                cartItemsContainer.innerHTML = '<p>Cannot pay because some items are expired.</p>';
-                return;
-            }
-
-            // Проверяем доступность endpoint’а
-            const endpointCheck = await fetch('http://localhost:3000/purchased', { method: 'GET' });
-            if (!endpointCheck.ok && endpointCheck.status === 404) {
-                throw new Error('The /purchased endpoint does not exist on the server. Check db.json for the "purchased" collection.');
-            }
-
-            // Отправляем все товары в purchased и удаляем из корзины
-            for (const item of cartItems) {
-                // Проверяем, что item не пустой
-                if (!item || !item.productId || !item.userName) {
-                    throw new Error('Invalid cart item data');
-                }
-
-                // Логируем данные и URL
-                console.log('Sending to purchased:', {
-                    url: 'http://localhost:3000/purchased',
-                    item
-                });
-
-                // Отправляем товар в purchased
-                const purchasedResponse = await fetch('http://localhost:3000/purchased', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(item)
-                });
-
-                if (!purchasedResponse.ok) {
-                    throw new Error(`Failed to add item to purchased: ${purchasedResponse.status}`);
-                }
-
-                // Удаляем товар из корзины
-                const deleteResponse = await fetch(`http://localhost:3000/cart/${item.id}`, {
-                    method: 'DELETE'
-                });
-                if (!deleteResponse.ok) {
-                    throw new Error(`Failed to delete item from cart: ${deleteResponse.status}`);
-                }
-            }
-
-            // Перезагружаем корзину
-            await loadCart();
-            // Обновляем счетчик в хедере
-            updateHeader(true);
-        } catch (error) {
-            console.error('Error paying for all items:', error);
-            cartItemsContainer.innerHTML = `<p>Failed to pay for all items: ${error.message}. Please ensure the /purchased endpoint exists in your server configuration (db.json).</p>`;
-        }
-    };
-
-    // Загружаем корзину при загрузке страницы
+    // Инициализация
+    applyStaticTranslations();
     await loadCart();
 
     // Обработчики событий
@@ -308,4 +339,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Обработчик кнопки "Pay for All"
     payAllBtn.addEventListener('click', payAll);
+
+    // Обработчик смены языка
+    document.addEventListener('languageChanged', () => {
+        applyStaticTranslations();
+        loadCart();
+    });
 });

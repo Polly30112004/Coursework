@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/header_footer/header_footer.css">
     <link rel="stylesheet" href="/preloader/preloader.css">
     <link rel="icon" href="/img/header_brand.svg" type="image/svg">
-    <title>Happy Coaching</title>
+    <title data-i18n="cart_page.title">Happy Coaching</title>
 </head>
 <body>
 <div id="preloader" class="preloader">
@@ -17,17 +17,18 @@
 <header id="header"></header>
 <main class="main">
     <section class="cart">
-        <h1>Your Cart</h1>
+        <h1 data-i18n="cart_page.title">Your Cart</h1>
         <div id="cart-items"></div>
         <div class="cart-summary">
-            <h2>Total: $<span id="cart-total">0</span></h2>
-            <button id="pay-all-btn" disabled>Pay for All</button>
+            <h2 data-i18n="cart_page.labels.total">Total: $<span id="cart-total">0</span></h2>
+            <button id="pay-all-btn" disabled data-i18n="cart_page.labels.pay_all">Pay for All</button>
         </div>
     </section>
 </main>
 <footer id="footer"></footer>
-<script src="/header_footer/header_footer_js.js"></script>
+<script type="module" src="/header_footer/header_footer_js.js"></script>
+<script type="module" src="/header_footer/language-switcher.js"></script>
 <script src="/preloader/preloader.js"></script>
-<script src="cart.js"></script>
+<script type="module" src="cart.js"></script>
 </body>
 </html>

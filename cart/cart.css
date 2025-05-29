@@ -1,21 +1,47 @@
+:root {
+    --white: #ffffff;
+    --black: #333461;
+    --gray: #4A556C;
+    --dark-gray: #1E2C30;
+    --accent: #20AD96;
+    --border-light: rgba(0, 0, 0, 0.15);
+    --accent-dark: #218838;
+    --banner-bg: #FAF8F6;
+    --error: #ff4444;
+}
+
+[data-theme="dark"] {
+    --white: #1a1a1a;
+    --black: #E5E7EB;
+    --gray: #D1D5DB;
+    --dark-gray: #0d1618;
+    --accent: #20AD96;
+    --border-light: rgba(255, 255, 255, 0.15);
+    --accent-dark: #218838;
+    --banner-bg: #2A3538;
+    --error: #ff6666;
+}
+
 body {
     font-family: 'Kumbh Sans', sans-serif;
     margin: 0;
     padding: 0;
-    color: #333461;
+    color: var(--black);
+    background-color: var(--white);
 }
 
 .main {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
+    background-color: var(--white);
 }
 
 .cart h1 {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #333461;
+    color: var(--black);
 }
 
 #cart-items {
@@ -28,10 +54,10 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     padding: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-light);
     border-radius: 4px;
     margin-bottom: 10px;
-    background-color: #fff;
+    background-color: var(--white);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -42,12 +68,12 @@ body {
 .cart-item-details h3 {
     margin: 0 0 5px 0;
     font-size: 1.2rem;
-    color: #333461;
+    color: var(--black);
 }
 
 .cart-item-details p {
     margin: 5px 0;
-    color: #4A556C;
+    color: var(--gray);
 }
 
 .date-selector {
@@ -58,17 +84,16 @@ body {
 }
 
 .date-selector label {
-    color: #4A556C;
+    color: var(--gray);
     font-size: 0.9rem;
 }
 
 .date-selector select {
     padding: 5px;
-    border: 1px solid #4A556C;
+    border: 1px solid var(--gray);
     border-radius: 4px;
-    color: #333461;
-    font-family: 'Kumbh Sans', sans-serif;
-    background-color: white;
+    color: var(--black);
+    background-color: var(--white);
 }
 
 .cart-item-actions {
@@ -79,8 +104,8 @@ body {
 
 .cart-item-actions .pay-btn {
     padding: 8px 16px;
-    background-color: #20AD96;
-    color: white;
+    background-color: var(--accent);
+     color: var(--white);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -88,11 +113,11 @@ body {
 }
 
 .cart-item-actions .pay-btn:hover {
-    background-color: #218838;
+    background-color: var(--accent-dark);
 }
 
 .cart-item-actions .pay-btn:disabled {
-    background-color: #ccc;
+    background-color: var(--gray);
     cursor: not-allowed;
 }
 
@@ -120,13 +145,15 @@ body {
 .cart-summary h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #333461;
+    color: var(--black);
 }
+
 
 #pay-all-btn {
     padding: 10px 20px;
-    background-color: #20AD96;
-    color: white;
+    background-color: var(--accent);
+    color: var(--white);
+     color: var(--white);
     border: none;
     border-radius: 4px;
     font-size: 1.1rem;
@@ -135,16 +162,16 @@ body {
 }
 
 #pay-all-btn:disabled {
-    background-color: #ccc;
+    background-color: var(--gray);
     cursor: not-allowed;
 }
 
 #pay-all-btn:not(:disabled):hover {
-    background-color: #218838;
+    background-color: var(--accent-dark);
 }
 
 .expired {
-    color: #ff4d4f;
+    color: #ff0000;
     font-weight: bold;
 }
 
