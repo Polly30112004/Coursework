@@ -20,46 +20,45 @@
     <main class="main">
         <div class="container">
             <div class="left">
-                <h2 class="h2">Results that speak for themselves</h2>
-                <p>Discover how real progress and clear outcomes can boost your confidence and drive lasting change.</p>
+                <h2 class="h2" data-i18n="login_page.container.left.title">Results that speak for themselves</h2>
+                <p data-i18n="login_page.container.left.description">Discover how real progress and clear outcomes can boost your confidence and drive lasting change.</p>
                 <form id="loginForm">
-                    <input type="text" id="name" placeholder="Name" required />
-                    <input type="password" id="password" placeholder="Password" required />
-                    <p><a href="/registration/registration.html">Create a new account</a></p>
-                    <button type="submit" class="btn">Log in</button>
+                    <input type="text" id="name" placeholder="Name" required data-i18n="login_page.container.left.form.name_placeholder" />
+                    <input type="password" id="password" placeholder="Password" required data-i18n="login_page.container.left.form.password_placeholder" />
+                    <p><a href="/registration/registration.html" data-i18n="login_page.container.left.form.create_account">Create a new account</a></p>
+                    <button type="submit" class="btn" data-i18n="login_page.container.left.form.button">Log in</button>
                 </form>
             </div>
             <div class="right">
-                <div class="circle">Free guide!</div>
+                <div class="circle" data-i18n="login_page.container.right.circle">Free guide!</div>
                 <div class="card">
                     <img src="/img/transsform_life.png" alt="Transform Your Life" />
                 </div>
             </div>
         </div>
 
-
- <div class="block2">
-    <div class="comments-container">
-        <h2 class="h2">Hear out what my <br>clients say about me.</h2>
-        
-        <div class="slider-controls">
-            <button class="slider-btn prev-btn"></button>
-            <div class="comments-slider">
-                <div class="swiper-wrapper"></div>
+        <div class="block2">
+            <div class="comments-container">
+                <h2 class="h2" data-i18n="login_page.block2.title">Hear out what my <br>clients say about me.</h2>
+                
+                <div class="slider-controls">
+                    <button class="slider-btn prev-btn"></button>
+                    <div class="comments-slider">
+                        <div class="swiper-wrapper"></div>
+                    </div>
+                    <button class="slider-btn next-btn"></button>
+                </div>
             </div>
-            <button class="slider-btn next-btn"></button>
         </div>
-    </div>
-</div>
 
         <div class="block3">
             <div class="text">
-                <h2 class="h2">Don’t miss out on my <span>‘Live life at <br>the full potential’</span> free guide</h2>
-                <p>Get my free ‘Live life at the full potential’ guide! It’s packed with a simple 3-step method to overcome obstacles, boost productivity, and achieve your dreams. Start your transformation today—download now!</p>
-                <button class="btn">Download my free guide</button>          
+                <h2 class="h2" data-i18n="login_page.block3.title">Don’t miss out on my <span>‘Live life at <br>the full potential’</span> free guide</h2>
+                <p data-i18n="login_page.block3.description">Get my free ‘Live life at the full potential’ guide! It’s packed with a simple 3-step method to overcome obstacles, boost productivity, and achieve your dreams. Start your transformation today—download now!</p>
+                <button class="btn" data-i18n="login_page.block3.button">Download my free guide</button>          
             </div>
             <div class="after-text">
-                <p>More than 100+ 5 star reviews</p>
+                <p data-i18n="login_page.block3.after_text">More than 100+ 5 star reviews</p>
                 <div class="stars">    
                     <img src="/img/star.svg" alt="">
                     <img src="/img/star.svg" alt="">
@@ -72,9 +71,8 @@
     </main>
     <footer id="footer"></footer>
     <script src="/log_in/log.js"></script>
-    <script src="/header_footer/header_footer_js.js"></script>
+    <script type="module" src="/header_footer/header_footer_js.js"></script>
     <script src="/preloader/preloader.js"></script>
-    <script src="slider.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script type="module" src="/log_in/slider.js"></script>    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>
