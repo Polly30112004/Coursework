@@ -1,4 +1,5 @@
 import commonPasswords from './common-passwords.js';
+import { getTranslations } from '/header_footer/language-switcher.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('profile-form');
@@ -25,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentUser = null;
     let originalValues = {};
     let userId = null;
+
+    // Получение переводов
+    const getCurrentTranslations = () => getTranslations(localStorage.getItem('language') || 'en');
 
     // Получаем текущего пользователя из localStorage
     const user = localStorage.getItem('currentUser');
@@ -78,11 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return regex.test(password) && !commonPasswords.includes(password);
     };
 
-    const setError = (element, message) => {
+    const setError = (element, messageKey) => {
+        const t = getCurrentTranslations();
         const formGroup = element.closest('.form-group');
         const errorSpan = formGroup.querySelector('.error-message');
         if (errorSpan) {
-            errorSpan.textContent = message;
+            const keys = messageKey.split('.');
+            let message = t;
+            keys.forEach(key => message = message?.[key]);
+            errorSpan.textContent = message || 'Error';
         }
         element.classList.add('invalid');
     };
@@ -128,40 +136,55 @@ document.addEventListener('DOMContentLoaded', () => {
         let isValid = true;
 
         // Валидация телефона
-        if (!phoneInput.value || !validatePhone(phoneInput.value)) {
-            setError(phoneInput, 'Phone number must start with +375 and have 9 digits');
+        if (!phoneInput.value) {
+            setError(phoneInput, 'register_page.form.phone.required');
+            isValid = false;
+        } else if (!validatePhone(phoneInput.value)) {
+            setError(phoneInput, 'register_page.form.phone.invalid');
             isValid = false;
         } else {
             clearError(phoneInput);
         }
 
         // Валидация email
-        if (!emailInput.value || !validateEmail(emailInput.value)) {
-            setError(emailInput, 'Enter a valid email address');
+        if (!emailInput.value) {
+            setError(emailInput, 'register_page.form.email.required');
+            isValid = false;
+        } else if (!validateEmail(emailInput.value)) {
+            setError(emailInput, 'register_page.form.email.invalid');
             isValid = false;
         } else {
             clearError(emailInput);
         }
 
         // Валидация даты рождения
-        if (!birthdateInput.value || !validateBirthdate(birthdateInput.value)) {
-            setError(birthdateInput, 'You must be between 16 and 120 years old');
+        if (!birthdateInput.value) {
+            setError(birthdateInput, 'register_page.form.birthdate.required');
+            isValid = false;
+        } else if (!validateBirthdate(birthdateInput.value)) {
+            setError(birthdateInput, 'register_page.form.birthdate.invalid');
             isValid = false;
         } else {
             clearError(birthdateInput);
         }
 
         // Валидация имени
-        if (!firstNameInput.value || !validateName(firstNameInput.value)) {
-            setError(firstNameInput, 'First name must contain only letters');
+        if (!firstNameInput.value) {
+            setError(firstNameInput, 'register_page.form.first_name.required');
+            isValid = false;
+        } else if (!validateName(firstNameInput.value)) {
+            setError(firstNameInput, 'register_page.form.first_name.invalid');
             isValid = false;
         } else {
             clearError(firstNameInput);
         }
 
         // Валидация фамилии
-        if (!lastNameInput.value || !validateName(lastNameInput.value)) {
-            setError(lastNameInput, 'Last name must contain only letters');
+        if (!lastNameInput.value) {
+            setError(lastNameInput, 'register_page.form.last_name.required');
+            isValid = false;
+        } else if (!validateName(lastNameInput.value)) {
+            setError(lastNameInput, 'register_page.form.last_name.invalid');
             isValid = false;
         } else {
             clearError(lastNameInput);
@@ -169,31 +192,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Валидация отчества
         if (middleNameInput.value && !validateName(middleNameInput.value)) {
-            setError(middleNameInput, 'Middle name must contain only letters');
+            setError(middleNameInput, 'register_page.form.middle_name.invalid');
             isValid = false;
         } else {
             clearError(middleNameInput);
         }
 
         // Валидация номера карты
-        if (!cardNumberInput.value || !validateCardNumber(cardNumberInput.value)) {
-            setError(cardNumberInput, 'Enter a valid 16-digit card number');
+        if (!cardNumberInput.value) {
+            setError(cardNumberInput, 'register_page.form.card_number.required');
+            isValid = false;
+        } else if (!validateCardNumber(cardNumberInput.value)) {
+            setError(cardNumberInput, 'register_page.form.card_number.invalid');
             isValid = false;
         } else {
             clearError(cardNumberInput);
         }
 
         // Валидация срока действия карты
-        if (!cardExpiryInput.value || !validateCardExpiry(cardExpiryInput.value)) {
-            setError(cardExpiryInput, 'Enter a valid expiry date (MM/YY, not expired)');
+        if (!cardExpiryInput.value) {
+            setError(cardExpiryInput, 'register_page.form.card_expiry.required');
+            isValid = false;
+        } else if (!validateCardExpiry(cardExpiryInput.value)) {
+            setError(cardExpiryInput, 'register_page.form.card_expiry.invalid');
             isValid = false;
         } else {
             clearError(cardExpiryInput);
         }
 
         // Валидация CVV
-        if (!cardCvvInput.value || !validateCardCvv(cardCvvInput.value)) {
-            setError(cardCvvInput, 'Enter a valid 3-digit CVV');
+        if (!cardCvvInput.value) {
+            setError(cardCvvInput, 'register_page.form.card_cvv.required');
+            isValid = false;
+        } else if (!validateCardCvv(cardCvvInput.value)) {
+            setError(cardCvvInput, 'register_page.form.card_cvv.invalid');
             isValid = false;
         } else {
             clearError(cardCvvInput);
@@ -201,14 +233,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Валидация имени пользователя
         if (!usernameInput.value) {
-            setError(usernameInput, 'Enter a username');
+            setError(usernameInput, 'register_page.form.username.required');
             isValid = false;
         } else if (usernameInput.value !== originalValues.username) {
             // Проверяем уникальность имени
-            const response = await fetch(`http://localhost:3000/users?name=${usernameInput.value}`);
+            const response = await fetch(`http://localhost:3000/users?name=${encodeURIComponent(usernameInput.value)}`);
             const users = await response.json();
             if (users.length > 0 && users[0].id !== userId) {
-                setError(usernameInput, 'Username already exists');
+                setError(usernameInput, 'register_page.form.username.exists');
                 isValid = false;
             } else {
                 clearError(usernameInput);
@@ -221,31 +253,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const method = document.querySelector('input[name="password-method"]:checked').value;
         if (method === 'manual') {
             if (!passwordInput.value) {
-                setError(passwordInput, 'Enter a password');
+                setError(passwordInput, 'register_page.form.password.required');
                 isValid = false;
             } else if (!validatePassword(passwordInput.value)) {
-                setError(passwordInput, 'Password must be 8-20 characters, include uppercase, lowercase, number, special character, and not be common');
+                setError(passwordInput, 'register_page.form.password.invalid');
                 isValid = false;
             } else {
                 clearError(passwordInput);
             }
 
             if (!confirmPasswordInput.value) {
-                setError(confirmPasswordInput, 'Confirm your password');
+                setError(confirmPasswordInput, 'register_page.form.password.confirm_required');
                 isValid = false;
             } else if (confirmPasswordInput.value !== passwordInput.value) {
-                setError(confirmPasswordInput, 'Passwords do not match');
-                isValid = false;
-            } else if (!validatePassword(confirmPasswordInput.value)) {
-                // Если пароли совпадают, но не проходят валидацию, показываем правила
-                setError(confirmPasswordInput, 'Password must be 8-20 characters, include uppercase, lowercase, number, special character, and not be common');
+                setError(confirmPasswordInput, 'register_page.form.password.mismatch');
                 isValid = false;
             } else {
                 clearError(confirmPasswordInput);
             }
         } else {
             if (!generatedPasswordInput.value) {
-                setError(generatedPasswordInput, 'Generate a password');
+                setError(generatedPasswordInput, 'register_page.form.generated_password.required');
                 isValid = false;
             } else {
                 clearError(generatedPasswordInput);
@@ -257,30 +285,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Загрузка данных пользователя
-    fetch(`http://localhost:3000/users?name=${currentUser.userName}`)
+    fetch(`http://localhost:3000/users?name=${encodeURIComponent(currentUser.userName)}`)
         .then(response => response.json())
         .then(users => {
             if (users.length === 0) {
                 console.error('Пользователь не найден');
+                setError(form, 'profile_page.form.server_error');
                 return;
             }
 
             const user = users[0];
-            userId = user.id; // Сохраняем ID пользователя
+            userId = user.id;
             phoneInput.value = user.phone;
             emailInput.value = user.email;
             birthdateInput.value = user.birthdate;
             firstNameInput.value = user.firstName;
             lastNameInput.value = user.lastName;
             middleNameInput.value = user.middleName || '';
-            cardNumberInput.value = user.cardNumber;
+            cardNumberInput.value = user.cardNumber.replace(/(.{4})/g, '$1 ').trim();
             cardExpiryInput.value = user.cardExpiry;
             cardCvvInput.value = user.cardCvv;
             usernameInput.value = user.name;
             passwordInput.value = user.password;
             confirmPasswordInput.value = user.password;
 
-            // Сохраняем исходные значения для сравнения
             originalValues = {
                 phone: user.phone,
                 email: user.email,
@@ -297,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Ошибка загрузки данных пользователя:', error);
+            setError(form, 'profile_page.form.server_error');
         });
 
     // Форматирование полей
@@ -355,11 +384,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             } else {
-                if (input.value !== originalValues[input.id]) {
-                    pendingChanges[input.id] = input.value;
+                const field = input.id === 'card-number' ? 'cardNumber' : input.id === 'card-expiry' ? 'cardExpiry' : input.id === 'card-cvv' ? 'cardCvv' : input.id;
+                const value = input.id === 'card-number' ? input.value.replace(/\s/g, '') : input.value;
+                if (value !== originalValues[field]) {
+                    pendingChanges[field] = value;
                     saveBtn.style.display = 'block';
                 } else {
-                    delete pendingChanges[input.id];
+                    delete pendingChanges[field];
                     if (Object.keys(pendingChanges).length === 0) {
                         saveBtn.style.display = 'none';
                     }
@@ -386,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
             firstName: firstNameInput.value,
             lastName: lastNameInput.value,
             middleName: middleNameInput.value || '',
-            cardNumber: cardNumberInput.value,
+            cardNumber: cardNumberInput.value.replace(/\s/g, ''),
             cardExpiry: cardExpiryInput.value,
             cardCvv: cardCvvInput.value,
             name: usernameInput.value,
@@ -400,7 +431,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => {
                 if (!response.ok) throw new Error('Failed to update user');
-                // Обновляем исходные значения
                 originalValues = {
                     phone: updatedUser.phone,
                     email: updatedUser.email,
@@ -414,7 +444,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     username: updatedUser.name,
                     password: updatedUser.password
                 };
-                // Обновляем currentUser в localStorage
                 localStorage.setItem('currentUser', JSON.stringify({ userName: updatedUser.name }));
                 pendingChanges = {};
                 saveBtn.style.display = 'none';
@@ -422,24 +451,33 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => {
                 console.error('Ошибка обновления профиля:', error);
+                setError(form, 'profile_page.form.server_error');
             });
     });
 
     // Отмена изменений при закрытии модального окна
     closeModal.addEventListener('click', () => {
-        // Возвращаем исходные значения
         Object.keys(pendingChanges).forEach(field => {
             if (field === 'password') {
                 passwordInput.value = originalValues.password;
                 confirmPasswordInput.value = originalValues.password;
                 generatedPasswordInput.value = '';
             } else {
-                document.getElementById(field).value = originalValues[field];
+                const id = field === 'cardNumber' ? 'card-number' : field === 'cardExpiry' ? 'card-expiry' : field === 'cardCvv' ? 'card-cvv' : field;
+                document.getElementById(id).value = originalValues[field];
+                if (id === 'card-number') {
+                    document.getElementById(id).value = originalValues[field].replace(/(.{4})/g, '$1 ').trim();
+                }
             }
         });
         pendingChanges = {};
         saveBtn.style.display = 'none';
         confirmModal.style.display = 'none';
+        validateForm();
+    });
+
+    // Обновление переводов при смене языка
+    document.addEventListener('languageChanged', () => {
         validateForm();
     });
 

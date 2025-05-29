@@ -1,21 +1,57 @@
+:root {
+    --white: #ffffff;
+    --black: #333461;
+    --gray: #4A556C;
+    --dark-gray: #1E2C30;
+    --accent: #20AD96;
+    --border-light: rgba(0, 0, 0, 0.15);
+    --dark-green: #111E22;
+    --accent-dark: #20AD96;
+    --banner-bg: #FAF8F6;
+    --banner-overlay: rgba(0, 44, 54, 0.8);
+    --footer-text: #1E2C30;
+    --error: #ff4444;
+}
+
+[data-theme="dark"] {
+    --white: #1a1a1a;
+    --black: #E5E7EB;
+    --gray: #D1D5DB;
+    --dark-gray: #0d1618;
+    --accent: #20AD96;
+    --border-light: rgba(255, 255, 255, 0.15);
+    --dark-green: #111E22;
+    --accent-dark: #20AD96;
+    --banner-bg: #2A3538;
+    --footer-text: #D1D5DB;
+    --error: #ff6666;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Kumbh Sans', sans-serif;
-    color: #333461;
+    color: var(--black);
+}
+
+body 
+{
+    background-color: var(--white);
 }
 
 .main {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
+    background-color: var(--white);
 }
 
 .profile h1 {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 20px;
+    color: var(--black);
 }
 
 .form-group {
@@ -26,6 +62,7 @@
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    color: var(--black);
 }
 
 .form-group input[type="text"],
@@ -36,30 +73,34 @@
     width: 100%;
     padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-light);
     border-radius: 4px;
     box-sizing: border-box;
+    background-color: var(--white);
+    color: var(--black);
 }
 
 .form-group input[id^="card-"] {
     width: 100%;
     padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-light);
     border-radius: 4px;
     box-sizing: border-box;
+    background-color: var(--white);
+    color: var(--black);
 }
 
 .form-group input:invalid:required {
-    border: 2px solid red;
+    border: 2px solid var(--error);
 }
 
 .form-group input:valid {
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-light);
 }
 
 .error-message {
-    color: red;
+    color: var(--error);
     font-size: 0.9rem;
     margin-top: 5px;
     display: block;
@@ -77,7 +118,7 @@
 #regenerate-password {
     margin-top: 10px;
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: var(--accent);
     color: white;
     border: none;
     border-radius: 4px;
@@ -85,18 +126,18 @@
 }
 
 #regenerate-password:hover {
-    background-color: #0056b3;
+    background-color: var(--accent-dark);
 }
 
 .required {
-    color: red;
+    color: var(--error);
     margin-left: 5px;
 }
 
 #save-btn {
     width: 100%;
     padding: 12px;
-    background-color: #20AD96;
+    background-color: var(--accent);
     color: white;
     border: none;
     border-radius: 4px;
@@ -106,12 +147,12 @@
 }
 
 #save-btn:disabled {
-    background-color: #ccc;
+    background-color: var(--gray);
     cursor: not-allowed;
 }
 
 #save-btn:not(:disabled):hover {
-    background-color: #218838;
+    background-color: var(--accent-dark);
 }
 
 .modal {
@@ -128,13 +169,14 @@
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--white);
     padding: 20px;
     border-radius: 8px;
     max-width: 400px;
     width: 90%;
     text-align: center;
     position: relative;
+    color: var(--black);
 }
 
 .close {
@@ -143,11 +185,12 @@
     right: 15px;
     font-size: 1.5rem;
     cursor: pointer;
+    color: var(--black);
 }
 
 .modal-button {
     padding: 10px 20px;
-    background-color: #20AD96;
+    background-color: var(--accent);
     color: white;
     border: none;
     border-radius: 4px;
@@ -156,5 +199,5 @@
 }
 
 .modal-button:hover {
-    background-color: #218838;
+    background-color: var(--accent-dark);
 }

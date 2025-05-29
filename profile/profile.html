@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/header_footer/header_footer.css">
     <link rel="stylesheet" href="/preloader/preloader.css">
     <link rel="icon" href="/img/header_brand.svg" type="image/svg">
-    <title>Happy Coaching - Profile</title>
+    <title data-i18n="profile_page.title">Happy Coaching - Profile</title>
 </head>
 <body>
 <div id="preloader" class="preloader">
@@ -17,93 +17,94 @@
 <header id="header"></header>
 <main class="main">
     <section class="profile">
-        <h1>Your Profile</h1>
+        <h1 data-i18n="profile_page.title">Your Profile</h1>
         <form id="profile-form">
             <div class="form-group">
-                <label for="phone">Phone Number<span class="required">*</span></label>
-                <input type="tel" id="phone" placeholder="+375 XX XXX XX XX" required>
+                <label for="phone" data-i18n="register_page.form.phone.label">Phone Number<span class="required">*</span></label>
+                <input type="tel" id="phone" data-i18n-placeholder="register_page.form.phone.placeholder" placeholder="+375 XX XXX XX XX" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="email">Email<span class="required">*</span></label>
-                <input type="email" id="email" required>
+                <label for="email" data-i18n="register_page.form.email.label">Email<span class="required">*</span></label>
+                <input type="email" id="email" data-i18n-placeholder="register_page.form.email.placeholder" placeholder="Enter your email" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="birthdate">Date of Birth<span class="required">*</span></label>
-                <input type="date" id="birthdate" required>
+                <label for="birthdate" data-i18n="register_page.form.birthdate.label">Date of Birth<span class="required">*</span></label>
+                <input type="date" id="birthdate" data-i18n-placeholder="register_page.form.birthdate.placeholder" placeholder="Select date" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="first-name">First Name<span class="required">*</span></label>
-                <input type="text" id="first-name" required>
+                <label for="first-name" data-i18n="register_page.form.first_name.label">First Name<span class="required">*</span></label>
+                <input type="text" id="first-name" data-i18n-placeholder="register_page.form.first_name.placeholder" placeholder="Enter first name" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="last-name">Last Name<span class="required">*</span></label>
-                <input type="text" id="last-name" required>
+                <label for="last-name" data-i18n="register_page.form.last_name.label">Last Name<span class="required">*</span></label>
+                <input type="text" id="last-name" data-i18n-placeholder="register_page.form.last_name.placeholder" placeholder="Enter last name" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="middle-name">Middle Name</label>
-                <input type="text" id="middle-name">
+                <label for="middle-name" data-i18n="register_page.form.middle_name.label">Middle Name</label>
+                <input type="text" id="middle-name" data-i18n-placeholder="register_page.form.middle_name.placeholder" placeholder="Enter middle name (optional)">
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="card-number">Card Number<span class="required">*</span></label>
-                <input type="text" id="card-number" maxlength="19" placeholder="1234 5678 9012 3456" required>
+                <label for="card-number" data-i18n="register_page.form.card_number.label">Card Number<span class="required">*</span></label>
+                <input type="text" id="card-number" maxlength="19" data-i18n-placeholder="register_page.form.card_number.placeholder" placeholder="1234 5678 9012 3456" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="card-expiry">Expiry Date<span class="required">*</span></label>
-                <input type="text" id="card-expiry" maxlength="5" placeholder="MM/YY" required>
+                <label for="card-expiry" data-i18n="register_page.form.card_expiry.label">Expiry Date<span class="required">*</span></label>
+                <input type="text" id="card-expiry" maxlength="5" data-i18n-placeholder="register_page.form.card_expiry.placeholder" placeholder="MM/YY" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="card-cvv">CVV<span class="required">*</span></label>
-                <input type="text" id="card-cvv" maxlength="3" placeholder="123" required>
+                <label for="card-cvv" data-i18n="register_page.form.card_cvv.label">CVV<span class="required">*</span></label>
+                <input type="text" id="card-cvv" maxlength="3" data-i18n-placeholder="register_page.form.card_cvv.placeholder" placeholder="123" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label for="username">Username<span class="required">*</span></label>
-                <input type="text" id="username" required>
+                <label for="username" data-i18n="register_page.form.username.label">Username<span class="required">*</span></label>
+                <input type="text" id="username" data-i18n-placeholder="register_page.form.username.placeholder" placeholder="Generated username" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>Password Method<span class="required">*</span></label>
+                <label data-i18n="register_page.form.password_method.label">Password Method<span class="required">*</span></label>
                 <div class="radio-group">
-                    <label><input type="radio" name="password-method" value="manual" checked> Manual</label>
-                    <label><input type="radio" name="password-method" value="auto"> Auto-generated</label>
+                    <label><input type="radio" name="password-method" value="manual" checked data-i18n="register_page.form.password_method.manual"> Manual</label>
+                    <label><input type="radio" name="password-method" value="auto" data-i18n="register_page.form.password_method.auto"> Auto-generated</label>
                 </div>
             </div>
             <div class="form-group password-group" id="manual-password">
-                <label for="password">Password<span class="required">*</span></label>
-                <input type="text" id="password" required>
+                <label for="password" data-i18n="register_page.form.password.label">Password<span class="required">*</span></label>
+                <input type="text" id="password" data-i18n-placeholder="register_page.form.password.placeholder" placeholder="Enter password" required>
                 <span class="error-message"></span>
-                <label for="confirm-password">Confirm Password<span class="required">*</span></label>
-                <input type="text" id="confirm-password" required>
+                <label for="confirm-password" data-i18n="register_page.form.password.confirm_label">Confirm Password<span class="required">*</span></label>
+                <input type="text" id="confirm-password" data-i18n-placeholder="register_page.form.password.confirm_placeholder" placeholder="Confirm password" required>
                 <span class="error-message"></span>
             </div>
             <div class="form-group password-group" id="auto-password" style="display: none;">
-                <label>Generated Password</label>
+                <label data-i18n="register_page.form.generated_password.label">Generated Password</label>
                 <input type="text" id="generated-password" readonly>
-                <button type="button" id="regenerate-password">Regenerate</button>
+                <button type="button" id="regenerate-password" data-i18n="register_page.form.generated_password.regenerate">Regenerate</button>
             </div>
-            <button type="button" id="save-btn" style="display: none;">Save</button>
+            <button type="button" id="save-btn" style="display: none;" data-i18n="profile_page.form.save">Save</button>
             <div id="confirm-modal" class="modal">
                 <div class="modal-content">
                     <span class="close">×</span>
-                    <h2>Confirm Changes</h2>
-                    <p>Are you sure you want to save the changes to your profile?</p>
-                    <button type="button" id="confirm-save" class="modal-button">Save Changes</button>
+                    <h2 data-i18n="profile_page.modal.title">Confirm Changes</h2>
+                    <p data-i18n="profile_page.modal.message">Are you sure you want to save the changes to your profile?</p>
+                    <button type="button" id="confirm-save" class="modal-button" data-i18n="profile_page.modal.confirm_button">Save Changes</button>
                 </div>
             </div>
         </form>
     </section>
 </main>
 <footer id="footer"></footer>
-<script src="/header_footer/header_footer_js.js"></script>
+<script type="module" src="/header_footer/header_footer_js.js"></script>
 <script src="/preloader/preloader.js"></script>
 <script type="module" src="/profile/profile.js"></script>
+<script type="module" src="/header_footer/language-switcher.js"></script>
 </body>
 </html>
