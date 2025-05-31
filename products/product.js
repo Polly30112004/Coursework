@@ -1,736 +1,528 @@
-// Get product ID from URL
-const urlParams = new URLSearchParams(window.location.search);
-const productId = urlParams.get('id');
+// product.js
 
-// Initialize editing state
-let isEditing = false;
-const userLocale = localStorage.getItem('language') || 'en';
+import { getTranslations, applyLanguage } from '/header_footer/language-switcher.js';
+import { updateHeader } from '/header_footer/header_footer_js.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    // Check authentication and set isAdmin based on userName
-    function checkAuth() {
+console.log('localStorage:', localStorage);
+
+document.addEventListener('DOMContentLoaded', () => {
+    let currentUser = null;
+    let productId = null;
+    let availableDates = [];
+
+    const getCurrentTranslations = () => getTranslations(localStorage.getItem('language') || 'en');
+    const getCurrentLanguage = () => localStorage.getItem('language') || 'en';
+
+    function checkUser() {
         const user = localStorage.getItem('currentUser');
         if (user) {
             currentUser = JSON.parse(user);
-            if (!currentUser.hasOwnProperty('isAdmin')) {
-                currentUser.isAdmin = /admin/i.test(currentUser.userName);
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            }
             return true;
         }
         return false;
     }
 
-    // Redirect to login if not authenticated
-    if (!checkAuth()) {
-        window.location.href = '/log_in/log.html';
-        return;
+    function isAdmin() {
+        const admin = currentUser && (currentUser.userName === 'Admin' || currentUser.isAdmin === true);
+        console.log('isAdmin check:', admin, 'currentUser:', currentUser);
+        return admin;
     }
 
-    // Load product data or initialize new product
-    let product;
-    if (productId) {
-        // Edit mode
-        console.log('Fetching data for productId:', productId);
-        try {
-            const response = await fetch(`http://localhost:3000/products/${productId}`);
-            console.log('Response status:', response.status);
-            if (!response.ok) {
-                throw new Error(`Product not found: ${response.status}`);
-            }
-            product = await response.json();
-            console.log('Product data:', product);
-            // Ensure availability_dates is an array
-            product.availability_dates = Array.isArray(product.availability_dates) ? product.availability_dates : [];
-        } catch (error) {
-            console.error('Error loading product:', error);
-            displayError('Failed to load product. Please try again.');
-            return;
-        }
-    } else if (currentUser.isAdmin) {
-        // Create mode
-        const now = new Date();
-        now.setMinutes(0, 0, 0); // Round to next hour
-        now.setHours(now.getHours() + 1);
-        product = {
-            title: '',
-            type: '',
-            price: '',
-            description: '',
-            image: '',
-            availability_dates: ['group coaching', 'individual coaching', 'consultation'].includes('') ? [now.toISOString()] : []
-        };
-        console.log('Entering create mode with empty product');
-    } else {
-        displayError('Access denied: Admins only.');
-        return;
+    function getProductId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('id');
     }
 
-    if (currentUser.isAdmin) {
-        enterEditMode(product, !productId); // isNewProduct = true if no productId
-    } else {
-        displayProduct(product);
-        addUserControls(product);
-    }
-
-    // Display product data (for non-admins)
-    function displayProduct(product) {
-        let titleElement = document.getElementById('product-title');
-        if (!titleElement) {
-            titleElement = document.createElement('h1');
-            titleElement.id = 'product-title';
-            document.querySelector('.product-info').prepend(titleElement);
-        }
-        titleElement.textContent = product.title || 'No title';
-
-        let imageElement = document.getElementById('product-image');
-        if (!imageElement) {
-            imageElement = document.createElement('img');
-            imageElement.id = 'product-image';
-            imageElement.alt = 'Product Image';
-            document.getElementById('product-image-container').appendChild(imageElement);
-        }
-        imageElement.src = product.image || '/img/placeholder.jpg';
-        imageElement.alt = product.title || 'Product image';
-
-        let typeElement = document.getElementById('product-type');
-        if (!typeElement) {
-            typeElement = document.createElement('div');
-            typeElement.id = 'product-type';
-            document.querySelector('.product-info').appendChild(typeElement);
-        }
-        if (product.type) {
-            typeElement.textContent = `Type: ${product.type}`;
-            typeElement.className = 'info-item';
-            typeElement.style.display = 'block';
+    function waitForHeader(callback) {
+        if (document.getElementById('header')?.innerHTML) {
+            callback();
         } else {
-            typeElement.style.display = 'none';
-        }
-
-        let priceElement = document.getElementById('product-price');
-        if (!priceElement) {
-            priceElement = document.createElement('p');
-            priceElement.id = 'product-price';
-            document.querySelector('.product-info').appendChild(priceElement);
-        }
-        if (product.price) {
-            priceElement.textContent = `Price: $${product.price}`;
-            priceElement.className = 'info-item price';
-            priceElement.style.display = 'block';
-        } else {
-            priceElement.style.display = 'none';
-        }
-
-        let descriptionElement = document.getElementById('product-description');
-        if (!descriptionElement) {
-            descriptionElement = document.createElement('p');
-            descriptionElement.id = 'product-description';
-            document.querySelector('.product-info').appendChild(descriptionElement);
-        }
-        if (product.description) {
-            descriptionElement.textContent = `Description: ${product.description}`;
-            descriptionElement.className = 'info-item description';
-            descriptionElement.style.display = 'block';
-        } else {
-            descriptionElement.style.display = 'none';
-        }
-
-        let datesElement = document.getElementById('product-dates');
-        if (!datesElement) {
-            datesElement = document.createElement('div');
-            datesElement.id = 'product-dates';
-            document.querySelector('.product-info').appendChild(datesElement);
-        }
-        datesElement.innerHTML = '';
-        datesElement.className = 'info-item dates';
-        if (product.availability_dates.length > 0 && product.type !== 'book') {
-            const label = document.createElement('label');
-            label.textContent = 'Available dates: ';
-            label.setAttribute('for', 'availability-dates-select');
-
-            const select = document.createElement('select');
-            select.id = 'availability-dates-select';
-            product.availability_dates.forEach(date => {
-                const option = document.createElement('option');
-                option.value = date;
-               option.textContent = new Date(date).toLocaleString(userLocale, {
-                month: 'numeric',
-                day: 'numeric',
-                year: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: false
-                });
-                select.appendChild(option);
-            });
-
-            datesElement.appendChild(label);
-            datesElement.appendChild(select);
-            datesElement.style.display = 'block';
-        } else {
-            datesElement.style.display = 'none';
-        }
-
-        let actionButtons = document.getElementById('action-buttons');
-        if (!actionButtons) {
-            actionButtons = document.createElement('div');
-            actionButtons.id = 'action-buttons';
-            document.querySelector('.product-info').appendChild(actionButtons);
+            document.addEventListener('headerLoaded', callback, { once: true });
         }
     }
 
-    // Add user controls (Add to Cart button)
-    function addUserControls(product) {
-        const actionButtons = document.getElementById('action-buttons');
-        if (!actionButtons) {
-            console.error('Action buttons container not found.');
-            return;
-        }
-        actionButtons.innerHTML = '';
-        const addToCartBtn = document.createElement('button');
-        addToCartBtn.id = 'add-to-cart-btn';
-        addToCartBtn.className = 'add-to-cart';
-        addToCartBtn.innerHTML = '<img src="/img/shopping_basket.png" alt="Cart icon"> Add to Cart';
-        actionButtons.appendChild(addToCartBtn);
-
-        addToCartBtn.addEventListener('click', async () => {
-            if (!checkAuth()) {
-                window.location.href = '/log_in/log.html';
+    function setupLanguageInputs() {
+        waitForHeader(() => {
+            const langRadios = document.querySelectorAll('input[name="language"]');
+            if (langRadios.length === 0) {
+                console.warn('No language radio buttons found after header load');
                 return;
             }
-
-            const selectedDate = product.availability_dates.length > 0 && product.type !== 'book'
-                ? document.getElementById('availability-dates-select')?.value || null
-                : null;
-
-            const cartItem = {
-                productId: parseInt(productId),
-                userName: currentUser.userName,
-                selectedDate: selectedDate,
-                productDetails: {
-                    title: product.title,
-                    type: product.type,
-                    price: product.price,
-                    description: product.description,
-                    image: product.image
-                }
-            };
-
-            console.log('Adding to cart:', cartItem);
-
-            try {
-                const response = await fetch('http://localhost:3000/cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(cartItem)
+            langRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const lang = radio.value;
+                    localStorage.setItem('language', lang);
+                    applyLanguage(lang);
+                    renderProduct();
                 });
-
-                if (!response.ok) {
-                    throw new Error(`Failed to add to cart: ${response.status}`);
+                if (radio.value === getCurrentLanguage()) {
+                    radio.checked = true;
                 }
-
-                await updateCartBadge();
-                displaySuccess('Product successfully added to cart.');
-            } catch (error) {
-                console.error('Error adding to cart:', error);
-                displayError('Failed to add product to cart. Please try again.');
-            }
+            });
         });
     }
 
-    // Enter edit mode for admins (edit or create)
-    function enterEditMode(product, isNewProduct = false) {
-        isEditing = true;
-
-        const imageContainer = document.getElementById('product-image-container');
-        // Clear existing image or placeholder
-        imageContainer.innerHTML = '';
-
-        if (isNewProduct) {
-            // Create mode: Grey placeholder
-            const placeholder = document.createElement('div');
-            placeholder.className = 'image-placeholder';
-            imageContainer.appendChild(placeholder);
-        } else {
-            // Edit mode: Image
-            let imageElement = document.createElement('img');
-            imageElement.id = 'product-image';
-            imageElement.alt = 'Product Image';
-            imageElement.src = product.image || '/img/placeholder.jpg';
-            imageContainer.appendChild(imageElement);
+    function showMessage(message, isSuccess = false) {
+        const messageElement = document.getElementById('error-message');
+        if (!messageElement) {
+            console.error('Message element not found');
+            return;
         }
 
-        // Title
-        let titleElement = document.getElementById('product-title');
-        const titleContainer = document.createElement('div');
-        titleContainer.className = 'field-container';
-        const titleLabel = document.createElement('label');
-        titleLabel.textContent = 'Title';
-        titleLabel.setAttribute('for', 'title-input');
-        const titleInput = document.createElement('input');
-        titleInput.id = 'title-input';
-        titleInput.className = 'edit-field';
-        titleInput.value = product.title || '';
-        titleContainer.appendChild(titleLabel);
-        titleContainer.appendChild(titleInput);
-        titleElement.replaceWith(titleContainer);
+        messageElement.textContent = message;
+        messageElement.className = isSuccess ? 'success-message' : 'error-message';
+        messageElement.style.display = 'block';
 
-        // Type (select)
-        let typeElement = document.getElementById('product-type');
-        const typeContainer = document.createElement('div');
-        typeContainer.className = 'field-container';
-        const typeLabel = document.createElement('label');
-        typeLabel.textContent = 'Type';
-        typeLabel.setAttribute('for', 'type-select');
-        const typeSelect = document.createElement('select');
-        typeSelect.id = 'type-select';
-        typeSelect.className = 'type-select';
-        const types = ['group coaching', 'individual coaching', 'consultation', 'book'];
-        types.forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.textContent = type;
-            if (type === product.type) option.selected = true;
-            typeSelect.appendChild(option);
-        });
-        typeContainer.appendChild(typeLabel);
-        typeContainer.appendChild(typeSelect);
-        typeElement.replaceWith(typeContainer);
-
-        // Price
-        let priceElement = document.getElementById('product-price');
-        const priceContainer = document.createElement('div');
-        priceContainer.className = 'field-container';
-        const priceLabel = document.createElement('label');
-        priceLabel.textContent = 'Price ($)';
-        priceLabel.setAttribute('for', 'price-input');
-        const priceInput = document.createElement('input');
-        priceInput.id = 'price-input';
-        priceInput.className = 'edit-field';
-        priceInput.type = 'number';
-        priceInput.min = '0.01';
-        priceInput.step = '0.01';
-        priceInput.value = product.price || '';
-        priceContainer.appendChild(priceLabel);
-        priceContainer.appendChild(priceInput);
-        priceElement.replaceWith(priceContainer);
-
-        // Description
-        let descriptionElement = document.getElementById('product-description');
-        const descriptionContainer = document.createElement('div');
-        descriptionContainer.className = 'field-container';
-        const descriptionLabel = document.createElement('label');
-        descriptionLabel.textContent = 'Description';
-        descriptionLabel.setAttribute('for', 'description-textarea');
-        const descriptionTextarea = document.createElement('textarea');
-        descriptionTextarea.id = 'description-textarea';
-        descriptionTextarea.className = 'edit-field textarea';
-        descriptionTextarea.value = product.description || '';
-        descriptionContainer.appendChild(descriptionLabel);
-        descriptionContainer.appendChild(descriptionTextarea);
-        descriptionElement.replaceWith(descriptionContainer);
-
-        // Image upload
-        let imageUploadDiv = document.querySelector('.image-upload');
-        if (imageUploadDiv) imageUploadDiv.remove();
-        imageUploadDiv = document.createElement('div');
-        imageUploadDiv.className = 'image-upload';
-        const imageLabel = document.createElement('label');
-        imageLabel.textContent = 'Image';
-        imageLabel.className = 'image-upload-label';
-        imageLabel.setAttribute('for', 'image-input');
-        const imageInput = document.createElement('input');
-        imageInput.type = 'file';
-        imageInput.accept = 'image/jpeg,image/png';
-        imageInput.id = 'image-input';
-        imageInput.style.display = 'none';
-        imageUploadDiv.appendChild(imageLabel);
-        imageUploadDiv.appendChild(imageInput);
-        imageContainer.appendChild(imageUploadDiv);
-
-        imageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                console.log('Selected file:', file.name, file.type, file.size);
-                const previewImg = document.createElement('img');
-                previewImg.id = 'product-image';
-                previewImg.alt = 'Product Image Preview';
-                previewImg.src = URL.createObjectURL(file);
-                const placeholder = imageContainer.querySelector('.image-placeholder');
-                if (placeholder) placeholder.remove();
-                const existingImg = imageContainer.querySelector('#product-image');
-                if (existingImg) existingImg.remove();
-                imageContainer.insertBefore(previewImg, imageUploadDiv);
-            }
-        });
-
-        // Availability Dates
-        let datesElement = document.getElementById('product-dates');
-        datesElement.innerHTML = '';
-        const datesContainer = document.createElement('div');
-        datesContainer.id = 'dates-container';
-        const datesLabel = document.createElement('label');
-        datesLabel.textContent = 'Availability Dates';
-        const datesList = document.createElement('div');
-        datesList.className = 'dates-list';
-        datesContainer.appendChild(datesLabel);
-        datesContainer.appendChild(datesList);
-
-        if (product.type !== 'book') {
-            product.availability_dates.forEach(date => {
-                const dateItem = createDateItem(date);
-                datesList.appendChild(dateItem);
-            });
-
-            const addDateBtn = document.createElement('button');
-            addDateBtn.className = 'add-date-btn';
-            addDateBtn.textContent = 'Add new date';
-            addDateBtn.addEventListener('click', () => {
-                const datesList = document.querySelector('.dates-list');
-                const allDates = Array.from(datesList.querySelectorAll('input[type="datetime-local"]'))
-                    .map(input => input.value)
-                    .filter(val => val)
-                    .map(val => new Date(val).getTime());
-
-                let newDate;
-                if (allDates.length === 0) {
-                    newDate = new Date();
-                    newDate.setMinutes(0, 0, 0);
-                    newDate.setHours(newDate.getHours() + 1);
-                } else {
-                    const lastDate = new Date(Math.max(...allDates));
-                    newDate = new Date(lastDate.getTime() + 60 * 60 * 1000);
-                }
-
-                let attempts = 0;
-                const maxAttempts = 10;
-                while (allDates.includes(newDate.getTime()) && attempts < maxAttempts) {
-                    newDate = new Date(newDate.getTime() + 60 * 60 * 1000);
-                    attempts++;
-                }
-
-                if (attempts >= maxAttempts) {
-                    displayError('Cannot add new date: too many similar dates.');
-                    return;
-                }
-
-                const dateItem = createDateItem(newDate.toISOString());
-                datesList.appendChild(dateItem);
-            });
-            datesContainer.appendChild(addDateBtn);
-        }
-
-        datesElement.appendChild(datesContainer);
-
-        typeSelect.addEventListener('change', () => {
-            if (typeSelect.value === 'book') {
-                datesContainer.style.display = 'none';
-                datesList.innerHTML = '';
-            } else {
-                if (datesList.children.length === 0) {
-                    const now = new Date();
-                    now.setMinutes(0, 0, 0);
-                    now.setHours(now.getHours() + 1);
-                    const dateItem = createDateItem(now.toISOString());
-                    datesList.appendChild(dateItem);
-                }
-                datesContainer.style.display = 'block';
-            }
-        });
-
-        if (product.type === 'book') {
-            datesContainer.style.display = 'none';
-        } else {
-            datesContainer.style.display = 'block';
-        }
-
-        const actionButtons = document.getElementById('action-buttons');
-        if (actionButtons) {
-            actionButtons.innerHTML = '';
-            const saveBtn = document.createElement('button');
-            saveBtn.className = 'save-btn';
-            saveBtn.textContent = isNewProduct ? 'Create Product' : 'Save';
-            actionButtons.appendChild(saveBtn);
-
-            saveBtn.addEventListener('click', () => saveChanges(product, titleInput, typeSelect, priceInput, descriptionTextarea, imageInput, datesList, isNewProduct));
-        } else {
-            console.error('Action buttons container not found in edit mode.');
-        }
+        setTimeout(() => {
+            messageElement.style.display = 'none';
+        }, 5000);
     }
 
-    // Create date item for editing
-function createDateItem(date) {
-    const dateItem = document.createElement('div');
-    dateItem.className = 'date-item';
-    const dateInput = document.createElement('input');
-    dateInput.type = 'datetime-local';
-    dateInput.value = new Date(date).toISOString().slice(0, 16);
-    dateInput.lang = userLocale;
-    dateInput.title = new Date(date).toLocaleString(userLocale, {
-        month: 'numeric',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit'
-    });
-
-    dateInput.addEventListener('change', () => {
-        const datesList = document.querySelector('.dates-list');
-        const dateInputs = Array.from(datesList.querySelectorAll('input[type="datetime-local"]'));
-        const allDates = dateInputs
-            .map(input => ({ value: input.value, element: input }))
-            .filter(({ value, element }) => value && element !== dateInput)
-            .map(({ value }) => value);
-        console.log('datesList:', datesList, 'allDates:', allDates);
-        if (allDates.includes(dateInput.value)) {
-            displayError('This date is already added! Please choose another.');
-            dateInput.value = '';
+    function formatDate(dateStr, lang) {
+        if (!dateStr) return '';
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) {
+            console.error('Invalid date:', dateStr);
+            return 'Invalid Date';
         }
-    });
+        const pad = (num) => String(num).padStart(2, '0');
+        const day = pad(date.getDate());
+        const month = pad(date.getMonth() + 1);
+        const year = date.getFullYear();
+        const hours = pad(date.getHours());
+        const minutes = pad(date.getMinutes());
+        return `${day}.${month}.${year} ${hours}:${minutes}`;
+    }
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.addEventListener('click', () => {
-        if (productId) {
-            checkDateDeletion(date).then(canDelete => {
-                if (canDelete) {
-                    dateItem.remove();
-                } else {
-                    displayError('Cannot delete this date as it is linked to a purchased product.');
-                }
-            });
-        } else {
-            dateItem.remove();
-        }
-    });
-    dateItem.appendChild(dateInput);
-    dateItem.appendChild(deleteBtn);
-    return dateItem;
-}
-    // Check if date can be deleted
-    async function checkDateDeletion(date) {
-        try {
-            const response = await fetch(`http://localhost:3000/purchased?productId=${productId}&selectedDate=${date}`);
-            if (!response.ok) {
-                throw new Error(`Failed to check purchased items: ${response.status}`);
-            }
-            const purchasedItems = await response.json();
-            return purchasedItems.length === 0;
-        } catch (error) {
-            console.error('Error checking purchased items:', error);
+    function validateForm() {
+        const t = getCurrentTranslations();
+        const titleEn = document.getElementById('title-en')?.value.trim();
+        const titleRu = document.getElementById('title-ru')?.value.trim();
+        const descriptionEn = document.getElementById('description-en')?.value.trim();
+        const descriptionRu = document.getElementById('description-ru')?.value.trim();
+        const type = document.getElementById('type-select')?.value;
+        const price = parseFloat(document.getElementById('price')?.value);
+        const imageUrl = document.getElementById('image-url')?.value.trim();
+
+        if (!titleEn || !titleRu) {
+            showMessage(t.product_page.messages.error.validation.title);
             return false;
         }
+        if (!descriptionEn || !descriptionRu) {
+            showMessage(t.product_page.messages.error.validation.description);
+            return false;
+        }
+        if (!type) {
+            showMessage(t.product_page.messages.error.validation.type);
+            return false;
+        }
+        if (isNaN(price) || price <= 0) {
+            showMessage(t.product_page.messages.error.validation.price);
+            return false;
+        }
+        if (!imageUrl) {
+            showMessage(t.product_page.messages.error.validation.image);
+            return false;
+        }
+        if (!imageUrl.match(/^(https?:\/\/[^\s/$.?#].[^\s]*\.(png|jpg|jpeg|gif)$)|(file:\/\/\/[A-Za-z]:\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)|(\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)|(\.\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)/i)) {
+            showMessage(t.product_page.messages.error.validation.image_invalid || 'Invalid image URL. Please provide a valid URL or path (png, jpg, jpeg, gif).');
+            return false;
+        }
+        if (type !== 'book' && availableDates.length === 0) {
+            showMessage(t.product_page.messages.error.validation.dates);
+            return false;
+        }
+        if (new Set(availableDates).size !== availableDates.length) {
+            showMessage(t.product_page.messages.error.validation.same_dates);
+            return false;
+        }
+        return true;
     }
 
-    // Validate fields
-    function validateFields(title, type, price, description, imageFile, imagePath, dates, isBook) {
-        if (!title.trim()) return 'Title cannot be empty.';
-        if (!type) return 'Type must be selected.';
-        if (!description.trim()) return 'Description cannot be empty.';
-        if (isNaN(price) || price <= 0) return 'Price must be greater than 0.';
-        if (!imageFile && !imagePath) return 'An image must be provided.';
-        if (!isBook && dates.length === 0) return 'At least one availability date is required for non-book products.';
-        return null;
+    function updateAvailableDates() {
+        const datesList = document.getElementById('dates-list');
+        if (!datesList) return;
+
+        const dateInputs = datesList.querySelectorAll('input[type="datetime-local"]');
+        availableDates = Array.from(dateInputs)
+            .map(input => input.value)
+            .filter(date => date); // Фильтруем пустые значения
     }
 
-    // Convert file to Base64
-    function fileToBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = () => reject(new Error('Failed to read file as Base64'));
-            reader.readAsDataURL(file);
-        });
-    }
+    function addDateField(date = '') {
+        const t = getCurrentTranslations();
+        const datesList = document.getElementById('dates-list');
+        if (!datesList) return;
 
-    // Save changes
-    async function saveChanges(product, titleInput, typeSelect, priceInput, descriptionTextarea, imageInput, datesList, isNewProduct) {
-        try {
-            const dates = typeSelect.value === 'book' ? [] : Array.from(datesList.querySelectorAll('input[type="datetime-local"]'))
-                .map(input => input.value)
-                .filter(val => val);
+        const dateObj = date ? new Date(date) : new Date();
+        if (isNaN(dateObj.getTime())) {
+            console.error('Invalid date in addDateField:', date);
+            return;
+        }
 
-            const uniqueDates = new Set(dates);
-            if (uniqueDates.size < dates.length) {
-                displayError('Dates cannot be the same!');
-                return;
-            }
+        const formattedDate = dateObj.toISOString().slice(0, 16);
+        const dateItem = document.createElement('div');
+        dateItem.className = 'date-item';
+        dateItem.innerHTML = `
+            <input type="datetime-local" value="${formattedDate}" required>
+            <span class="date-display">${formatDate(formattedDate, getCurrentLanguage())}</span>
+            <button type="button" class="delete-date" data-i18n="product_page.labels.delete_date">${t.product_page.labels.delete_date || 'Удалить дату'}</button>
+        `;
+        datesList.appendChild(dateItem);
 
-            const updatedProduct = {
-                title: titleInput.value,
-                type: typeSelect.value,
-                price: parseFloat(priceInput.value),
-                description: descriptionTextarea.value,
-                availability_dates: typeSelect.value === 'book' ? [] : Array.from(uniqueDates).map(date => new Date(date).toISOString())
-            };
+        const deleteBtn = dateItem.querySelector('.delete-date');
+        deleteBtn.addEventListener('click', () => {
+            const dateValue = dateItem.querySelector('input').value;
+            if (!dateValue) return;
 
-            // Validate fields
-            const validationError = validateFields(
-                updatedProduct.title,
-                updatedProduct.type,
-                updatedProduct.price,
-                updatedProduct.description,
-                imageInput.files[0],
-                isNewProduct ? null : product.image,
-                updatedProduct.availability_dates,
-                updatedProduct.type === 'book'
-            );
-            if (validationError) {
-                displayError(validationError);
-                return;
-            }
-
-            // Handle image upload
-            if (imageInput.files[0]) {
-                const file = imageInput.files[0];
-                console.log('Uploading file:', file.name, file.type, file.size);
-
-                // Convert to Base64
-                const base64 = await fileToBase64(file);
-                console.log('Base64 length:', base64.length);
-
-                const response = await fetch('http://localhost:3000/upload', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        base64,
-                        filename: file.name
+            if (productId) {
+                fetch(`http://localhost:3000/purchased?productId=${productId}`)
+                    .then(response => response.json())
+                    .then(purchasedItems => {
+                        if (purchasedItems.some(item => item.selectedDate === dateValue)) {
+                            showMessage(t.product_page.messages.error.validation.purchased_date);
+                        } else {
+                            dateItem.remove();
+                            updateAvailableDates();
+                        }
                     })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(`Failed to upload image: ${errorData.error || response.status}`);
-                }
-
-                const result = await response.json();
-                if (!result.path) {
-                    throw new Error('No path returned from upload');
-                }
-                updatedProduct.image = result.path;
-                console.log('Image uploaded:', result.path);
-            } else if (!isNewProduct) {
-                updatedProduct.image = product.image;
+                    .catch(error => {
+                        console.error('Error checking purchased items:', error);
+                        showMessage(t.product_page.messages.error.load);
+                    });
+            } else {
+                dateItem.remove();
+                updateAvailableDates();
             }
+        });
 
-            console.log('Saving product:', updatedProduct);
+        const dateInput = dateItem.querySelector('input');
+        dateInput.addEventListener('change', () => {
+            const newDate = dateInput.value;
+            if (newDate) {
+                dateItem.querySelector('.date-display').textContent = formatDate(newDate, getCurrentLanguage());
+                updateAvailableDates();
+            }
+        });
 
-            let response;
-            if (isNewProduct) {
-                // Create new product
-                response = await fetch('http://localhost:3000/products', {
+        updateAvailableDates();
+    }
+
+    function saveProduct(e) {
+        e.preventDefault();
+        if (!isAdmin()) {
+            showMessage(getCurrentTranslations().product_page.messages.error.access_denied);
+            return;
+        }
+
+        if (!validateForm()) return;
+
+        const product = {
+            title: {
+                en: document.getElementById('title-en').value,
+                ru: document.getElementById('title-ru').value
+            },
+            description: {
+                en: document.getElementById('description-en').value,
+                ru: document.getElementById('description-ru').value
+            },
+            type: {
+                en: document.getElementById('type-select').value,
+                ru: document.getElementById('type-select').selectedOptions[0].text
+            },
+            price: parseFloat(document.getElementById('price').value),
+            image: document.getElementById('image-url').value,
+            availability_dates: availableDates
+        };
+
+        const method = productId ? 'PUT' : 'POST';
+        const url = productId ? `http://localhost:3000/products/${productId}` : 'http://localhost:3000/products';
+
+        fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(product)
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to save product');
+                return response.json();
+            })
+            .then(() => {
+                const t = getCurrentTranslations();
+                showMessage(productId ? t.product_page.messages.success.save : t.product_page.messages.success.create, true);
+            })
+            .catch(error => {
+                console.error('Error saving product:', error);
+                showMessage(t.product_page.messages.error.save.replace('{error}', error.message));
+            });
+    }
+
+    function addToCart() {
+        if (!currentUser || currentUser.userName === 'guest') {
+            window.location.href = '/log_in/log.html';
+            return;
+        }
+        if (isAdmin()) {
+            showMessage(getCurrentTranslations().product_page.messages.error.admin_cart_error || 'Admin cannot add products to cart.');
+            return;
+        }
+
+        const selectedDate = document.getElementById('date-select')?.value;
+        fetch(`http://localhost:3000/products/${productId}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load product data');
+                return response.json();
+            })
+            .then(product => {
+                const cartItem = {
+                    productId: parseInt(productId),
+                    userName: currentUser.userName,
+                    selectedDate: selectedDate || null,
+                    productDetails: {
+                        title: product.title,
+                        type: product.type,
+                        price: product.price,
+                        description: product.description,
+                        image: product.image
+                    }
+                };
+
+                return fetch('http://localhost:3000/cart', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updatedProduct)
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cartItem)
                 });
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to add product to cart');
+                waitForHeader(() => updateHeader(true));
+                showMessage(getCurrentTranslations().product_page.messages.success.add_to_cart, true);
+            })
+            .catch(error => {
+                console.error('Error adding to cart:', error);
+                showMessage(getCurrentTranslations().product_page.messages.error.load);
+            });
+    }
+
+    function updateDatesVisibility() {
+        const typeSelect = document.getElementById('type-select');
+        const datesContainer = document.querySelector('.field-container:has(#dates-list)');
+        if (typeSelect && datesContainer) {
+            const isBook = typeSelect.value === 'book';
+            datesContainer.style.display = isBook ? 'none' : 'block';
+            if (isBook) {
+                availableDates = [];
+                document.getElementById('dates-list').innerHTML = '';
+            }
+        }
+    }
+
+    function renderProduct() {
+        const userView = document.getElementById('user-view');
+        const adminView = document.getElementById('admin-view');
+        const preloader = document.getElementById('preloader');
+
+        if (!userView || !adminView) {
+            console.error('View containers not found');
+            showMessage('Failed to load view containers');
+            preloader.style.display = 'none';
+            return;
+        }
+
+        preloader.style.display = 'block';
+
+        const t = getCurrentTranslations();
+        const lang = getCurrentLanguage();
+
+        if (isAdmin()) {
+            console.log('Rendering admin view');
+            userView.style.display = 'none';
+            adminView.style.display = 'block';
+
+            if (!productId) {
+                document.getElementById('title-en').value = '';
+                document.getElementById('title-ru').value = '';
+                document.getElementById('description-en').value = '';
+                document.getElementById('description-ru').value = '';
+                document.getElementById('type-select').value = 'group_coaching';
+                document.getElementById('price').value = '';
+                document.getElementById('image-url').value = '';
+                document.getElementById('dates-list').innerHTML = '';
+                availableDates = [];
+                document.getElementById('save-btn').setAttribute('data-i18n', 'product_page.labels.create');
+                document.getElementById('save-btn').textContent = t.product_page.labels.create || 'Create Product';
+                preloader.style.display = 'none';
+                applyLanguage(lang);
             } else {
-                // Update existing product
-                response = await fetch(`http://localhost:3000/products/${productId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updatedProduct)
+                fetch(`http://localhost:3000/products/${productId}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to load product');
+                        return response.json();
+                    })
+                    .then(product => {
+                        console.log('Loaded product:', product);
+                        document.getElementById('title-en').value = product.title.en || '';
+                        document.getElementById('title-ru').value = product.title.ru || '';
+                        document.getElementById('description-en').value = product.description.en || '';
+                        document.getElementById('description-ru').value = product.description.ru || '';
+
+                        const typeSelect = document.getElementById('type-select');
+                        const productType = product.type?.en?.toLowerCase();
+                        console.log('Product type.en:', productType);
+                        if (productType && typeSelect.options) {
+                            const validTypes = ['group_coaching', 'individual_coaching', 'consultation', 'book'];
+                            if (validTypes.includes(productType)) {
+                                typeSelect.value = productType;
+                            } else {
+                                console.warn('Invalid product type:', productType);
+                                typeSelect.value = 'group_coaching';
+                            }
+                        } else {
+                            typeSelect.value = 'group_coaching';
+                        }
+
+                        document.getElementById('price').value = product.price || '';
+                        document.getElementById('image-url').value = product.image || '';
+                        document.getElementById('dates-list').innerHTML = '';
+                        availableDates = [];
+
+                        if (product.availability_dates && Array.isArray(product.availability_dates)) {
+                            console.log('Availability dates:', product.availability_dates);
+                            product.availability_dates.forEach(date => {
+                                if (date) {
+                                    const dateObj = new Date(date);
+                                    if (!isNaN(dateObj.getTime())) {
+                                        addDateField(date);
+                                    } else {
+                                        console.warn('Skipping invalid date:', date);
+                                    }
+                                }
+                            });
+                        } else {
+                            console.log('No valid availability dates found');
+                        }
+
+                        document.getElementById('save-btn').setAttribute('data-i18n', 'product_page.labels.save');
+                        document.getElementById('save-btn').textContent = t.product_page.labels.save || 'Save';
+                        updateDatesVisibility();
+                        preloader.style.display = 'none';
+                        applyLanguage(lang);
+                    })
+                    .catch(error => {
+                        console.error('Error loading product:', error);
+                        showMessage(t.product_page.messages.error.load);
+                        preloader.style.display = 'none';
+                    });
+            }
+
+            const typeSelect = document.getElementById('type-select');
+            if (typeSelect) {
+                console.log('Type select options:', Array.from(typeSelect.options).map(opt => ({
+                    value: opt.value,
+                    text: opt.textContent
+                })));
+                typeSelect.addEventListener('change', updateDatesVisibility);
+                updateDatesVisibility();
+            }
+        } else {
+            console.log('Rendering user view');
+            adminView.style.display = 'none';
+            userView.style.display = 'flex';
+
+            if (!productId) {
+                userView.innerHTML = `<p data-i18n="product_page.messages.error.load">${t.product_page.messages.error.load}</p>`;
+                preloader.style.display = 'none';
+                return;
+            }
+
+            fetch(`http://localhost:3000/products/${productId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to load product');
+                    return response.json();
+                })
+                .then(product => {
+                    document.getElementById('product-title').textContent = product.title[lang] || product.title.en;
+                    document.getElementById('product-type').textContent = t.product_page.labels.type + ': ' + (product.type[lang] || product.type.en);
+                    document.getElementById('product-price').textContent = t.product_page.labels.price + ': $' + product.price;
+                    document.getElementById('product-description').textContent = product.description[lang] || product.description.en;
+                    document.getElementById('product-image').src = product.image || '/img/placeholder.png';
+                    document.getElementById('product-image').alt = product.title[lang] || product.title.en;
+
+                    const datesContainer = document.getElementById('product-dates');
+                    const dateSelect = document.getElementById('date-select');
+                    if (product.type.en === 'book') {
+                        datesContainer.style.display = 'none';
+                    } else {
+                        datesContainer.style.display = 'block';
+                        dateSelect.innerHTML = '';
+                        if (product.availability_dates?.length) {
+                            product.availability_dates.forEach(date => {
+                                if (date) {
+                                    const dateObj = new Date(date);
+                                    if (!isNaN(dateObj.getTime())) {
+                                        const option = document.createElement('option');
+                                        option.value = date;
+                                        option.textContent = formatDate(date, lang);
+                                        dateSelect.appendChild(option);
+                                    }
+                                }
+                            });
+                        } else {
+                            dateSelect.innerHTML = `<option value="" disabled>${t.product_page.labels.availability_dates}</option>`;
+                        }
+                    }
+
+                    preloader.style.display = 'none';
+                    applyLanguage(lang);
+                })
+                .catch(error => {
+                    console.error('Error loading product:', error);
+                    showMessage(t.product_page.messages.error.load);
+                    preloader.style.display = 'none';
                 });
-            }
-
-            if (!response.ok) {
-                throw new Error(`Failed to save product: ${response.status}`);
-            }
-
-            const savedProduct = await response.json();
-            isEditing = false;
-            if (isNewProduct) {
-                // Redirect to the new product's page
-                window.location.href = `/catalog/catalog.html`;
-            } else {
-                const productInfo = document.querySelector('.product-info');
-                productInfo.innerHTML = `
-                    <h1 id="product-title"></h1>
-                    <div id="product-type" class="info-item"></div>
-                    <p id="product-price" class="info-item price"></p>
-                    <p id="product-description" class="info-item description"></p>
-                    <div id="product-dates" class="info-item dates"></div>
-                    <div id="action-buttons"></div>
-                `;
-                enterEditMode(updatedProduct);
-                displaySuccess('Product successfully updated.');
-            }
-        } catch (error) {
-            console.error('Error saving product:', error);
-            displayError(`Failed to save product: ${error.message}`);
         }
     }
 
-    // Display error message
-    function displayError(message) {
-        const productInfo = document.querySelector('.product-info');
-        if (productInfo) {
-            const errorDiv = document.createElement('div');
-            errorDiv.style.color = 'red';
-            errorDiv.textContent = message;
-            productInfo.appendChild(errorDiv);
-            setTimeout(() => errorDiv.remove(), 3000);
+    function setupEventListeners() {
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+        const adminForm = document.getElementById('admin-form');
+        const addDateBtn = document.getElementById('add-date-btn');
+
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', addToCart);
+        }
+
+        if (adminForm) {
+            adminForm.addEventListener('submit', saveProduct);
+        }
+
+        if (addDateBtn) {
+            addDateBtn.addEventListener('click', () => {
+                const t = getCurrentTranslations();
+                const newDate = new Date();
+                newDate.setHours(13, 0);
+                const formattedNewDate = newDate.toISOString().slice(0, 16);
+                if (availableDates.includes(formattedNewDate)) {
+                    showMessage(t.product_page.messages.error.validation.duplicate_date);
+                    return;
+                }
+                addDateField(formattedNewDate);
+            });
         }
     }
 
-    // Display success message
-    function displaySuccess(message) {
-        const productInfo = document.querySelector('.product-info');
-        if (productInfo) {
-            const successDiv = document.createElement('div');
-            successDiv.style.color = '#20AD96';
-            successDiv.textContent = message;
-            productInfo.appendChild(successDiv);
-            setTimeout(() => successDiv.remove(), 3000);
-        }
-    }
-
-    // Update cart badge
-    async function updateCartBadge() {
-        if (!currentUser || currentUser.isAdmin) return;
+    checkUser();
+    productId = getProductId();
+    waitForHeader(() => {
         try {
-            const response = await fetch(`http://localhost:3000/cart?userName=${currentUser.userName}`);
-            if (!response.ok) {
-                throw new Error(`Failed to load cart: ${response.status}`);
-            }
-            const cartItems = await response.json();
-            const cartCount = cartItems.length;
-            const cartBadge = document.querySelector('.cart-badge');
-            if (cartBadge) {
-                cartBadge.textContent = cartCount;
-                cartBadge.style.display = cartCount > 0 ? 'block' : 'none';
-            } else {
-                console.warn('Cart badge element not found in DOM.');
-            }
+            renderProduct();
+            setupLanguageInputs();
+            setupEventListeners();
+            updateHeader(true);
         } catch (error) {
-            console.error('Error loading cart:', error);
+            console.error('Error initializing product page:', error);
+            showMessage(getCurrentTranslations().product_page.messages.error.load);
+            document.getElementById('preloader').style.display = 'none';
         }
-    }
-
-    await updateCartBadge();
-
-    function setupLanguageSelector() {
-    const langRadios = document.querySelectorAll('input[name="language"]');
-    const updateLanguage = (lang) => {
-        const langCode = lang === 'rus' ? 'ru' : 'en';
-        localStorage.setItem('language', langCode);
-        window.location.reload(); 
-    };
-
-    langRadios.forEach(radio => {
-        radio.addEventListener('change', (e) => updateLanguage(e.target.value));
     });
-
-    const defaultLang = localStorage.getItem('language') || 'en';
-    localStorage.setItem('language', defaultLang);
-}
-
-setupLanguageSelector();
 });
