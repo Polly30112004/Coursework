@@ -437,7 +437,7 @@ login_page: {
       title: "Catalog",
       controls: {
         search: {
-          placeholder: "Search by title..."
+          placeholder: "Search..."
         },
         filter: {
           label: "Filter by type",
@@ -477,6 +477,7 @@ login_page: {
         add_to_cart_error: "Failed to add product to cart. Please try again.",
         delete_confirm: "Are you sure you want to delete this product?",
         delete_error: "Failed to delete product. Please try again.",
+        delete_purchased_error: 'Cannot delete this product because it has been purchased.',
         confirm: "Yes",
         cancel: "Cancel",
         close: "Close"
@@ -496,7 +497,8 @@ login_page: {
         save: "Save",
         create: "Create Product",
         add_date: "Add New Date",
-        delete_date: "Delete"
+        delete_date: "Delete",
+        delete: "Delete"
       },
       types: {
         group_coaching: "Group Coaching",
@@ -517,7 +519,8 @@ login_page: {
             dates: "At least one availability date is required for non-book products.",
             duplicate_date: "This date is already added! Please choose another.",
             purchased_date: "Cannot delete this date as it is linked to a purchased product.",
-            same_dates: "Dates cannot be the same!"
+            same_dates: "Dates cannot be the same!",
+            image_invalid: 'Invalid image URL. Please provide a valid URL (png, jpg, jpeg, gif).'
           },
           access_denied: "Access denied: Admins only.",
           upload: "Failed to upload image."
@@ -995,7 +998,7 @@ login_page: {
       title: "Каталог",
       controls: {
         search: {
-          placeholder: "Поиск по названию..."
+          placeholder: "Поиск..."
         },
         filter: {
           label: "Фильтр по типу",
@@ -1035,6 +1038,7 @@ login_page: {
         add_to_cart_error: "Не удалось добавить продукт в корзину. Попробуйте снова.",
         delete_confirm: "Вы уверены, что хотите удалить этот продукт?",
         delete_error: "Не удалось удалить продукт. Попробуйте снова.",
+        delete_purchased_error: 'Нельзя удалить этот продукт, так как он был куплен.',
         confirm: "Да",
         cancel: "Отмена",
         close: "Закрыть"
@@ -1053,7 +1057,8 @@ login_page: {
         save: "Сохранить",
         create: "Создать продукт",
         add_date: "Добавить новую дату",
-        delete_date: "Удалить"
+        delete_date: "Удалить",
+        delete: "Удалить"   
       },
       types: {
         group_coaching: "Групповой коучинг",
@@ -1074,7 +1079,8 @@ login_page: {
             dates: "Для продуктов, кроме книг, требуется хотя бы одна дата доступности.",
             duplicate_date: "Эта дата уже добавлена! Выберите другую.",
             purchased_date: "Нельзя удалить эту дату, так как она связана с купленным продуктом.",
-            same_dates: "Даты не могут быть одинаковыми!"
+            same_dates: "Даты не могут быть одинаковыми!",
+            image_invalid: 'Неверный URL-адрес изображения. Укажите действительный URL-адрес (png, jpg, jpeg, gif).'
           },
           access_denied: "Доступ запрещён: только для администраторов.",
           upload: "Не удалось загрузить изображение."
