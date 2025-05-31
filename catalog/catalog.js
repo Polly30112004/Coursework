@@ -43,9 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
                 return Promise.all(deletePromises);
             })
-            .then(() => {
-                updateHeader(true); // Предполагается, что функция определена в header_footer_js.js
-            })
             .catch(error => console.error('Error clearing admin cart:', error));
 
         const adminAdd = document.getElementById('admin-add');
