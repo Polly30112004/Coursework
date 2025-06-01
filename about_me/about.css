@@ -204,10 +204,11 @@ body {
     padding: 1rem;
 }
 
-.step-icon {
+.step img {
     width: 3rem;
     height: 3rem;
     margin-bottom: 1rem;
+    justify-self: center !important;
 }
 
 .step h3 {
