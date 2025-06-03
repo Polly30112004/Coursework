@@ -91,3 +91,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+
+    const shopButton = document.querySelector('.block1 .btn');
+         if (shopButton) {
+        shopButton.addEventListener('click', () => {
+            window.location.href = '/catalog/catalog.html';
+            hamMenu.classList.remove('active');
+            header.classList.remove('active');
+        });
+    }
