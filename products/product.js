@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showMessage(t.product_page.messages.error.validation.image);
             return false;
         }
-        if (!imageUrl.match(/^(https?:\/\/[^\s/$.?#].[^\s]*\.(png|jpg|jpeg|gif)$)|(file:\/\/\/[A-Za-z]:\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)|(\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)|(\.\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)/i)) {
+        if (!imageUrl.match(/^(https?:\/\/[^\s/$.?#].[^\s]*\.(png|jpg|jpeg|gif)$)|([A-Za-z]:\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)|(\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)|(\.\/[^<>:"|?*]+\.(png|jpg|jpeg|gif)$)/i)) {
             showMessage(t.product_page.messages.error.validation.image_invalid || 'Invalid image URL. Please provide a valid URL or path (png, jpg, jpeg, gif).');
             return false;
         }
