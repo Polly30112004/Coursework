@@ -2,117 +2,160 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/header_footer/header_footer.css">
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900" rel="stylesheet">
-    <title></title>
+    <script src="translations.js" type="module"></script>
+    <title>Happy Coaching</title>
 </head>
 <body>
    <header class="header" id="header"> 
     <a href="/home/index.html">
         <div class="brand">
-            <img src="/img/header_brand.svg" alt="" class="brand_icon">
-            <p class="brand_name">Happy Coaching</p>
+            <img src="/img/header_brand.svg" alt="Happy Coaching Logo" class="brand_icon">
+            <p class="brand_name" data-i18n="header.brandName">Happy Coaching</p>
         </div>
     </a>
     <div class="navigation">
-        <input type="checkbox" id="theme">
-        <label for="theme" class="theme-toggle">
-            <img src="/img/night.png" alt="" class="theme-night">
-            <img src="/img/day.png" alt="" class="theme-day">
-        </label> 
-
-        <input type="checkbox" id="visibility">
-        <label for="visibility" class="visibility-toggle">
-            <img src="/img/visibility_off.png" alt="" class="visibility-off">
-            <img src="/img/visibility.png" alt="" class="visibility-on">
+        <div class="restart-toggle">
+            <img src="/img/restart-header.svg" alt="Restart">
+        </div>
+        <!-- Переключатель день/ночь -->
+        <input type="checkbox" id="theme-toggle">
+        <label for="theme-toggle" class="theme-toggle">
+            <img src="/img/night.png" alt="Night Off" class="night-off">
+            <img src="/img/day.png" alt="Night On" class="night-on">
         </label>
+        <!-- Переключатель доступности -->
+        <div class="visibility-wrapper">
+            <input type="checkbox" id="visibility">
+            <label for="visibility" class="visibility-toggle">
+                <img src="/img/visibility_off.png" alt="Visibility Off" class="visibility-off">
+                <img src="/img/visibility.png" alt="Visibility On" class="visibility-on">
+            </label>
+        </div>
+        <div class="settings-toggle">
+            <img src="/img/settings.svg" alt="Settings">
+        </div> 
         <div class="lang">
-            <input type="radio" id="eng" name="language" value="en" checked>
+            <input type="radio" id="eng" name="language" value="en">
             <label for="eng" class="eng">en</label>
-            <input type="radio" id="rus" name="language" value="rus">
+            <input type="radio" id="rus" name="language" value="ru">
             <label for="rus" class="rus">рус</label>
         </div>
-        <div class="links">
-            <a href="/home/index.html">Home</a>
-            <a href="/log_in/log.html" id="auth-link">Log in</a>
-            <a id="profile-link" href="#">Profile</a>
-            <a href="/about_me/about.html">About us</a>
-            <a href="/extra/extra.html">Extra sales</a>
-        </div>
-        <div class="button-cart">
-            <button class="shop">Get your guide now</button>
-            <div class="cart-icon-wrapper">
-                <img src="/img/shopping_basket.png" alt="">
-                <span class="cart-badge">0</span>
+        <div class="menu-container">
+            <div class="links">
+                <a href="/home/index.html" data-i18n="header.home">Home</a>
+                <a href="/log_in/log.html" id="auth-link">Log In</a>
+                <a id="profile-link" href="/profile/profile.html" data-i18n="header.profile">Profile</a>
+                <a href="/about_me/about.html" data-i18n="header.about">About us</a>
+                <a href="/extra/extra.html" data-i18n="header.extra">Extra sales</a>
             </div>
-        </div>     
+            <div class="button-cart">
+                <button class="shop" data-i18n="header.getGuide">Get your guide now</button>
+                <div class="cart-icon-wrapper">
+                    <img src="/img/shopping_basket.png" alt="Cart">
+                    <span class="cart-badge">0</span>
+                </div>
+            </div>
+        </div>
         <nav class="ham-menu">
             <span></span>
             <span></span>
             <span></span>
         </nav>
     </div>
-   </header>
+</header>
 
-   <footer class="footer" id="footer">
-    <div class="subscribe-section">
-        <div class="subscribe-text">
-            <h2 class="h2">Get notified when I publish new articles</h2>
-            <p>Stay up to date with the latest news, announcements, and articles.</p>
-        </div>
-        <form class="subscribe-form">
-            <button>Subscribe</button>
-        </form>
-    </div>
-
-    <div class="footer-columns">
-        <div class="footer-brand">
-            <div class="brand">
-                <img src="/img/header_brand.svg" alt="" class="brand_icon">
-                <p class="brand_name">Happy Coaching</p>
+    <footer class="footer" id="footer">
+        <div class="subscribe-section">
+            <div class="subscribe-text">
+                <h2 class="footerh2" data-i18n="footer.subscribeTitle">Get notified when I publish new articles</h2>
+                <p data-i18n="footer.subscribeText">Stay up to date with the latest news, announcements, and articles.</p>
             </div>
-            <span>Design amazing digital experiences that <br> create more happy in the world.</span>
+            <form class="subscribe-form">
+                <button data-i18n="footer.subscribeButton">Subscribe</button>
+            </form>
         </div>
 
-        <div class="footer-column">
-            <h3>Pages</h3>
-            <ul>
-                <li><a href="/home/index.html">Home</a></li>
-                <li><a href="/log_in/log.html">Log in</a></li>
-                <li><a href="/about_me/about.html">About us</a></li>
-                <li><a href="/extra/extra.html">Extra Sales/Landingpage</a></li>
-                <li><a href="/catalog/catalog.html">Catalog</a></li>
-            </ul>
+        <div class="footer-columns">
+            <div class="footer-brand">
+                <div class="brand">
+                    <img src="/img/header_brand.svg" alt="Happy Coaching Logo" class="brand_icon">
+                    <p class="brand_name" data-i18n="header.brandName">Happy Coaching</p>
+                </div>
+                <span data-i18n="footer.brandDescription">Design amazing digital experiences that create more happy in the world.</span>
+            </div>
+
+            <div class="footer-column">
+                <h3 data-i18n="footer.pages">Pages</h3>
+                <ul>
+                    <li><a href="/home/index.html" data-i18n="header.home">Home</a></li>
+                    <li><a href="/log_in/log.html" id="footer-login-link" data-i18n="header.login">Log In</a></li>
+                    <li><a href="/profile/profile.html" id="footer-profile-link" data-i18n="header.profile">Profile</a></li>
+                    <li><a href="/about_me/about.html" data-i18n="header.about">About us</a></li>
+                    <li><a href="/extra/extra.html" data-i18n="header.extra">Extra Sales</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3 data-i18n="footer.contact">Contact</h3>
+                <ul>
+                    <li>+375 29 44 888</li>
+                    <li><a href="mailto:hello@happydigital.nl">hello@happydigital.nl</a></li>
+                    <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+                    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                </ul>
+            </div>
         </div>
 
-        <div class="footer-column">
-            <h3>Contact</h3>
-            <ul>
-                <li>+375 29 44 888</li>
-                <li><a href="mailto:hello@happydigital.nl">hello@happydigital.nl</a></li>
-                <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
-                <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-            </ul>
+        <div class="footer-bottom">
+            <a href="https://happydigital.nl" target="_blank"> 
+                <p data-i18n="footer.madeBy">Made with by HappyDigital</p>
+            </a>
+            <div class="social-icons">
+                <a href="https://linkedin.com" target="_blank">
+                    <img src="/img/In.png" alt="LinkedIn">
+                </a>
+                <a href="https://facebook.com" target="_blank">
+                    <img src="/img/facebook.png" alt="Facebook">
+                </a>
+                <a href="https://dribbble.com" target="_blank" aria-label="Dribbble">
+                    <img src="/img/basketball.png" alt="Dribbble">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Панель доступности -->
+    <div class="accessibility-panel">
+        <div class="accessibility-controls">
+            <h3 data-i18n="accessibility.panelTitle">Accessibility Settings</h3>
+            <div class="font-size-control">
+                <label data-i18n="accessibility.fontSize">Font Size</label>
+                <button data-font-size="small" data-i18n="accessibility.fontSizeSmall">Small</button>
+                <button data-font-size="medium" data-i18n="accessibility.fontSizeMedium">Medium</button>
+                <button data-font-size="large" data-i18n="accessibility.fontSizeLarge">Large</button>
+            </div>
+            <div class="color-scheme-control">
+                <label data-i18n="accessibility.colorScheme">Color Scheme</label>
+                <button data-color-scheme="black-white" data-i18n="accessibility.colorSchemeBlackWhite">Black on White</button>
+                <button data-color-scheme="black-green" data-i18n="accessibility.colorSchemeBlackGreen">Green on Black</button>
+                <button data-color-scheme="white-black" data-i18n="accessibility.colorSchemeWhiteBlack">White on Black</button>
+                <button data-color-scheme="beige-brown" data-i18n="accessibility.colorSchemeBeigeBrown">Brown on Beige</button>
+                <button data-color-scheme="blue-lightblue" data-i18n="accessibility.colorSchemeBlueLightBlue">Black on Light Blue</button>
+            </div>
+            <div class="images-control">
+                <label data-i18n="accessibility.images">Images</label>
+                <button data-images="on" data-i18n="accessibility.imagesOn">On</button>
+                <button data-images="off" data-i18n="accessibility.imagesOff">Off</button>
+            </div>
+            <button class="apply-settings" data-i18n="accessibility.apply">Apply</button>
+            <button class="close-settings" data-i18n="accessibility.close">Close</button>
         </div>
     </div>
 
-    <div class="footer-bottom">
-        <a href="https://happydigital.nl" target="_blank"> 
-            <p>Made with <img src="/img/footer-bottom.svg" alt=""> by HappyDigital</p>
-        </a>
-        <div class="social-icons">
-            <a href="https://linkedin.com" target="_blank">
-                <img src="/img/In.png" alt="LinkedIn">
-            </a>
-            <a href="https://facebook.com" target="_blank">
-                <img src="/img/facebook.png" alt="Facebook">
-            </a>
-            <a href="https://dribbble.com" target="_blank" aria-label="Dribbble">
-                <img src="/img/basketball.png" alt="Dribbble">
-            </a>
-        </div>
-    </div>
-</footer>
-
+    <script type="module" src="/header_footer/language-switcher.js"></script>
+    <script type="module" src="/header_footer/header_footer_js.js"></script>
 </body>
 </html>

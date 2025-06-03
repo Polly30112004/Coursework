@@ -10,10 +10,30 @@ export const translations = {
       extra: "Extra sales",
       getGuide: "Get your guide now"
     },
+     accessibility: {
+      panelTitle: "Accessibility Settings",
+      fontSize: "Font Size",
+      fontSizeSmall: "Small",
+      fontSizeMedium: "Medium",
+      fontSizeLarge: "Large",
+      colorScheme: "Color Scheme",
+      colorSchemeBlackWhite: "Black on White",
+      colorSchemeBlackGreen: "Black on Green",
+      colorSchemeWhiteBlack: "White on Black",
+      colorSchemeBeigeBrown: "Beige on Brown",
+      colorSchemeBlueLightblue: "Blue on Light Blue",
+      images: "Images",
+      imagesOn: "On",
+      imagesOff: "Off",
+      apply: "Apply",
+      close: "Close",
+      imagePlaceholder: "[Image]"
+    },
     footer: {
       subscribeTitle: "Get notified when I publish new articles",
       subscribeText: "Stay up to date with the latest news, announcements, and articles.",
       subscribeButton: "Subscribe",
+      subscribeSuccess: 'Subscription confirmed!',
       brandDescription: "Design amazing digital experiences that create more happy in the world.",
       pages: "Pages",
       contact: "Contact",
@@ -29,7 +49,7 @@ export const translations = {
         percentage: "100%",
         about: {
           title: "About me",
-          description: "I help people to discover their true potential and live a fulfilling life... Discover the simple 3 steps that I discovered to hack productivity. It just works and it is begin using backed by science. <br> Wanna transform your life?",
+          description: "I help people to discover their true potential and live a fulfilling life... Discover the simple 3 steps that I discovered to hack productivity. It just works and it is begin using backed by science. Wanna transform your life?",
           overlay: {
             sessions: "More than 250+",
             label: "Online Sessions"
@@ -577,10 +597,30 @@ login_page: {
       extra: "Акции",
       getGuide: "Получить гайд"
     },
+     accessibility: {
+      panelTitle: "Настройки доступности",
+      fontSize: "Размер шрифта",
+      fontSizeSmall: "Маленький",
+      fontSizeMedium: "Средний",
+      fontSizeLarge: "Большой",
+      colorScheme: "Цветовая схема",
+      colorSchemeBlackWhite: "Чёрный на белом",
+      colorSchemeBlackGreen: "Чёрный на зелёном",
+      colorSchemeWhiteBlack: "Белый на чёрном",
+      colorSchemeBeigeBrown: "Бежевый на коричневом",
+      colorSchemeBlueLightblue: "Синий на светло-синем",
+      images: "Изображения",
+      imagesOn: "Вкл",
+      imagesOff: "Выкл",
+      apply: "Применить",
+      close: "Закрыть",
+      imagePlaceholder: "[Изображение]"
+    },
     footer: {
       subscribeTitle: "Получайте уведомления о новых статьях",
       subscribeText: "Будьте в курсе последних новостей и публикаций.",
       subscribeButton: "Подписаться",
+      subscribeSuccess: 'Подписка оформлена!',
       brandDescription: "Создаем цифровые продукты, которые делают мир счастливее.",
       pages: "Страницы",
       contact: "Контакты",
@@ -596,7 +636,7 @@ login_page: {
         percentage: "100%",
         about: {
           title: "Обо мне",
-          description: "Я помогаю людям раскрыть их истинный потенциал и жить полноценной жизнью... Откройте для себя 3 простых шага, которые я открыл, чтобы взломать продуктивность. Это просто работает и подтверждено наукой. <br> Хотите изменить свою жизнь?",
+          description: "Я помогаю людям раскрыть их истинный потенциал и жить полноценной жизнью... Откройте для себя 3 простых шага, которые я открыл, чтобы взломать продуктивность. Это просто работает и подтверждено наукой. Хотите изменить свою жизнь?",
           overlay: {
             sessions: "Более 250+",
             label: "Онлайн-сессий"
