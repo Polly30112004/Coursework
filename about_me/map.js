@@ -33,3 +33,10 @@ function setupMap() {
 }
 
 initMapSystem();
+
+ const shopButton = document.querySelector('.block1 .btn');
+         if (shopButton) {
+        shopButton.addEventListener('click', () => {
+            window.location.href = '/catalog/catalog.html';
+        });
+    } 
