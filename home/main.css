@@ -37,8 +37,7 @@
     --footer-text: #D1D5DB;
     --third-color: #1E2C30;
 }
-
-/* Версия для слабовидящих */
+/* Стили для слабовидящих */
 [data-theme="accessibility"] {
     --background: #ffffff;
     --text: #000000;
@@ -48,7 +47,7 @@
 [data-theme="accessibility"][data-color-scheme="black-white"] {
     --background: #ffffff;
     --text: #333333;
-    --banner-bg-accessibility: #E0E0E0;
+    --banner-bg-accessibility: #CCCCCC; /* Улучшен контраст */
 }
 
 [data-theme="accessibility"][data-color-scheme="white-black"] {
@@ -59,20 +58,20 @@
 
 [data-theme="accessibility"][data-color-scheme="black-green"] {
     --background: #333333;
-    --text: #00FF00;
-    --banner-bg-accessibility: #1A2A1A;
+    --text: #98FB98; /* Безопасный зелёный */
+    --banner-bg-accessibility: #2F4F2F; /* Контрастный зелёный */
 }
 
 [data-theme="accessibility"][data-color-scheme="beige-brown"] {
-    --background: #F5E7EB;
-    --text: #8B4513;
-    --banner-bg-accessibility: #E6D0D5;
+    --background: #F5F0E1; /* Нейтральный бежевый */
+    --text: #4A2C07; /* Темнее коричневый */
+    --banner-bg-accessibility: #D9C2A6; /* Контрастный бежевый */
 }
 
-[data-theme="accessibility"][data-color-scheme="blue-lightblue"] {
+[data-theme="accessibility"][data-color-scheme="blue-light"] {
     --background: #ADD8E6;
-    --text: #0e0457;
-    --banner-bg-accessibility: #87CEEB;
+    --text: #0E0E52; /* Мягкий синий */
+    --banner-bg-accessibility: #4682B4; /* Темнее голубой */
 }
 
 [data-theme="accessibility"] * {
