@@ -132,9 +132,11 @@ export function updateHeader(isLoggedIn) {
         profileLink.style.display = isLoggedIn && !isAdmin ? 'block' : 'none';
     }
 
+
+    cartIconWrapper.style.display = isLoggedIn && !isAdmin ? 'block' : 'none';
     if (cartIconWrapper) {
         const badge = cartIconWrapper.querySelector('.cart-badge');
-        if (isLoggedIn && currentUser && currentUser.userName) { // Используем userName
+        if (isLoggedIn && !isAdmin && currentUser && currentUser.userName) {
             fetch(`http://localhost:3000/cart?userName=${currentUser.userName}`)
                 .then(response => {
                     if (!response.ok) {

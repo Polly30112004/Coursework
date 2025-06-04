@@ -524,6 +524,7 @@ login_page: {
         group_coaching: "Group Coaching",
         individual_coaching: "Individual Coaching",
         consultation: "Consultation",
+        select_type: "Select Type",
         book: "Book"
       },
        messages: {
@@ -1104,6 +1105,7 @@ login_page: {
         group_coaching: "Групповой коучинг",
         individual_coaching: "Индивидуальный коучинг",
         consultation: "Консультация",
+        select_type: "Выбранный тип",
         book: "Книга"
       },
       messages: {
