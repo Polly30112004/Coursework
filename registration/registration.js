@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let usernameAttempts = 5;
 
-    // Получение переводов
     const getCurrentTranslations = () => getTranslations(localStorage.getItem('language') || 'en');
 
     const validatePhone = (phone) => {
@@ -370,14 +369,14 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:${PORT}/users?name=${encodeURIComponent(user.name)}`);
+            const response = await fetch(`http://localhost:3000/users?name=${encodeURIComponent(user.name)}`);
             const users = await response.json();
             if (users.length > 0) {
                 setError(usernameInput, 'register_page.form.username.exists');
                 return;
             }
 
-            const postResponse = await fetch(`http://localhost:${PORT}/users`, {
+            const postResponse = await fetch(`http://localhost:3000/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
@@ -385,14 +384,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!postResponse.ok) throw new Error('Registration failed');
 
-            window.location.assign('/log-in/log-in.html');
+            window.location.assign('/home/index.html');
         } catch (error) {
             console.error('Error registering user:', error);
             setError(form, 'register_page.form.server_error');
         }
     });
 
-    // Обновление переводов при смене языка
     document.addEventListener('languageChanged', () => {
         updateUsernameAttempts();
         validateForm();
