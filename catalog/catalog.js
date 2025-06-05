@@ -337,13 +337,6 @@ function renderPagination(totalPages) {
                 productId: parseInt(productId),
                 userName: currentUser.userName,
                 selectedDate: selectedDate,
-                productDetails: {
-                    title: product.title,
-                    type: product.type,
-                    price: product.price,
-                    description: product.description,
-                    image: product.image
-                }
             };
 
             return fetch('http://localhost:3000/cart', {

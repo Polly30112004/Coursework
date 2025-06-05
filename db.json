@@ -7,13 +7,13 @@
         "ru": "Консультация по карьерному пути"
       },
       "type": {
-        "en": "individual_coaching",
+        "en": "individual coaching",
         "ru": "Individual Coaching"
       },
       "availability_dates": [
         "2025-05-28T21:00:00.000Z",
-        "2025-05-28T19:11:00.000Z",
-        "2025-05-28T11:00:00.000Z",
+        "2025-06-28T19:11:00.000Z",
+        "2025-06-28T11:00:00.000Z",
         "2025-05-28T19:00:00.000Z"
       ],
       "price": 51,
@@ -76,7 +76,7 @@
         "ru": "Коучинг по трансформации жизни"
       },
       "type": {
-        "en": "individual_coaching",
+        "en": "individual coaching",
         "ru": "Индивидуальный коучинг"
       },
       "availability_dates": [
@@ -100,7 +100,7 @@
         "ru": "Коучинг по мастерству лидерства"
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "availability_dates": [
@@ -128,7 +128,7 @@
         "ru": "Эта 4-недельная групповая программа коучинга по повышению продуктивности направлена на оптимизацию ваших ежедневных привычек, чтобы добиться большего за меньшее время. Вы присоединитесь к поддерживающей группе, чтобы изучить техники управления временем, стратегии приоритизации и методы устранения отвлекающих факторов. Под руководством опытного коуча программа включает еженедельные задания и проверки ответственности. Вы разовьёте устойчивые привычки для повышения продуктивности и достижения целей."
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "price": 155,
@@ -148,7 +148,7 @@
         "ru": "Коучинг по укреплению уверенности"
       },
       "type": {
-        "en": "individual_coaching",
+        "en": "individual coaching",
         "ru": "Индивидуальный коучинг"
       },
       "availability_dates": [
@@ -172,7 +172,7 @@
         "ru": "Групповой коучинг по мотивации"
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "availability_dates": [
@@ -196,7 +196,7 @@
         "ru": "Коучинг по успеху в отношениях"
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "availability_dates": [
@@ -220,7 +220,7 @@
         "ru": "Коучинг по осознанности"
       },
       "type": {
-        "en": "individual_coaching",
+        "en": "individual coaching",
         "ru": "Индивидуальный коучинг"
       },
       "availability_dates": [
@@ -244,7 +244,7 @@
         "ru": "Коучинг по смене карьеры"
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "availability_dates": [
@@ -340,7 +340,7 @@
         "ru": "Мастер-класс по постановке целей"
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "availability_dates": [
@@ -362,7 +362,7 @@
         "ru": "Коучинг по публичным выступлениям"
       },
       "type": {
-        "en": "individual_coaching",
+        "en": "individual coaching",
         "ru": "Индивидуальный коучинг"
       },
       "availability_dates": [
@@ -406,7 +406,7 @@
         "ru": "Коучинг по эмоциональному интеллекту"
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "availability_dates": [
@@ -468,7 +468,7 @@
         "ru": "Коучинг по созданию карьерного бренда"
       },
       "type": {
-        "en": "individual_coaching",
+        "en": "individual coaching",
         "ru": "Индивидуальный коучинг"
       },
       "availability_dates": [
@@ -490,7 +490,7 @@
         "ru": "Коучинг по изменению мышления"
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "availability_dates": [
@@ -530,7 +530,7 @@
         "ru": "Коучинг по балансу работы и жизни"
       },
       "type": {
-        "en": "individual_coaching",
+        "en": "individual coaching",
         "ru": "Индивидуальный коучинг"
       },
       "availability_dates": [
@@ -552,7 +552,7 @@
         "ru": "Коучинг по сплочению команды"
       },
       "type": {
-        "en": "group_coaching",
+        "en": "group coaching",
         "ru": "Групповой коучинг"
       },
       "availability_dates": [
@@ -614,7 +614,7 @@
         "ru": "Коучинг по устойчивости к стрессу"
       },
       "type": {
-        "en": "individual_coaching",
+        "en": "individual coaching",
         "ru": "Индивидуальный коучинг"
       },
       "availability_dates": [
@@ -793,36 +793,6 @@
   ],
   "cart": [
     {
-      "id": 1,
-      "productId": 19,
-      "userName": "EpicTaco",
-      "selectedDate": "2025-08-01T10:00:00.000Z"
-    },
-    {
-      "id": 2,
-      "productId": 23,
-      "userName": "EpicTaco",
-      "selectedDate": null
-    },
-    {
-      "id": 3,
-      "productId": 21,
-      "userName": "EpicTaco",
-      "selectedDate": "2025-08-07T13:00:00.000Z"
-    },
-    {
-      "id": 4,
-      "productId": 27,
-      "userName": "EpicTaco",
-      "selectedDate": null
-    },
-    {
-      "id": 5,
-      "productId": 30,
-      "userName": "EpicTaco",
-      "selectedDate": null
-    },
-    {
       "id": 6,
       "productId": 20,
       "userName": "YeetCactus19",
@@ -881,6 +851,36 @@
       "productId": 23,
       "userName": "SavageRocket94",
       "selectedDate": null
+    },
+    {
+      "productId": 33,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 17
+    },
+    {
+      "productId": 17,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 18
+    },
+    {
+      "productId": 30,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 19
+    },
+    {
+      "productId": 23,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 20
+    },
+    {
+      "productId": 23,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 21
     }
   ],
   "purchased": [
@@ -1075,6 +1075,42 @@
       "userName": "SavageRocket94",
       "selectedDate": null,
       "id": 71
+    },
+    {
+      "productId": 23,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 72
+    },
+    {
+      "productId": 18,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 73
+    },
+    {
+      "productId": 15,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 74
+    },
+    {
+      "productId": 27,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 75
+    },
+    {
+      "productId": 30,
+      "userName": "EpicTaco",
+      "selectedDate": null,
+      "id": 76
+    },
+    {
+      "productId": 2,
+      "userName": "EpicTaco",
+      "selectedDate": "2025-06-28T19:11:00.000Z",
+      "id": 77
     }
   ]
 }
