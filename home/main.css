@@ -319,7 +319,8 @@
 [data-theme="accessibility"] .icon,
 [data-theme="accessibility"] .types img,
 [data-theme="accessibility"] .card img,
-[data-theme="accessibility"] .image_icon {
+[data-theme="accessibility"] .image_icon,
+ [data-theme="accessibility"] .free_guid{
     display: block !important;
     background-color: transparent !important;
 }
@@ -426,18 +427,14 @@
 [data-theme="accessibility"] .free_guid {
 
     position: absolute !important;
-    background-color: none  !important;
     color: var(--text) !important;
-  
     display: flex !important;
-    box-shadow: 0 0.125rem 0.3125rem var(--text) !important; /* Тень */
 }
 
 [data-theme="accessibility"] .image_icon {
     font-size: 14px !important;
     height: 92px !important;
     width: 92px !important;
-    background-color: var(--text) !important; /* Исправлено: цвет из темы */
 }
 
 
@@ -560,11 +557,7 @@
         justify-content: center !important;
     }
 
-    [data-theme="accessibility"] .transsform_life,
-    [data-theme="accessibility"] .content .image-placeholder
-    {
-        display: none !important;
-    }
+
 }
 
 @media (max-width: 768px) {
@@ -1100,6 +1093,20 @@ header .image_icon,
     }
 }
 
+@media (max-width: 600px) {
+    .card {
+        height: auto !important; /* Карточка подстраивается под содержимое */
+    }
+
+    .card_text {
+        padding: 1rem 1.25rem !important; /* Уменьшаем отступы: 11px сверху/снизу, 13.75px слева/справа при font-size: 11px */
+    }
+
+    .card h3 {
+        margin-bottom: 0.5rem !important; /* Уменьшаем отступ под заголовком: 5.5px */
+    }
+}
+
 @media (max-width: 480px) {
     html {
         font-size: 11px;
@@ -1136,4 +1143,20 @@ header .image_icon,
     .zigzag {
         display: none !important;
     }
+}
+
+[data-theme="accessibility"] .block5 .free_guid .image_icon {
+    display: flex !important;
+    border-radius: 100% !important; /* Гарантируем круг */
+    background-color: var(--banner-bg-accessibility) !important;
+    font-size: 14px !important;
+    color: var(--text) !important; /* Используем фиксированный белый, чтобы избежать конфликтов с --text */
+    font-weight: 700 !important;
+    height: 92px !important;
+    width: 92px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: normal !important;
+    overflow: visible !important; /* Гарантируем, что текст не обрезается */
 }
